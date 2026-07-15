@@ -1,0 +1,49 @@
+name: Research repository CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Run repository validation
+        run: python scripts/validate_repository.py
+
+  deliver:
+    name: Package research snapshot
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create tracked-file snapshot
+        run: git archive --format=tar.gz --prefix=NMA-NeuroAI-Online-Learning-Project/ --output="${RUNNER_TEMP}/research-snapshot-${GITHUB_SHA}.tar.gz" HEAD
+
+      - name: Upload research snapshot
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: research-snapshot-${{ github.sha }}
+          path: ${{ runner.temp }}/research-snapshot-${{ github.sha }}.tar.gz
+          if-no-files-found: error
+          retention-days: 7

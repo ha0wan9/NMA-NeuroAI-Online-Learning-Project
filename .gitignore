@@ -1,0 +1,33 @@
+# Local Project Meta preferences and runtime state
+USER.md
+USER.template.md
+.harness/
+
+# Python caches and tooling state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Local environments and credentials
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

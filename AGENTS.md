@@ -13,6 +13,7 @@ This repository is a two-week collaborative NeuroAI research and evaluation proj
 ## Topic Routing
 
 - Research milestones, claim labels, biological-plausibility criteria, baselines, and evaluation protocol: `agents/research-project-contract.md`.
+- Two-stage literature review navigation, the shared paper/claim registry, Domain Introduction, SOTA weak-cell status, and candidate-shortlist work: `.research/surveys/bioplausible-online-learning/index.md`.
 - Multi-agent literature or experiment work: `agents/delegation.md`.
 - CI/CD design, workflow maintenance, and repository validation: `agents/ci-cd.md`.
 - Delivery before a commit: `agents/pre-commit-delivery.md`.

@@ -65,5 +65,17 @@ Project-owned artifacts:
   review_policy: team review when milestone gates, claim discipline, or evaluation invariants change
   last_reviewed: 2026-07-15
   refresh_trigger: the approved proposal, claim discipline, or evaluation protocol changes
+- path: .research/surveys/bioplausible-online-learning/index.md
+  origin: project-owned
+  owner: shared-user-facing
+  review_policy: team review before survey phase, weak-cell acceptance, or candidate decisions change
+  last_reviewed: 2026-07-15
+  refresh_trigger: shared registry, SOTA audit status, research questions, or candidate decisions change
+- path: .research/surveys/bioplausible-online-learning/reading-roadmap-index.md
+  origin: imported-project-owned
+  owner: shared-user-facing
+  review_policy: team review before the introduction route, evidence cutoff, or Stage 2 handoff changes
+  last_reviewed: 2026-07-15
+  refresh_trigger: source roadmap version, shared canonical IDs, introduction sequence, or handoff changes
 
-The project-owned research contract is not instantiated from a Project Meta template.
+These project-owned artifacts are not instantiated from Project Meta templates.

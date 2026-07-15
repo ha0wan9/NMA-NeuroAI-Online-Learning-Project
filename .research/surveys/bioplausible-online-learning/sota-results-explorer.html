@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Stage Two · SOTA Results Explorer</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --background: light-dark(rgb(250 251 253), rgb(20 21 23));
+  --foreground: light-dark(rgb(27 30 35), rgb(245 247 250));
+  --surface: light-dark(rgb(255 255 255 / 94%), rgb(38 40 44 / 94%));
+  --surface-strong: light-dark(rgb(255 255 255), rgb(44 46 51));
+  --muted: light-dark(rgb(91 99 112), rgb(173 180 190));
+  --border: light-dark(rgb(27 30 35 / 11%), rgb(255 255 255 / 12%));
+  --border-strong: light-dark(rgb(27 30 35 / 22%), rgb(255 255 255 / 24%));
+  --primary: light-dark(rgb(29 105 195), rgb(119 184 255));
+  --primary-soft: light-dark(rgb(29 105 195 / 10%), rgb(119 184 255 / 14%));
+  --weak: light-dark(rgb(178 91 0), rgb(255 177 92));
+  --weak-soft: light-dark(rgb(178 91 0 / 10%), rgb(255 177 92 / 13%));
+  --s1: light-dark(rgb(36 119 181), rgb(111 190 245));
+  --s2: light-dark(rgb(202 112 45), rgb(240 155 89));
+  --s3: light-dark(rgb(48 145 94), rgb(105 203 151));
+  --s4: light-dark(rgb(148 91 184), rgb(199 149 231));
+  --s5: light-dark(rgb(183 67 112), rgb(237 130 172));
+  --s6: light-dark(rgb(50 142 143), rgb(101 201 199));
+  --shadow: 0 12px 34px light-dark(rgb(35 45 60 / 8%), rgb(0 0 0 / 22%));
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--s1) 9%, transparent), transparent 34rem),
+    radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--s4) 7%, transparent), transparent 30rem),
+    var(--background);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+button, a { font: inherit; }
+a { color: var(--primary); text-underline-offset: 3px; }
+button:focus-visible, a:focus-visible { outline: 3px solid color-mix(in srgb, var(--primary) 48%, transparent); outline-offset: 3px; }
+.shell { width: min(1480px, calc(100% - 32px)); margin: 0 auto; padding: 22px 0 52px; }
+.handoff { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 30px; }
+.stage-mark { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: .01em; }
+.stage-index { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: var(--surface-strong); background: var(--foreground); font-size: 13px; }
+.handoff nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr); gap: 28px; align-items: end; padding: 22px 0 30px; }
+.eyebrow { margin: 0 0 8px; color: var(--primary); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+h1 { max-width: 900px; margin: 0; font-size: clamp(34px, 5.5vw, 68px); line-height: .98; letter-spacing: -.055em; font-weight: 700; }
+.dek { max-width: 790px; margin: 20px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
+.audit-card { padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.audit-top { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+.audit-label { margin: 0 0 4px; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.audit-status { margin: 0; font-weight: 700; }
+.status-dot { width: 11px; height: 11px; margin-top: 6px; border-radius: 50%; background: var(--weak); box-shadow: 0 0 0 6px var(--weak-soft); }
+.audit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+.metric { padding-top: 10px; border-top: 1px solid var(--border); }
+.metric strong { display: block; font-size: 22px; line-height: 1; }
+.metric span { color: var(--muted); font-size: 12px; }
+.caution { margin: 14px 0 0; color: var(--muted); font-size: 13px; }
+.weak-strip { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 24px; }
+.weak-strip > span:first-child { margin-right: 3px; color: var(--muted); font-size: 13px; }
+.weak-chip { padding: 5px 9px; border-radius: 999px; color: var(--weak); background: var(--weak-soft); font-size: 12px; font-weight: 650; }
+.explorer { border-top: 1px solid var(--border); padding-top: 22px; }
+.toolbar { display: flex; align-items: end; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
+.toolbar-copy h2 { margin: 0 0 4px; font-size: 19px; letter-spacing: -.02em; }
+.toolbar-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+.lens-controls { display: flex; gap: 7px; flex-wrap: wrap; }
+.lens-button {
+  appearance: none; border: 1px solid var(--border); border-radius: 999px; padding: 8px 12px;
+  color: var(--foreground); background: var(--surface); cursor: pointer; font-weight: 620; font-size: 13px;
+}
+.lens-button:hover { border-color: var(--border-strong); }
+.lens-button[aria-pressed="true"] { color: var(--surface-strong); border-color: var(--foreground); background: var(--foreground); }
+.selection {
+  display: none; grid-template-columns: minmax(0, 1.55fr) minmax(250px, .45fr); gap: 22px;
+  margin-bottom: 24px; padding: 22px; border: 1px solid var(--border-strong); border-radius: var(--radius);
+  background: var(--surface-strong); box-shadow: var(--shadow);
+}
+.selection.is-open { display: grid; }
+.selection-kicker { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.route-swatch { width: 9px; height: 9px; border-radius: 3px; background: var(--paper-color, var(--primary)); }
+.selection h3 { margin: 0; font-size: clamp(21px, 3vw, 30px); line-height: 1.12; letter-spacing: -.035em; }
+.byline { margin: 7px 0 0; color: var(--muted); }
+.review-label { margin: 20px 0 5px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.review-text { margin: 0; max-width: 880px; font-size: 16px; }
+.selection-meta { align-self: stretch; padding-left: 20px; border-left: 1px solid var(--border); }
+.tag-list { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.tag { padding: 4px 8px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 7%, transparent); font-size: 12px; }
+.detail-grid { display: grid; gap: 9px; margin: 0 0 18px; }
+.detail-row { display: grid; grid-template-columns: 95px 1fr; gap: 10px; font-size: 13px; }
+.detail-row dt { color: var(--muted); }
+.detail-row dd { margin: 0; }
+.detail-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.action-link { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; font-size: 13px; font-weight: 650; }
+.action-link.primary { color: var(--surface-strong); border-color: var(--foreground); background: var(--foreground); }
+.close-button { appearance: none; border: 0; padding: 0; color: var(--muted); background: transparent; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: 12px; }
+.atlas { display: grid; grid-template-columns: repeat(var(--cluster-count, 5), minmax(210px, 1fr)); gap: 14px; align-items: start; }
+.cluster { min-width: 0; }
+.cluster-head { min-height: 72px; padding: 0 3px 12px; border-bottom: 2px solid color-mix(in srgb, var(--cluster-color) 55%, var(--border)); }
+.cluster-title-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cluster-title { margin: 0; font-size: 14px; font-weight: 750; }
+.cluster-count { display: grid; place-items: center; min-width: 25px; height: 25px; padding: 0 6px; border-radius: 999px; color: var(--cluster-color); background: color-mix(in srgb, var(--cluster-color) 11%, transparent); font-size: 12px; font-weight: 700; }
+.cluster-note { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.paper-list { display: grid; gap: 9px; padding-top: 10px; }
+.paper-card {
+  appearance: none; width: 100%; min-width: 0; border: 1px solid var(--border); border-left: 4px solid var(--paper-color);
+  border-radius: 13px; padding: 12px; color: var(--foreground); background: var(--surface); text-align: left; cursor: pointer;
+  box-shadow: 0 3px 14px light-dark(rgb(35 45 60 / 4%), rgb(0 0 0 / 12%));
+  transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
+}
+.paper-card:hover { transform: translateY(-2px); border-color: var(--border-strong); background: var(--surface-strong); }
+.paper-card[aria-pressed="true"] { border-color: var(--paper-color); background: color-mix(in srgb, var(--paper-color) 8%, var(--surface-strong)); }
+.card-top { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .035em; }
+.stars { letter-spacing: -.08em; color: var(--foreground); }
+.paper-title { display: block; margin-top: 8px; font-weight: 720; line-height: 1.3; letter-spacing: -.012em; }
+.paper-author { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 9px; }
+.card-tag { padding: 2px 6px; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 6%, transparent); color: var(--muted); font-size: 10px; }
+.footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+@media (max-width: 1180px) { .atlas { grid-template-columns: repeat(3, minmax(220px, 1fr)); } }
+@media (max-width: 820px) {
+  .hero, .selection { grid-template-columns: 1fr; }
+  .selection-meta { padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--border); }
+  .atlas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .shell { width: min(100% - 20px, 1480px); padding-top: 14px; }
+  .hero { padding-top: 12px; }
+  .atlas { grid-template-columns: 1fr; }
+  .cluster-head { min-height: 0; }
+  .lens-controls { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; }
+  .lens-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .paper-card { transition: none; } }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="handoff">
+    <div class="stage-mark"><span class="stage-index">02</span><span>Stage Two · SOTA Results Explorer</span></div>
+    <nav aria-label="Research navigation">
+      <a href="biologically-plausible-online-learning-roadmap.html">Stage One · Reading Roadmap</a>
+      <a href="index.md">Survey frame</a>
+      <a href="paper_index.md">Shared paper registry</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="page-title">
+    <div>
+      <p class="eyebrow">Biologically plausible online learning</p>
+      <h1 id="page-title">One evidence set.<br>Six ways to see it.</h1>
+      <p class="dek">Re-cluster the same 30 retained papers by method, research question, learning regime, research function, limiting caveat, or evidence form. Select any card to open its survey record and primary source.</p>
+    </div>
+    <aside class="audit-card" aria-label="Current survey audit status">
+      <div class="audit-top">
+        <div><p class="audit-label">Coverage gate</p><p class="audit-status">Audit needs Round N</p></div>
+        <span class="status-dot" aria-hidden="true"></span>
+      </div>
+      <div class="audit-grid">
+        <div class="metric"><strong>30</strong><span>retained papers</span></div>
+        <div class="metric"><strong>35</strong><span>active cells</span></div>
+        <div class="metric"><strong>5</strong><span>weak cells</span></div>
+      </div>
+      <p class="caution">A high evidence rating marks survey value, not proof that a method is fully biologically plausible or superior to Backpropagation.</p>
+    </aside>
+  </section>
+
+  <div class="weak-strip" aria-label="Weak evidence cells">
+    <span>Weak evidence cells</span>
+    <span class="weak-chip">SQ2 · critical review</span>
+    <span class="weak-chip">SQ4 · critical review</span>
+    <span class="weak-chip">SQ7 · dataset</span>
+    <span class="weak-chip">SQ8 · survey</span>
+    <span class="weak-chip">SQ8 · dataset</span>
+  </div>
+
+  <section class="explorer" aria-labelledby="atlas-title">
+    <div class="toolbar">
+      <div class="toolbar-copy">
+        <h2 id="atlas-title">Cluster lens: <span id="active-lens-label">Method family</span></h2>
+        <p id="lens-description">Compare the five principal routes represented in the retained evidence set.</p>
+      </div>
+      <div class="lens-controls" role="group" aria-label="Cluster papers by">
+        <button class="lens-button" type="button" data-lens="route" aria-pressed="true">Method family</button>
+        <button class="lens-button" type="button" data-lens="question" aria-pressed="false">Primary question</button>
+        <button class="lens-button" type="button" data-lens="regime" aria-pressed="false">Learning regime</button>
+        <button class="lens-button" type="button" data-lens="role" aria-pressed="false">Research function</button>
+        <button class="lens-button" type="button" data-lens="caveat" aria-pressed="false">Limiting caveat</button>
+        <button class="lens-button" type="button" data-lens="evidence" aria-pressed="false">Evidence form</button>
+      </div>
+    </div>
+
+    <article id="selection" class="selection" aria-live="polite" aria-label="Selected paper review">
+      <div>
+        <div class="selection-kicker"><span class="route-swatch"></span><span id="detail-id"></span><span>·</span><span id="detail-route"></span></div>
+        <h3 id="detail-title"></h3>
+        <p class="byline" id="detail-byline"></p>
+        <p class="review-label">Survey record</p>
+        <p class="review-text" id="detail-review"></p>
+      </div>
+      <div class="selection-meta">
+        <div class="tag-list" id="detail-tags"></div>
+        <dl class="detail-grid">
+          <div class="detail-row"><dt>Regime</dt><dd id="detail-regime"></dd></div>
+          <div class="detail-row"><dt>Function</dt><dd id="detail-role"></dd></div>
+          <div class="detail-row"><dt>Key caveat</dt><dd id="detail-caveat"></dd></div>
+          <div class="detail-row"><dt>Evidence</dt><dd id="detail-evidence"></dd></div>
+          <div class="detail-row"><dt>Score</dt><dd id="detail-score"></dd></div>
+        </dl>
+        <div class="detail-actions">
+          <a id="source-link" class="action-link primary" target="_blank" rel="noreferrer">Read primary source ↗</a>
+          <a class="action-link" href="paper_index.md">Open registry</a>
+          <button id="close-detail" class="close-button" type="button">Close review</button>
+        </div>
+      </div>
+    </article>
+
+    <div id="atlas" class="atlas" aria-live="polite"></div>
+  </section>
+
+  <footer class="footer">
+    <span>Evidence cutoff: 15 July 2026 · Round 1 audit state</span>
+    <span>Positions are categorical survey classifications, not learned similarity scores.</span>
+  </footer>
+</main>
+
+<script>
+const routeColors = {
+  "Predictive coding": "var(--s1)",
+  "Spike-local": "var(--s2)",
+  "Other local credit": "var(--s3)",
+  "Stability and memory": "var(--s4)",
+  "Protocol and critique": "var(--s5)"
+};
+
+const lenses = {
+  route: {
+    label: "Method family",
+    description: "Compare the five principal routes represented in the retained evidence set.",
+    groups: [
+      ["Predictive coding", "Local inference and predictive-state updates"],
+      ["Spike-local", "Eligibility, three-factor, and temporally local SNN rules"],
+      ["Other local credit", "Feedback, target, equilibrium, and local-error routes"],
+      ["Stability and memory", "Metaplasticity, consolidation, and plasticity preservation"],
+      ["Protocol and critique", "Criteria, benchmarks, surveys, and evaluation corrections"]
+    ]
+  },
+  question: {
+    label: "Primary research question",
+    description: "Place each paper under the mechanism or protocol question it most directly anchors; cross-cutting SQ tags remain visible on every card.",
+    groups: [
+      ["SQ1 · Plausibility criteria", "Operational criteria and hidden information pathways"],
+      ["SQ2 · Predictive coding", "Online and continual predictive-coding evidence"],
+      ["SQ3 · Spike-local learning", "Local temporal and spiking learning rules"],
+      ["SQ4 · Other local credit", "Non-spiking alternatives to standard BP credit"],
+      ["SQ5 · Stability mechanisms", "Biologically motivated retention and plasticity"],
+      ["SQ7–8 · Protocol and metrics", "Streams, scenarios, benchmarks, and fair evaluation"]
+    ]
+  },
+  regime: {
+    label: "Learning regime",
+    description: "Separate causal update timing from actual continual-learning evidence and from review-only synthesis.",
+    groups: [
+      ["Continual", "Non-stationary or incremental evaluation"],
+      ["Single-pass", "Causal or batch-one primary evaluation"],
+      ["Offline-only", "Stationary, multi-epoch, or settling-based evaluation"],
+      ["Neuromorphic", "Primary hardware or event-driven evaluation"],
+      ["Cross-regime review", "Synthesis spanning multiple regimes"]
+    ]
+  },
+  role: {
+    label: "Research function",
+    description: "See what each paper contributes to the argument rather than treating every paper as a candidate algorithm.",
+    groups: [
+      ["Candidate mechanism", "A concrete rule or system that may inform implementation"],
+      ["Stability mechanism", "A retention or plasticity intervention, usually wrapped around a base learner"],
+      ["Critical test", "Negative, corrective, or boundary-setting evidence"],
+      ["Synthesis and criteria", "Field maps and biological-plausibility frameworks"],
+      ["Protocol and benchmark", "Scenario definitions, datasets, baselines, and metrics"]
+    ]
+  },
+  caveat: {
+    label: "Limiting caveat",
+    description: "Cluster by the main limitation recorded in the survey ledger, making shared hidden assumptions easier to spot.",
+    groups: [
+      ["Global credit remains", "A global loss, target, feedback signal, BP step, or outer loop remains"],
+      ["Settling or phases", "Iterative inference, equilibrium, symmetry, or phased updates constrain online use"],
+      ["Extra memory or control", "The effect cannot be attributed to a base local rule alone"],
+      ["Scale or evidence scope", "Scale, replication, benchmark scope, or physiological validation is limited"],
+      ["Not a rule comparison", "The paper maps, critiques, or benchmarks rather than testing a replacement rule"]
+    ]
+  },
+  evidence: {
+    label: "Primary evidence form",
+    description: "Group by the paper's dominant evidence contribution while preserving all active evidence-dimension tags.",
+    groups: [
+      ["Theory + experiment", "Formal mechanism plus empirical evaluation"],
+      ["Experiment", "Empirical evaluation is the dominant contribution"],
+      ["Synthesis / review", "Survey, perspective, or critical synthesis"],
+      ["Dataset / benchmark", "Stream construction or benchmark protocol"],
+      ["Theory", "Theoretical framework is the dominant contribution"]
+    ]
+  }
+};
+
+const papers = [
+  {id:"P001",title:"Biological Underpinnings for Lifelong Learning Machines",author:"Kudithipudi",venue:"Nature Machine Intelligence",year:2022,route:"Protocol and critique",question:"SQ1 · Plausibility criteria",regime:"Cross-regime review",role:"Synthesis and criteria",caveat:"Not a rule comparison",evidence:"Synthesis / review",dims:["survey","critical review"],sqs:["SQ1","SQ5","SQ6","SQ7","SQ10"],stars:3,score:"12.5",review:"Authoritative biological-mechanism map; a perspective, not head-to-head evidence.",url:"https://www.nature.com/articles/s42256-022-00452-0"},
+  {id:"P002",title:"Backpropagation and the Brain",author:"Lillicrap",venue:"Nature Reviews Neuroscience",year:2020,route:"Other local credit",question:"SQ1 · Plausibility criteria",regime:"Cross-regime review",role:"Synthesis and criteria",caveat:"Not a rule comparison",evidence:"Synthesis / review",dims:["survey","critical review"],sqs:["SQ1","SQ4","SQ6","SQ10"],stars:3,score:"11.5",review:"Canonical plausibility critique and route map; no new continual benchmark.",url:"https://www.nature.com/articles/s41583-020-0277-3"},
+  {id:"P003",title:"Continual Learning Through Synaptic Intelligence",author:"Zenke",venue:"ICML",year:2017,route:"Stability and memory",question:"SQ5 · Stability mechanisms",regime:"Continual",role:"Stability mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ5","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"10.5",review:"Online synapse-importance wrapper still relies on BP-derived global-loss gradients.",url:"https://proceedings.mlr.press/v70/zenke17a.html"},
+  {id:"P004",title:"Continual Reinforcement Learning with Complex Synapses",author:"Kaplanis",venue:"ICML",year:2018,route:"Stability and memory",question:"SQ5 · Stability mechanisms",regime:"Continual",role:"Stability mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ5","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"10.5",review:"Multiscale synapses reduce forgetting and replay in simple reinforcement learning; the base learner remains gradient-based.",url:"https://proceedings.mlr.press/v80/kaplanis18a.html"},
+  {id:"P005",title:"Synaptic Metaplasticity in Binarized Neural Networks",author:"Laborieux",venue:"Nature Communications",year:2021,route:"Stability and memory",question:"SQ5 · Stability mechanisms",regime:"Continual",role:"Stability mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ5","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"12.5",review:"Metaplasticity reduces forgetting in binarized networks; it is a biological add-on, not a BP replacement.",url:"https://www.nature.com/articles/s41467-021-22768-y"},
+  {id:"P006",title:"Bayesian Continual Learning and Forgetting in Neural Networks",author:"Bonnet",venue:"Nature Communications",year:2025,route:"Stability and memory",question:"SQ5 · Stability mechanisms",regime:"Continual",role:"Stability mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ5","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"13.5",review:"Task-boundary-free uncertainty-scaled metaplasticity; the global ANN objective remains.",url:"https://www.nature.com/articles/s41467-025-64601-w"},
+  {id:"P007",title:"Loss of Plasticity in Deep Continual Learning",author:"Dohare",venue:"Nature",year:2024,route:"Stability and memory",question:"SQ5 · Stability mechanisms",regime:"Continual",role:"Critical test",caveat:"Not a rule comparison",evidence:"Experiment",dims:["experiment"],sqs:["SQ5","SQ6","SQ7","SQ8","SQ9","SQ10"],stars:3,score:"13.5",review:"Long-horizon plasticity-loss evidence plus continual BP; continual BP is not a biologically plausible replacement.",url:"https://www.nature.com/articles/s41586-024-07711-7"},
+  {id:"P008",title:"Re-evaluating Continual Learning Scenarios",author:"Hsu",venue:"NeurIPS CL Workshop",year:2018,route:"Protocol and critique",question:"SQ7–8 · Protocol and metrics",regime:"Continual",role:"Critical test",caveat:"Not a rule comparison",evidence:"Experiment",dims:["experiment","critical review"],sqs:["SQ6","SQ7","SQ8","SQ10"],stars:3,score:"10.5",review:"Strong-baseline and scenario-taxonomy evidence; not a candidate learning rule.",url:"https://arxiv.org/abs/1810.12488"},
+  {id:"P009",title:"A Continual Learning Survey: Defying Forgetting in Classification Tasks",author:"De Lange",venue:"IEEE TPAMI",year:2022,route:"Protocol and critique",question:"SQ7–8 · Protocol and metrics",regime:"Continual",role:"Synthesis and criteria",caveat:"Not a rule comparison",evidence:"Synthesis / review",dims:["experiment","survey","critical review"],sqs:["SQ5","SQ6","SQ7","SQ8","SQ9","SQ10"],stars:3,score:"12.5",review:"Survey plus an eleven-method comparison, explicitly scoped to task-incremental classification.",url:"https://doi.org/10.1109/TPAMI.2021.3057446"},
+  {id:"P010",title:"CORe50: A New Dataset and Benchmark for Continuous Object Recognition",author:"Lomonaco",venue:"CoRL",year:2017,route:"Protocol and critique",question:"SQ7–8 · Protocol and metrics",regime:"Continual",role:"Protocol and benchmark",caveat:"Not a rule comparison",evidence:"Dataset / benchmark",dims:["experiment","dataset"],sqs:["SQ7","SQ8","SQ9"],stars:3,score:"10.5",review:"Streaming object dataset with NI, NC, and NIC protocols; benchmark evidence only.",url:"https://proceedings.mlr.press/v78/lomonaco17a.html"},
+  {id:"P011",title:"An Approximation of Error Backpropagation in a Predictive Coding Network",author:"Whittington",venue:"Neural Computation",year:2017,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Offline-only",role:"Candidate mechanism",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ2","SQ6","SQ10"],stars:3,score:"10.5",review:"Foundational local-Hebbian predictive-coding approximation to BP; offline with restrictive convergence assumptions.",url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC5467749/"},
+  {id:"P012",title:"A Theoretical Framework for Inference Learning",author:"Alonso",venue:"NeurIPS",year:2022,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Offline-only",role:"Candidate mechanism",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ2","SQ6","SQ7","SQ9"],stars:3,score:"11.5",review:"Links inference learning to implicit SGD at batch size one; this is not non-stationary continual learning.",url:"https://proceedings.neurips.cc/paper_files/paper/2022/hash/f242c4cba2467637256722cb679642bd-Abstract-Conference.html"},
+  {id:"P013",title:"On the Relationship Between Predictive Coding and Backpropagation",author:"Rosenbaum",venue:"PLOS ONE",year:2022,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Offline-only",role:"Critical test",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment","critical review"],sqs:["SQ1","SQ2","SQ6","SQ9","SQ10"],stars:3,score:"11.5",review:"Strict predictive coding generally differs from exact BP and can incur substantial iterative-settling costs.",url:"https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0266102"},
+  {id:"P014",title:"Inferring Neural Activity Before Plasticity as a Foundation for Learning Beyond Backpropagation",author:"Song",venue:"Nature Neuroscience",year:2024,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Continual",role:"Candidate mechanism",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ2","SQ7","SQ9","SQ10"],stars:3,score:"12.5",review:"Prospective configuration reports online and continual effects; several tests remain minibatch or offline.",url:"https://www.nature.com/articles/s41593-023-01514-1"},
+  {id:"P015",title:"A Stable, Fast, and Fully Automatic Learning Algorithm for Predictive Coding Networks",author:"Salvatori",venue:"ICLR",year:2024,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Offline-only",role:"Candidate mechanism",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ2","SQ6","SQ9","SQ10"],stars:3,score:"12.5",review:"Weight updates during settling improve predictive-coding speed; “incremental” names the schedule, not a continual-learning protocol.",url:"https://proceedings.iclr.cc/paper_files/paper/2024/hash/554414e570a85eb3118e988c5d77986f-Abstract-Conference.html"},
+  {id:"P016",title:"Lifelong Neural Predictive Coding: Learning Cumulatively Online Without Forgetting",author:"Ororbia",venue:"NeurIPS",year:2022,route:"Predictive coding",question:"SQ2 · Predictive coding",regime:"Continual",role:"Candidate mechanism",caveat:"Extra memory or control",evidence:"Experiment",dims:["experiment"],sqs:["SQ1","SQ2","SQ7","SQ9","SQ10"],stars:3,score:"12.5",review:"Explicit class-incremental predictive-coding-style system; context, controller, and expanding memory confound the base rule.",url:"https://proceedings.neurips.cc/paper_files/paper/2022/hash/26f5a4e26c13d1e0a47f46790c999361-Abstract-Conference.html"},
+  {id:"P017",title:"Model-Agnostic Linear-Memory Online Learning in Spiking Neural Networks",author:"Wang",venue:"Nature Communications",year:2026,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ3","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"13.5",review:"Causal linear-memory SNN gradients at scale; deep learning signals use BP/JAX vector–Jacobian products.",url:"https://doi.org/10.1038/s41467-026-68453-w"},
+  {id:"P018",title:"A Solution to the Learning Dilemma for Recurrent Networks of Spiking Neurons",author:"Bellec",venue:"Nature Communications",year:2020,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Single-pass",role:"Candidate mechanism",caveat:"Scale or evidence scope",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ3","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"10.5",review:"Causal eligibility traces with top-down signals; no task-incremental continual learning and often slower than BPTT.",url:"https://doi.org/10.1038/s41467-020-17236-y"},
+  {id:"P019",title:"Synaptic Plasticity Dynamics for Deep Continuous Local Learning",author:"Kaiser",venue:"Frontiers in Neuroscience",year:2020,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Experiment",dims:["theory","experiment"],sqs:["SQ1","SQ3","SQ6","SQ7","SQ9","SQ10"],stars:2,score:"9.5",review:"Instantaneous layer-local updates retain label losses, surrogate derivatives, and offline multi-epoch training.",url:"https://doi.org/10.3389/fnins.2020.00424"},
+  {id:"P020",title:"S-TLLR: STDP-Inspired Temporal Local Learning Rule for Spiking Neural Networks",author:"Apolinario",venue:"TMLR",year:2025,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ3","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"12.5",review:"Near-BPTT results with lower memory and MACs; full spatial locality depends on direct feedback alignment.",url:"https://openreview.net/forum?id=CNaiJRcX84"},
+  {id:"P021",title:"ETLP: Event-Based Three-Factor Local Plasticity for Online Learning",author:"Quintana",venue:"Neuromorphic Computing and Engineering",year:2024,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Neuromorphic",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ3","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"10.5",review:"Three-factor projected-label rule and hardware demonstration; the supervised target factor is globally supplied.",url:"https://doi.org/10.1088/2634-4386/ad6733"},
+  {id:"P022",title:"Online Training Through Time for Spiking Neural Networks",author:"Xiao",venue:"NeurIPS",year:2022,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ3","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"12.5",review:"Large-scale temporally online SNN training still uses spatial BP and an instantaneous global loss.",url:"https://openreview.net/forum?id=Siv3nHYHheI"},
+  {id:"P023",title:"Brain-Inspired Learning on Neuromorphic Substrates",author:"Zenke",venue:"Proceedings of the IEEE",year:2021,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Cross-regime review",role:"Synthesis and criteria",caveat:"Not a rule comparison",evidence:"Synthesis / review",dims:["theory","survey","critical review"],sqs:["SQ1","SQ3","SQ6","SQ9","SQ10"],stars:3,score:"11.5",review:"Canonical locality and memory framework for SNN rules; review evidence, not a superiority result.",url:"https://doi.org/10.1109/JPROC.2020.3045625"},
+  {id:"P024",title:"Eligibility Traces and Plasticity on Behavioral Time Scales",author:"Gerstner",venue:"Frontiers in Neural Circuits",year:2018,route:"Spike-local",question:"SQ3 · Spike-local learning",regime:"Cross-regime review",role:"Synthesis and criteria",caveat:"Scale or evidence scope",evidence:"Synthesis / review",dims:["theory","survey","critical review"],sqs:["SQ1","SQ3","SQ7","SQ10"],stars:3,score:"11.5",review:"Wet-lab support for eligibility and third-factor motifs does not validate algorithm-specific error signals.",url:"https://doi.org/10.3389/fncir.2018.00053"},
+  {id:"P025",title:"Random Synaptic Feedback Weights Support Error Backpropagation for Deep Learning",author:"Lillicrap",venue:"Nature Communications",year:2016,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ4","SQ6","SQ10"],stars:3,score:"10.5",review:"Random feedback removes exact weight transport but retains output error and a backward teaching channel.",url:"https://www.nature.com/articles/ncomms13276"},
+  {id:"P026",title:"Assessing the Scalability of Biologically Motivated Deep Learning Algorithms",author:"Bartunov",venue:"NeurIPS",year:2018,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Offline-only",role:"Critical test",caveat:"Scale or evidence scope",evidence:"Experiment",dims:["experiment","critical review"],sqs:["SQ1","SQ4","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"11.5",review:"Direct negative scalability evidence for feedback alignment, target propagation, and difference target propagation; offline and tied to 2018 architectures.",url:"https://proceedings.neurips.cc/paper_files/paper/2018/hash/63c3ddcc7b23daa1e42dc41f9a44a873-Abstract.html"},
+  {id:"P027",title:"Meta-Learning Biologically Plausible Plasticity Rules with Random Feedback Pathways",author:"Shervani-Tabar",venue:"Nature Communications",year:2023,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Single-pass",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ4","SQ6","SQ7","SQ9","SQ10"],stars:3,score:"11.5",review:"Batch-one meta-learned local rule; outer-loop global optimization and IID streams limit the claim.",url:"https://www.nature.com/articles/s41467-023-37562-1"},
+  {id:"P028",title:"Equilibrium Propagation: Bridging the Gap Between Energy-Based Models and Backpropagation",author:"Scellier",venue:"Frontiers in Computational Neuroscience",year:2017,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Offline-only",role:"Candidate mechanism",caveat:"Settling or phases",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ4","SQ6","SQ9","SQ10"],stars:2,score:"9.5",review:"Foundational two-phase local update; settling and symmetry make it temporally non-local.",url:"https://www.frontiersin.org/journals/computational-neuroscience/articles/10.3389/fncom.2017.00024/full"},
+  {id:"P029",title:"Towards Scaling Difference Target Propagation by Learning Backprop Targets",author:"Ernoult",venue:"ICML",year:2022,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Theory + experiment",dims:["theory","experiment"],sqs:["SQ1","SQ4","SQ6","SQ9","SQ10"],stars:3,score:"12.5",review:"Evidence that difference target propagation can scale in the evaluated settings; trained feedback explicitly approximates BP targets.",url:"https://proceedings.mlr.press/v162/ernoult22a.html"},
+  {id:"P030",title:"Training Neural Networks with Local Error Signals",author:"Nøkland",venue:"ICML",year:2019,route:"Other local credit",question:"SQ4 · Other local credit",regime:"Offline-only",role:"Candidate mechanism",caveat:"Global credit remains",evidence:"Experiment",dims:["experiment"],sqs:["SQ1","SQ4","SQ6","SQ9","SQ10"],stars:3,score:"11.5",review:"Layer-local losses scale, but labels are broadcast and auxiliary subnetworks still use gradients.",url:"https://proceedings.mlr.press/v97/nokland19a.html"}
+];
+
+const atlas = document.getElementById("atlas");
+const selection = document.getElementById("selection");
+let activeLens = "route";
+let selectedId = null;
+
+function paperColor(paper) { return routeColors[paper.route] || "var(--primary)"; }
+
+function makeCard(paper) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "paper-card";
+  button.dataset.paperId = paper.id;
+  button.style.setProperty("--paper-color", paperColor(paper));
+  button.setAttribute("aria-pressed", paper.id === selectedId ? "true" : "false");
+  button.setAttribute("aria-label", `${paper.id}, ${paper.title}. Open survey record.`);
+  button.innerHTML = `
+    <span class="card-top"><span>${paper.id} · ${paper.year}</span><span class="stars" aria-label="${paper.stars} star evidence rating">${"★".repeat(paper.stars)}${"☆".repeat(3-paper.stars)}</span></span>
+    <span class="paper-title">${paper.title}</span>
+    <span class="paper-author">${paper.author} · ${paper.venue}</span>
+    <span class="card-tags">${paper.sqs.slice(0,4).map(tag => `<span class="card-tag">${tag}</span>`).join("")}${paper.sqs.length > 4 ? `<span class="card-tag">+${paper.sqs.length-4}</span>` : ""}</span>`;
+  button.addEventListener("click", () => selectPaper(paper.id));
+  return button;
+}
+
+function renderAtlas() {
+  const lens = lenses[activeLens];
+  atlas.replaceChildren();
+  atlas.style.setProperty("--cluster-count", lens.groups.length);
+  lens.groups.forEach(([name, note], index) => {
+    const matches = papers.filter(paper => paper[activeLens] === name).sort((a,b) => b.year - a.year || a.id.localeCompare(b.id));
+    const section = document.createElement("section");
+    section.className = "cluster";
+    section.style.setProperty("--cluster-color", `var(--s${(index % 6) + 1})`);
+    section.setAttribute("aria-label", `${name}, ${matches.length} papers`);
+    section.innerHTML = `<header class="cluster-head"><div class="cluster-title-row"><h3 class="cluster-title">${name}</h3><span class="cluster-count">${matches.length}</span></div><p class="cluster-note">${note}</p></header><div class="paper-list"></div>`;
+    const list = section.querySelector(".paper-list");
+    matches.forEach(paper => list.appendChild(makeCard(paper)));
+    atlas.appendChild(section);
+  });
+}
+
+function selectPaper(id) {
+  const paper = papers.find(item => item.id === id);
+  if (!paper) return;
+  selectedId = id;
+  document.querySelectorAll(".paper-card").forEach(card => card.setAttribute("aria-pressed", card.dataset.paperId === id ? "true" : "false"));
+  selection.style.setProperty("--paper-color", paperColor(paper));
+  document.getElementById("detail-id").textContent = paper.id;
+  document.getElementById("detail-route").textContent = paper.route;
+  document.getElementById("detail-title").textContent = paper.title;
+  document.getElementById("detail-byline").textContent = `${paper.author} · ${paper.venue} · ${paper.year}`;
+  document.getElementById("detail-review").textContent = paper.review;
+  document.getElementById("detail-regime").textContent = paper.regime;
+  document.getElementById("detail-role").textContent = paper.role;
+  document.getElementById("detail-caveat").textContent = paper.caveat;
+  document.getElementById("detail-evidence").textContent = paper.evidence;
+  document.getElementById("detail-score").textContent = `${paper.score} weighted · ${"★".repeat(paper.stars)}`;
+  document.getElementById("detail-tags").innerHTML = [...paper.sqs, ...paper.dims].map(tag => `<span class="tag">${tag}</span>`).join("");
+  document.getElementById("source-link").href = paper.url;
+  selection.classList.add("is-open");
+  selection.scrollIntoView({behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"nearest"});
+}
+
+document.querySelectorAll(".lens-button").forEach(button => {
+  button.addEventListener("click", () => {
+    activeLens = button.dataset.lens;
+    document.querySelectorAll(".lens-button").forEach(item => item.setAttribute("aria-pressed", item === button ? "true" : "false"));
+    document.getElementById("active-lens-label").textContent = lenses[activeLens].label;
+    document.getElementById("lens-description").textContent = lenses[activeLens].description;
+    renderAtlas();
+  });
+});
+
+document.getElementById("close-detail").addEventListener("click", () => {
+  selectedId = null;
+  selection.classList.remove("is-open");
+  document.querySelectorAll(".paper-card").forEach(card => card.setAttribute("aria-pressed", "false"));
+});
+
+renderAtlas();
+</script>
+</body>
+</html>

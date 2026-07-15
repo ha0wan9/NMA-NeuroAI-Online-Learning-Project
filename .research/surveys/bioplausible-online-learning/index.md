@@ -30,6 +30,37 @@ Backpropagation. A spiking architecture alone is not counted as a learning
 rule, and a bio-inspired mechanism is not counted as biologically plausible
 without an explicit information and update pathway.
 
+## Two-stage research path
+
+1. **Stage 1 — Domain Introduction:** Researchers with a general scientific
+   background first use the
+   [interactive reading roadmap](biologically-plausible-online-learning-roadmap.html)
+   and [roadmap index](reading-roadmap-index.md) to build the problem vocabulary,
+   mechanism taxonomy, and comparison cautions needed for this project.
+2. **Stage 2 — SOTA Results Explorer:** This master survey then explores current
+   results, methods, protocols, and implementation feasibility against its fixed
+   research question and ten SOTA sub-questions. Begin with the
+   [interactive evidence atlas](sota-results-explorer.html), which re-clusters
+   the retained papers through six categorical research lenses without treating
+   visual distance as an evidence claim.
+
+Stage 1 supplies context and hands readers off to Stage 2; its separate audit
+does not change the SOTA coverage gate.
+
+### Shared evidence registry
+
+The two stages use one canonical 50-paper registry,
+[`P001`–`P050`](paper_index.md). The original SOTA IDs `P001`–`P030` remain
+stable, and 20 roadmap-only papers were appended as `P031`–`P050`. The roadmap
+proposal's `SQ1`–`SQ8` namespace and this SOTA proposal's `SQ1`–`SQ10` namespace
+remain separate; matching numbers are not equivalent. Claim provenance is in
+the shared [`claims.jsonl`](claims.jsonl), and source-ID reconciliation is in
+[`paper-id-crosswalk.md`](paper-id-crosswalk.md).
+
+Under the currently recorded evidence, the imported roadmap closes none of the
+five weak SOTA cells and does not authorize synthesis. The survey therefore
+retains status `audit-needs-roundN`.
+
 ## Scope
 
 | Dimension | In scope | Out of scope |
@@ -164,14 +195,37 @@ Exclude or demote:
 
 ## Pointers
 
-- `paper_index.md` — stable paper rows (`P001`, `P002`, ...)
-- `round1-search-log.md` — Round 1 queries, central score ledger, exclusions,
-  reserve candidates and predicted gaps
-- `claims.jsonl` — claim-level provenance contract; intentionally empty at frame
-- `coverage_matrix.md` — active sub-question × evidence-dimension skeleton
-- `survey.md` — synthesized prose, created only after audit passes
-- `audits/` — round-by-round audit reports, created when the audit phase begins
-  - `audits/audit-r1.md` — formal Round 1 coverage, concentration and bias audit
+### Stage 1 — Domain Introduction
+
+- Entry points: [roadmap index](reading-roadmap-index.md) and
+  [interactive HTML](biologically-plausible-online-learning-roadmap.html)
+- Reading artifacts: [beginner-to-frontier route](reading-roadmap.md) and
+  [roadmap survey](reading-roadmap-survey.md)
+- Coverage and search: [coverage matrix](reading-roadmap-coverage-matrix.md) and
+  [search log](reading-roadmap-search-log.md)
+- Audits: [coverage](audits/reading-roadmap-coverage-audit.md),
+  [bias](audits/reading-roadmap-bias-audit.md), and
+  [claims-adversary](audits/reading-roadmap-claims-adversary.md)
+
+### Shared registry artifacts
+
+- [Paper index](paper_index.md) — stable canonical paper rows (`P001`–`P050`)
+- [Claims ledger](claims.jsonl) — claim-level provenance across both stages
+- [Paper-ID crosswalk](paper-id-crosswalk.md) — roadmap source IDs reconciled
+  to the canonical registry
+
+### Stage 2 — SOTA Results Explorer
+
+- [Interactive evidence atlas](sota-results-explorer.html) — one-card-per-paper
+  clustering by method, primary question, learning regime, research function,
+  limiting caveat, and evidence form
+- [Round 1 search log](round1-search-log.md) — queries, central score ledger,
+  exclusions, reserve candidates, and predicted gaps
+- [Coverage matrix](coverage_matrix.md) — active SOTA sub-question ×
+  evidence-dimension coverage
+- [Round 1 audit](audits/audit-r1.md) — formal coverage, concentration, and bias
+  audit recording the five weak cells
+- `survey.md` — synthesized prose, created only after the SOTA audit passes
 
 ## Changelog
 
@@ -180,3 +234,4 @@ Exclude or demote:
 | 2026-07-15T10:49Z | Created fixed frame with 10 SQs and active evidence cells | Day 3 demand survey and literature-review gate |
 | 2026-07-15T12:23Z | Added 30 centrally deduplicated and scored Round 1 papers; advanced to `round1-done` | Broad BFS retrieval completed across all method routes; formal gap audit is next |
 | 2026-07-15T12:31Z | Audited 35 active evidence cells and 28 ★★★ papers; set `audit-needs-roundN` | Five cells are covered but source-concentrated; no global 60% bias trigger fired |
+| 2026-07-15T17:30Z | Integrated the target-adapted Stage 1 roadmap and two-stage navigation | Share the `P001`–`P050` evidence registry while preserving the five weak SOTA cells and `audit-needs-roundN` gate |

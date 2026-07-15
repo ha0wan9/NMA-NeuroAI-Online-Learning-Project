@@ -20,7 +20,7 @@ spike-local rules, other local-credit routes, and stability/protocol evidence.
 All clusters returned before central deduplication, scoring and ID assignment.
 
 The lead merged duplicate preprint/venue versions, applied the shared
-four-dimension rubric once, retained one canonical row per work, and assigned
+four-dimensional rubric once, retained one canonical row per work, and assigned
 `P001`–`P030`. Online gradient computation was not treated as evidence of
 continual learning, and an SNN architecture was not treated as a learning rule.
 
@@ -36,7 +36,7 @@ Score order is `relevance / authority / recency / evidence`; weighted score is
 | P003 | [Continual Learning Through Synaptic Intelligence](https://proceedings.mlr.press/v70/zenke17a.html) | 3/3/1/2 | 10.5 | Direct online importance mechanism; remains an add-on to gradient/BP training. |
 | P004 | [Continual Reinforcement Learning with Complex Synapses](https://proceedings.mlr.press/v80/kaplanis18a.html) | 3/3/1/2 | 10.5 | Direct multiscale-synapse evidence; simple tasks and gradient-based base learner. |
 | P005 | [Synaptic metaplasticity in binarized neural networks](https://www.nature.com/articles/s41467-021-22768-y) | 3/3/2/3 | 12.5 | Strong coded metaplasticity result; does not replace global credit assignment. |
-| P006 | [Bayesian continual learning and forgetting](https://www.nature.com/articles/s41467-025-64601-w) | 3/3/3/3 | 13.5 | Leading task-boundary-free metaplastic update with code; biological inspiration is not physiological validation. |
+| P006 | [Bayesian continual learning and forgetting](https://www.nature.com/articles/s41467-025-64601-w) | 3/3/3/3 | 13.5 | Task-boundary-free metaplastic update with available code; biological inspiration is not physiological validation. |
 | P007 | [Loss of plasticity in deep continual learning](https://www.nature.com/articles/s41586-024-07711-7) | 3/3/3/3 | 13.5 | Large, long-horizon demand evidence; its continual-BP remedy is not a plausible rule alternative. |
 | P008 | [Re-evaluating Continual Learning Scenarios](https://arxiv.org/abs/1810.12488) | 3/2/1/3 | 10.5 | Strong protocol and baseline correction; workshop status and no candidate rule. |
 | P009 | [A continual learning survey: Defying forgetting](https://doi.org/10.1109/TPAMI.2021.3057446) | 3/3/2/3 | 12.5 | Broad survey plus empirical comparison; conclusions are task-incremental. |
@@ -47,7 +47,7 @@ Score order is `relevance / authority / recency / evidence`; weighted score is
 | P014 | [Prospective configuration](https://www.nature.com/articles/s41593-023-01514-1) | 3/3/2/3 | 12.5 | Direct online/continual claims with matched models; several protocols remain minibatch or offline. |
 | P015 | [Stable, Fast PC Networks](https://proceedings.iclr.cc/paper_files/paper/2024/hash/554414e570a85eb3118e988c5d77986f-Abstract-Conference.html) | 3/3/2/3 | 12.5 | Strong feasibility advance; “incremental” means during inference, not continual learning. |
 | P016 | [Lifelong Neural Predictive Coding](https://proceedings.neurips.cc/paper_files/paper/2022/hash/26f5a4e26c13d1e0a47f46790c999361-Abstract-Conference.html) | 3/3/2/3 | 12.5 | Direct class-incremental evidence; extra controller/context/memory confounds the rule. |
-| P017 | [Linear-memory online SNN learning](https://doi.org/10.1038/s41467-026-68453-w) | 3/3/3/3 | 13.5 | Leading temporal-online scale evidence; deep learning signals are spatially backpropagated. |
+| P017 | [Linear-memory online SNN learning](https://doi.org/10.1038/s41467-026-68453-w) | 3/3/3/3 | 13.5 | Evidence of temporally online learning at scale; deep learning signals are still spatially backpropagated. |
 | P018 | [e-prop](https://doi.org/10.1038/s41467-020-17236-y) | 3/3/1/2 | 10.5 | Canonical causal eligibility-trace rule; learning signals and CL evidence remain limited. |
 | P019 | [DECOLLE](https://doi.org/10.3389/fnins.2020.00424) | 3/2/1/2 | 9.5 | Practical layer-local updates; uses label losses, surrogate derivatives and offline epochs. |
 | P020 | [S-TLLR](https://openreview.net/forum?id=CNaiJRcX84) | 3/3/2/3 | 12.5 | Near-BPTT multi-task evidence and resource accounting; full locality depends on DFA. |
@@ -59,8 +59,8 @@ Score order is `relevance / authority / recency / evidence`; weighted score is
 | P026 | [Scalability of biologically motivated algorithms](https://proceedings.neurips.cc/paper_files/paper/2018/hash/63c3ddcc7b23daa1e42dc41f9a44a873-Abstract.html) | 3/3/1/3 | 11.5 | Important negative FA/TP/DTP evidence; offline and tied to 2018 models/tuning. |
 | P027 | [Meta-learned plasticity with random feedback](https://www.nature.com/articles/s41467-023-37562-1) | 3/3/2/2 | 11.5 | Batch-one inner updates; global outer-loop meta-optimization and IID streams. |
 | P028 | [Equilibrium Propagation](https://www.frontiersin.org/journals/computational-neuroscience/articles/10.3389/fncom.2017.00024/full) | 3/3/1/1 | 9.5 | Foundational local rule; two phases, settling and symmetry weaken online plausibility. |
-| P029 | [Scaling Difference Target Propagation](https://proceedings.mlr.press/v162/ernoult22a.html) | 3/3/2/3 | 12.5 | Strong scaling evidence; learned feedback explicitly approximates BP targets. |
-| P030 | [Training with Local Error Signals](https://proceedings.mlr.press/v97/nokland19a.html) | 3/3/1/3 | 11.5 | Strong layer-local scaling evidence; labels and auxiliary gradient computations remain. |
+| P029 | [Scaling Difference Target Propagation](https://proceedings.mlr.press/v162/ernoult22a.html) | 3/3/2/3 | 12.5 | Evidence that DTP can scale in the evaluated settings; learned feedback explicitly approximates BP targets. |
+| P030 | [Training with Local Error Signals](https://proceedings.mlr.press/v97/nokland19a.html) | 3/3/1/3 | 11.5 | Evidence that layer-local losses can scale in the evaluated settings; labels are still broadcast and auxiliary gradient computations remain. |
 
 ## Retained Breadth
 
@@ -108,8 +108,8 @@ invalidating it. High-priority reserves for a targeted round are:
   (2023) critical evaluation; μPC (2025) depth scaling; BayesPCN (2022)
   sequential associative memory.
 - Spike-local: OSTL, OSTTP, FPTT and SuperSpike. They are useful for temporal
-  credit or scalability but retain spatial BP/global loss, have small evidence,
-  or overlap retained routes.
+  credit or scalability but retain spatial BP/global loss, have limited
+  supporting evidence, or overlap retained routes.
 - Other local credit: Deep Feedback Control, dendritic microcircuits,
   Continual EP and Forward-Forward. These complete mechanism routes but lack
   decisive continual evidence in the retained cap.
@@ -146,11 +146,14 @@ invalidating it. High-priority reserves for a targeted round are:
 
 ## Round 1 Handoff
 
-- `paper_index.md` now contains stable IDs `P001`–`P030`.
-- `claims.jsonl` remains empty because full-text claim extraction has not begun.
-- `coverage_matrix.md` remains `not-audited`; Round 1 may preview coverage but
-  cannot close cells.
-- Next action: run the formal coverage and bias audit, then issue narrowly
-  targeted Round N searches only for documented gaps.
+At the Round 1 handoff:
+
+- `paper_index.md` contained stable IDs `P001`–`P030`.
+- `claims.jsonl` was still empty because full-text claim extraction had not
+  begun.
+- `coverage_matrix.md` was still `not-audited`; Round 1 could preview coverage
+  but could not close cells.
+- The next planned action was the formal coverage and bias audit, followed by
+  narrowly targeted Round N searches for documented gaps.
 
 **Phase**: round1  **Survey**: bioplausible-online-learning  **Status**: round1-done  **Next**: audit

@@ -27,7 +27,8 @@ Follow the literature review in order:
    as its canonical frame.
 
 Both stages use one shared 50-paper registry: the
-[paper index](.research/surveys/bioplausible-online-learning/paper_index.md),
+[interactive paper registry](.research/surveys/bioplausible-online-learning/paper-registry.html)
+([canonical Markdown](.research/surveys/bioplausible-online-learning/paper_index.md)),
 [claim ledger](.research/surveys/bioplausible-online-learning/claims.jsonl), and
 [paper-ID crosswalk](.research/surveys/bioplausible-online-learning/paper-id-crosswalk.md).
 The introduction uses a 35-paper subset. The SOTA survey retains status

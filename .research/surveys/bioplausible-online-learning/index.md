@@ -50,7 +50,8 @@ does not change the SOTA coverage gate.
 ### Shared evidence registry
 
 The two stages use one canonical 50-paper registry,
-[`P001`–`P050`](paper_index.md). The original SOTA IDs `P001`–`P030` remain
+[`P001`–`P050`](paper-registry.html), rendered from the canonical
+[`paper_index.md`](paper_index.md). The original SOTA IDs `P001`–`P030` remain
 stable, and 20 roadmap-only papers were appended as `P031`–`P050`. The roadmap
 proposal's `SQ1`–`SQ8` namespace and this SOTA proposal's `SQ1`–`SQ10` namespace
 remain separate; matching numbers are not equivalent. Claim provenance is in
@@ -209,7 +210,9 @@ Exclude or demote:
 
 ### Shared registry artifacts
 
-- [Paper index](paper_index.md) — stable canonical paper rows (`P001`–`P050`)
+- [Interactive paper registry](paper-registry.html) — searchable rendering of
+  all stable canonical paper rows (`P001`–`P050`)
+- [Paper index](paper_index.md) — canonical Markdown source for the registry
 - [Claims ledger](claims.jsonl) — claim-level provenance across both stages
 - [Paper-ID crosswalk](paper-id-crosswalk.md) — roadmap source IDs reconciled
   to the canonical registry
@@ -235,3 +238,4 @@ Exclude or demote:
 | 2026-07-15T12:23Z | Added 30 centrally deduplicated and scored Round 1 papers; advanced to `round1-done` | Broad BFS retrieval completed across all method routes; formal gap audit is next |
 | 2026-07-15T12:31Z | Audited 35 active evidence cells and 28 ★★★ papers; set `audit-needs-roundN` | Five cells are covered but source-concentrated; no global 60% bias trigger fired |
 | 2026-07-15T17:30Z | Integrated the target-adapted Stage 1 roadmap and two-stage navigation | Share the `P001`–`P050` evidence registry while preserving the five weak SOTA cells and `audit-needs-roundN` gate |
+| 2026-07-15T18:57Z | Added a searchable HTML rendering of the shared paper registry | Make all 50 canonical records and their 22 fields browsable while retaining `paper_index.md` as the source of truth |

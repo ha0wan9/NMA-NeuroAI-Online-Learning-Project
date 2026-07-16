@@ -1,0 +1,3 @@
+[submodule "playground/predictive-coding"]
+	path = playground/predictive-coding
+	url = https://github.com/Bogacz-Group/PredictiveCoding.git

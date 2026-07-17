@@ -1,5 +1,33 @@
 # NMA NeuroAI Online Learning Project
 
+## Notebook environment
+
+All notebooks use the shared uv project environment declared in
+`pyproject.toml` and locked in `uv.lock`. Install uv for your Windows user with
+the [official installer](https://docs.astral.sh/uv/getting-started/installation/):
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Open a new terminal, then initialize the predictive-coding submodule and create
+the environment from the repository root:
+
+```bash
+git submodule update --init --recursive
+uv sync
+uv run python -m ipykernel install --user --name nma-neuroai --display-name "Python (nma-neuroai)"
+uv run jupyter lab
+```
+
+In VS Code, you can instead select `.venv\Scripts\python.exe` directly as the
+notebook kernel. The environment covers
+the imports used across `playground/*.ipynb` and
+`playground/predictive-coding/*.ipynb`. The `google.colab` import in the latter
+notebooks is guarded and is not needed for local execution. Run Jupyter from
+the repository root so `playground/continual_learning_pc.ipynb` can locate the
+checked-out predictive-coding submodule.
+
 ## Shared documentation
 
 - [Online learning](https://docs.google.com/document/d/1KPN6ZmiHvTHzIgHrToI5Lz1579pkk8hePS8xrIrLj_k/edit?tab=t.0) — team-maintained living documentation for shared project reference.

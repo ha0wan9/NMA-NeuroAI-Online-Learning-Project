@@ -1,0 +1,25 @@
+[project]
+name = "nma-neuroai-online-learning"
+version = "0.1.0"
+description = "Notebook environment for the NMA NeuroAI online learning project"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "datatops",
+    "ipykernel",
+    "ipython",
+    "ipywidgets",
+    "jupyterlab",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pip",
+    "scipy",
+    "seaborn",
+    "torch",
+    "torchvision",
+    "tqdm",
+    "vibecheck",
+]
+
+[tool.uv]
+package = false

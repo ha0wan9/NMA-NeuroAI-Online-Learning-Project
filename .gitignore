@@ -15,6 +15,9 @@ htmlcov/
 # Notebooks
 .ipynb_checkpoints/
 
+# Downloaded notebook datasets
+playground/data/
+
 # Local environments and credentials
 .env
 .env.*

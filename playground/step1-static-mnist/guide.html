@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="High-level-to-detailed guide to the Step 1 static-MNIST predictive-coding and backpropagation experiment harness.">
+  <title>Step 1 Experiment Harness — From Project Workflow to Reproducible Evidence</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17212b;
+      --muted: #596775;
+      --paper: #f8f6f0;
+      --panel: #ffffff;
+      --line: #d9ddd8;
+      --navy: #16324f;
+      --blue: #2a78d6;
+      --orange: #d96534;
+      --green: #167c5a;
+      --yellow: #f4c95d;
+      --shadow: 0 18px 45px rgba(22, 50, 79, 0.09);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(42, 120, 214, 0.10), transparent 27rem),
+        radial-gradient(circle at 95% 22%, rgba(217, 101, 52, 0.09), transparent 25rem),
+        var(--paper);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+
+    a { color: var(--blue); text-underline-offset: 0.18em; }
+    a:hover { color: var(--navy); }
+    code, pre { font-family: var(--mono); }
+    code {
+      padding: 0.12rem 0.34rem;
+      border-radius: 0.35rem;
+      background: #edf1f3;
+      font-size: 0.9em;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 1rem 0;
+      padding: 1.1rem 1.2rem;
+      color: #e9f0f6;
+      background: #122638;
+      border: 1px solid #27445c;
+      border-radius: 12px;
+      line-height: 1.5;
+    }
+    pre code { padding: 0; color: inherit; background: transparent; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(14rem, 18rem) minmax(0, 72rem);
+      gap: clamp(1.5rem, 4vw, 4.5rem);
+      width: min(96%, 96rem);
+      margin: 0 auto;
+      padding: 1.5rem 0 5rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+      max-height: calc(100vh - 3rem);
+      overflow-y: auto;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.83);
+      border: 1px solid rgba(217, 221, 216, 0.9);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    nav strong {
+      display: block;
+      margin: 0.1rem 0 0.7rem;
+      color: var(--navy);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    nav a {
+      display: block;
+      padding: 0.4rem 0.55rem;
+      color: var(--muted);
+      border-radius: 8px;
+      font-size: 0.91rem;
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--navy); background: #edf3f8; }
+
+    main { min-width: 0; }
+    header {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(2rem, 6vw, 5.2rem);
+      color: white;
+      background: linear-gradient(135deg, #102b45, #1d4f77 63%, #246fa4);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+    header::after {
+      position: absolute;
+      right: -7rem;
+      bottom: -10rem;
+      width: 24rem;
+      height: 24rem;
+      content: "";
+      background: radial-gradient(circle, rgba(244, 201, 93, 0.35), transparent 66%);
+    }
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: #b8d9ef;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 14ch;
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 5.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+    .lede {
+      max-width: 48rem;
+      margin: 1.7rem 0 0;
+      color: #e5f0f7;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.7rem; }
+    .badge {
+      padding: 0.4rem 0.72rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+      font-size: 0.84rem;
+    }
+
+    section {
+      margin-top: 2rem;
+      padding: clamp(1.4rem, 4vw, 2.6rem);
+      background: rgba(255, 255, 255, 0.91);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 30px rgba(22, 50, 79, 0.045);
+    }
+    h2 {
+      margin: 0 0 0.9rem;
+      color: var(--navy);
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+    }
+    h3 { margin: 1.6rem 0 0.5rem; color: var(--navy); }
+    p { margin: 0.7rem 0; }
+    .section-kicker {
+      margin: 0 0 0.35rem;
+      color: var(--orange);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .callout {
+      margin: 1.3rem 0;
+      padding: 1rem 1.15rem;
+      border-left: 5px solid var(--yellow);
+      border-radius: 0 12px 12px 0;
+      background: #fff9e8;
+    }
+    .callout strong { color: #5b4712; }
+    .callout.limit { border-left-color: var(--orange); background: #fff2ed; }
+    .callout.success { border-left-color: var(--green); background: #edf8f3; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+    .card {
+      padding: 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fbfcfc;
+    }
+    .card strong { display: block; margin-bottom: 0.35rem; color: var(--navy); }
+    .card p { margin: 0; color: var(--muted); font-size: 0.93rem; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0.55rem;
+      margin: 1.4rem 0;
+    }
+    .flow-step {
+      flex: 1 1 8.5rem;
+      min-height: 5rem;
+      display: grid;
+      place-items: center;
+      padding: 0.8rem;
+      text-align: center;
+      color: var(--navy);
+      background: #edf4fa;
+      border: 1px solid #cbddea;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+    .arrow { display: grid; place-items: center; color: var(--orange); font-weight: 900; }
+
+    .model {
+      display: grid;
+      grid-template-columns: repeat(7, auto);
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1.5rem 0;
+      padding: 1.4rem;
+      background: #f3f7fa;
+      border-radius: 14px;
+    }
+    .layer {
+      min-width: 5rem;
+      padding: 0.8rem;
+      color: white;
+      text-align: center;
+      background: var(--blue);
+      border-radius: 11px;
+      font-weight: 750;
+    }
+    .layer.hidden { background: var(--navy); }
+    .layer.output { background: var(--orange); }
+
+    table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; }
+    th, td { padding: 0.75rem; border-bottom: 1px solid var(--line); text-align: left; }
+    th { color: var(--navy); background: #f0f4f6; font-size: 0.88rem; }
+    td.num { font-family: var(--mono); text-align: right; }
+
+    details {
+      margin: 0.8rem 0;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #fcfdfd;
+    }
+    summary { cursor: pointer; color: var(--navy); font-weight: 750; }
+    footer { padding: 2.5rem 0 1rem; color: var(--muted); text-align: center; font-size: 0.9rem; }
+
+    @media (max-width: 880px) {
+      .shell { display: block; width: min(94%, 72rem); }
+      nav { position: static; max-height: none; margin-bottom: 1.5rem; }
+      nav .links { display: grid; grid-template-columns: repeat(2, 1fr); }
+      .model { grid-template-columns: 1fr; }
+      .model .arrow { transform: rotate(90deg); }
+    }
+
+    @media print {
+      body { background: white; }
+      .shell { display: block; width: 100%; padding: 0; }
+      nav { display: none; }
+      header, section { box-shadow: none; break-inside: avoid; }
+      header { border-radius: 0; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav aria-label="Guide navigation">
+      <strong>Guide map</strong>
+      <div class="links">
+        <a href="#big-picture">1. Big picture</a>
+        <a href="#git-workflow">2. Git workflow</a>
+        <a href="#harness">3. The harness</a>
+        <a href="#scope">4. Scientific scope</a>
+        <a href="#configuration">5. Configuration</a>
+        <a href="#methods">6. PC and BP</a>
+        <a href="#fairness">7. Fairness controls</a>
+        <a href="#artifact">8. Result artifact</a>
+        <a href="#tests">9. Tests</a>
+        <a href="#environment">10. Environment</a>
+        <a href="#dependency">11. Dependency boundary</a>
+        <a href="#manual">12. Manual workflow</a>
+        <a href="#next">13. What comes next</a>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <p class="eyebrow">NMA NeuroAI · Step 1</p>
+        <h1>From project workflow to reproducible evidence</h1>
+        <p class="lede">A high-level-first guide to the static-MNIST Predictive Coding and Backpropagation experiment harness: what it proves, how it stays fair, and how it fits into the team’s continual-learning project.</p>
+        <div class="badges" aria-label="Guide metadata">
+          <span class="badge">Protocol step1-static-mnist-v0.1</span>
+          <span class="badge">Python 3.11</span>
+          <span class="badge">CPU smoke test</span>
+          <span class="badge">Static feasibility only</span>
+        </div>
+      </header>
+
+      <section id="big-picture">
+        <p class="section-kicker">Level 1 · Orientation</p>
+        <h2>The big picture</h2>
+        <p>This contribution creates a small, reproducible scientific experiment without changing the team’s shared <code>main</code> branch directly. It asks one preliminary question:</p>
+        <div class="callout"><strong>Can Predictive Coding and Backpropagation both run successfully through the same controlled MNIST experiment pipeline?</strong></div>
+        <p>It does not answer whether Predictive Coding learns better online or forgets less. Instead, it establishes the experimental foundation required before such a comparison can be trusted.</p>
+        <div class="flow" aria-label="Project gate sequence">
+          <div class="flow-step">Literature &amp; proposal</div><div class="arrow">→</div>
+          <div class="flow-step">Reproducible baseline</div><div class="arrow">→</div>
+          <div class="flow-step">Candidate integration</div><div class="arrow">→</div>
+          <div class="flow-step">Matched evaluation</div><div class="arrow">→</div>
+          <div class="flow-step">Conclusions</div>
+        </div>
+      </section>
+
+      <section id="git-workflow">
+        <p class="section-kicker">Level 2 · Collaboration</p>
+        <h2>How the Git workflow protects the team</h2>
+        <p>The contribution lives on <code>baseline/spuler-experiments-harness</code>. Commit <code>94e029f</code> is present locally and on GitHub, while <code>main</code> remains unchanged until review.</p>
+        <div class="flow">
+          <div class="flow-step">main<br><small>accepted team state</small></div><div class="arrow">+</div>
+          <div class="flow-step">your feature commit<br><small>94e029f</small></div><div class="arrow">→</div>
+          <div class="flow-step">pull request<br><small>discussion + checks</small></div><div class="arrow">→</div>
+          <div class="flow-step">reviewed main</div>
+        </div>
+        <p>Pushing a feature branch backs up the work and makes it visible. A pull request then gives teammates a place to inspect code, discuss scientific choices, request changes, and approve the merge.</p>
+      </section>
+
+      <section id="harness">
+        <p class="section-kicker">Level 3 · System</p>
+        <h2>What an experiment harness does</h2>
+        <p>A harness is the infrastructure surrounding an experiment. It turns an idea into a repeatable procedure.</p>
+        <div class="grid">
+          <div class="card"><strong>Configuration</strong><p>Fixes model size, learning rates, sample counts, and inference steps.</p></div>
+          <div class="card"><strong>Data path</strong><p>Selects balanced examples and freezes their realized order.</p></div>
+          <div class="card"><strong>Training</strong><p>Runs PC and BP through a shared interface and loss.</p></div>
+          <div class="card"><strong>Evaluation</strong><p>Measures accuracy on a separate deterministic test subset.</p></div>
+          <div class="card"><strong>Provenance</strong><p>Records versions, commits, device, seed, and platform.</p></div>
+          <div class="card"><strong>Evidence safety</strong><p>Validates records and refuses to overwrite earlier runs.</p></div>
+        </div>
+        <div class="flow">
+          <div class="flow-step">Load fixed config</div><div class="arrow">→</div>
+          <div class="flow-step">Build deterministic subset</div><div class="arrow">→</div>
+          <div class="flow-step">Train PC &amp; BP</div><div class="arrow">→</div>
+          <div class="flow-step">Evaluate</div><div class="arrow">→</div>
+          <div class="flow-step">Write JSON evidence</div>
+        </div>
+      </section>
+
+      <section id="scope">
+        <p class="section-kicker">Scientific boundary</p>
+        <h2>Why this is called “Step 1”</h2>
+        <p>The record is deliberately labeled <code>static-feasibility-only</code>. Static MNIST is one fixed digit-classification problem; there is no sequence of changing tasks or distributions.</p>
+        <div class="grid">
+          <div class="card"><strong>Established here</strong><p>The dependency loads, both methods train, the shared path works, and a reproducible record can be created.</p></div>
+          <div class="card"><strong>Not established here</strong><p>Online learning, forgetting, robustness to shift, biological superiority, or PC outperforming BP.</p></div>
+        </div>
+        <div class="callout limit"><strong>Interpretation limit:</strong> a successful smoke record is engineering and method-feasibility evidence—not a comparative scientific result.</div>
+      </section>
+
+      <section id="configuration">
+        <p class="section-kicker">Experiment anatomy</p>
+        <h2>The smoke configuration</h2>
+        <table>
+          <thead><tr><th>Setting</th><th>Value</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Training examples</td><td class="num">1,000</td><td>Small, balanced feasibility workload</td></tr>
+            <tr><td>Test examples</td><td class="num">500</td><td>Separate deterministic evaluation subset</td></tr>
+            <tr><td>Epochs</td><td class="num">1</td><td>One pass through the selected examples</td></tr>
+            <tr><td>Batch size</td><td class="num">100</td><td>Ten parameter updates per method</td></tr>
+            <tr><td>Hidden width</td><td class="num">64</td><td>Compact two-hidden-layer network</td></tr>
+            <tr><td>PC inference steps</td><td class="num">5</td><td>Latent-state settling before each update</td></tr>
+          </tbody>
+        </table>
+        <div class="model" aria-label="Model architecture">
+          <div class="layer">784<br><small>pixels</small></div><div class="arrow">→</div>
+          <div class="layer hidden">64<br><small>hidden</small></div><div class="arrow">→</div>
+          <div class="layer hidden">64<br><small>hidden</small></div><div class="arrow">→</div>
+          <div class="layer output">10<br><small>digits</small></div>
+        </div>
+      </section>
+
+      <section id="methods">
+        <p class="section-kicker">Learning paths</p>
+        <h2>How PC and BP differ</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Backpropagation</strong>
+            <p>Forward prediction → output error → backward gradient → weight update.</p>
+          </div>
+          <div class="card">
+            <strong>Predictive Coding</strong>
+            <p>Initial prediction → repeated latent-state energy reduction → weight update.</p>
+          </div>
+        </div>
+        <p>Both methods use the same linear architecture, ReLU activations, one-hot squared-error loss, and Adam parameter optimizer at learning rate <code>0.001</code>. PC additionally uses latent-state SGD at <code>0.01</code>.</p>
+        <div class="callout limit"><strong>Compute caveat:</strong> PC performs five internal inference iterations per batch. Runtime is recorded, but this smoke test is not a compute-matched performance comparison.</div>
+      </section>
+
+      <section id="fairness">
+        <p class="section-kicker">Comparison integrity</p>
+        <h2>How fairness is enforced</h2>
+        <p>A shared nominal seed is not enough. The harness explicitly matches and verifies the consequential parts of the experiment.</p>
+        <div class="grid">
+          <div class="card"><strong>Same initialization</strong><p>The seed resets before each model is built, then all trainable parameters are hashed.</p></div>
+          <div class="card"><strong>Same examples</strong><p>The subset is deterministic and class-balanced: 100 training examples per digit.</p></div>
+          <div class="card"><strong>Same realized order</strong><p>The order is constructed once and DataLoader shuffling is disabled.</p></div>
+          <div class="card"><strong>Same evaluation</strong><p>Both methods use the same separate test identities and metric implementation.</p></div>
+        </div>
+        <p>The record validator rejects completed method runs if their stream identities or initial-parameter hashes differ. This turns fairness from an intention into a checked invariant.</p>
+      </section>
+
+      <section id="artifact">
+        <p class="section-kicker">Evidence</p>
+        <h2>What the JSON result contains</h2>
+        <p>The paired artifact at <code>results/smoke-seed-0.json</code> keeps protocol identity, configuration, both method runs, resource counters, hashes, and environment provenance together.</p>
+        <table>
+          <thead><tr><th>Method</th><th>Accuracy</th><th>Runtime</th><th>Updates</th></tr></thead>
+          <tbody>
+            <tr><td>Predictive Coding</td><td class="num">0.490</td><td class="num">32.3 s</td><td class="num">10</td></tr>
+            <tr><td>Backpropagation</td><td class="num">0.484</td><td class="num">15.3 s</td><td class="num">10</td></tr>
+          </tbody>
+        </table>
+        <div class="callout success"><strong>Reproduction check:</strong> an independent repeat matched both accuracies, the stream hashes, and the initial-parameter hash exactly.</div>
+        <h3>Why records cannot be overwritten</h3>
+        <p>Replacing an old result under the same filename can hide failures and destroy traceability. The runner therefore refuses an existing destination. Repetitions must use a fresh output directory.</p>
+      </section>
+
+      <section id="tests">
+        <p class="section-kicker">Verification</p>
+        <h2>What the six protocol tests establish</h2>
+        <ol>
+          <li>Configuration inspection works without training or loading MNIST.</li>
+          <li>The protocol is labeled static and claim-limited.</li>
+          <li>Stratified sample selection is deterministic and balanced.</li>
+          <li>PC and BP begin with matching trainable parameters.</li>
+          <li>Existing evidence cannot be overwritten.</li>
+          <li>Record validation rejects mismatched realized streams.</li>
+        </ol>
+        <p>These checks validate the experiment’s structural guarantees. They do not establish scientific generalization or method superiority.</p>
+      </section>
+
+      <section id="environment">
+        <p class="section-kicker">Reproducibility</p>
+        <h2>Why <code>uv</code> and the lockfile matter</h2>
+        <div class="flow">
+          <div class="flow-step">pyproject.toml<br><small>declares requirements</small></div><div class="arrow">→</div>
+          <div class="flow-step">uv.lock<br><small>freezes resolved versions</small></div><div class="arrow">→</div>
+          <div class="flow-step">uv sync --locked<br><small>reconstructs environment</small></div>
+        </div>
+        <p>The smoke environment is deliberately CPU-only. GPU execution is not silently enabled because CUDA versions, kernels, and hardware can materially affect reproducibility and resource comparisons.</p>
+      </section>
+
+      <section id="dependency">
+        <p class="section-kicker">Provenance and licensing</p>
+        <h2>Why Predictive Coding remains a submodule</h2>
+        <p>The team harness calls an external Predictive Coding implementation pinned at commit <code>5bf803c</code>. The upstream source is not copied into the team-owned runner.</p>
+        <div class="grid">
+          <div class="card"><strong>Stable identity</strong><p>The exact upstream commit is recorded and shared.</p></div>
+          <div class="card"><strong>Clear boundary</strong><p>Team orchestration stays separate from externally sourced algorithm code.</p></div>
+          <div class="card"><strong>Licensing caution</strong><p>No redistribution permission is inferred while the upstream repository lacks a clear license.</p></div>
+        </div>
+      </section>
+
+      <section id="manual">
+        <p class="section-kicker">Hands on</p>
+        <h2>Manual setup, testing, and execution</h2>
+        <h3>1. Reconstruct the environment</h3>
+        <pre><code>git submodule update --init --recursive
+uv sync --locked --extra cpu</code></pre>
+        <h3>2. Inspect the protocol without training</h3>
+        <pre><code>uv run --extra cpu python \
+  playground/step1-static-mnist/experiment.py --print-config</code></pre>
+        <h3>3. Run the protocol tests</h3>
+        <pre><code>uv run --extra cpu python -m unittest \
+  playground/step1-static-mnist/test_protocol.py</code></pre>
+        <h3>4. Create a fresh smoke artifact</h3>
+        <pre><code>uv run --extra cpu python \
+  playground/step1-static-mnist/experiment.py \
+  --config smoke \
+  --device cpu \
+  --methods pc bp \
+  --seeds 0 \
+  --output-dir /tmp/spuler-step1-test</code></pre>
+        <h3>5. Inspect and validate the repository</h3>
+        <pre><code>python3 -m json.tool /tmp/spuler-step1-test/smoke-seed-0.json
+python3 scripts/validate_repository.py
+git diff --check
+git status --short</code></pre>
+        <details>
+          <summary>What should I confirm in the JSON?</summary>
+          <ul>
+            <li>Top-level and method statuses are <code>completed</code>.</li>
+            <li>PC and BP have identical <code>initial_parameters_sha256</code>.</li>
+            <li>PC and BP have identical <code>stream_identity</code>.</li>
+            <li>The protocol is <code>step1-static-mnist-v0.1</code>.</li>
+            <li>The interpretation is <code>static-feasibility-only</code>.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section id="next">
+        <p class="section-kicker">Handoff</p>
+        <h2>Where the project goes next</h2>
+        <p>The feature branch is ready for a pull request into <code>main</code>. After review and merge, the team can build the causal continual-learning BP baseline on the same principles: deterministic realized streams, shared evaluation, preserved evidence, and explicit protocol identity.</p>
+        <div class="callout"><strong>Suggested pull request title:</strong> Baseline: add static MNIST experiment harness</div>
+        <p>The continual-learning protocol must still decide distribution shifts, replay policy, task-boundary access, evaluation cadence, forgetting metrics, seeds, and compute budgets before PC and BP can be compared scientifically.</p>
+      </section>
+
+      <footer>
+        NMA NeuroAI Online Learning Project · Step 1 guide · Protocol <code>step1-static-mnist-v0.1</code>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

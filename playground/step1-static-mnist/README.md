@@ -6,6 +6,10 @@ method feasibility check only. It is not an online or continual-learning
 experiment, does not test forgetting, and does not authorize a claim that one
 method outperforms the other.
 
+For a high-level-first visual explanation of the workflow, experiment design,
+fairness controls, evidence artifact, and manual commands, open the
+[standalone HTML guide](guide.html).
+
 ## Provenance and dependency boundary
 
 The team-owned runner adapts experiment-orchestration ideas developed in the

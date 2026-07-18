@@ -1,0 +1,20 @@
+flowchart TD
+    study["pc-relaxation-plasticity\ninconclusive for default"]
+    H1["H1: relaxation depth\ntrade-off supported"]
+    H1E1["H1.E1: static MNIST\npass"]
+    H1E2["H1.E2: SplitMNIST\npass"]
+    H1E3["H1.E3: Permuted MNIST\ninconclusive"]
+    RS["R-static: T≥5 saturation"]
+    RSP["R-split: stability–plasticity trade-off"]
+    RP["R-permuted: T=10 finite-grid candidate"]
+    D["D-no-default: no setting promoted"]
+    study -->|tests| H1
+    H1 -->|tests| H1E1
+    H1 -->|tests| H1E2
+    H1 -->|tests| H1E3
+    H1E1 -->|supports| RS
+    H1E2 -->|supports| RSP
+    H1E3 -->|supports| RP
+    RS -->|supports| D
+    RSP -->|supports| D
+    RP -->|supports| D

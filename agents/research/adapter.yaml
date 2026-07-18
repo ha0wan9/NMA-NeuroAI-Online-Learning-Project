@@ -1,0 +1,42 @@
+adapter_version: 1
+instantiated_from: dl-research/templates/adapter.yaml
+owner: project team
+created_utc: 2026-07-17T21:53:49Z
+last_reviewed_utc: 2026-07-17T23:45:00Z
+status: ready
+
+research_root_pattern: agents/research/<study-id>/
+branch_pattern: codex/<study-id>
+run_name_pattern: <study-id>-<HnEn>-<experiment-name>
+
+config_backend: Python dataclasses with argparse overrides
+execution_backend: CyberEngine ROCm GPU through SSH and rootless Podman
+launch_command: study-specific CyberEngine wrapper recorded in each study index
+metric_parser: study-specific deterministic parser recorded in each study index
+primary_metric: final accuracy by evaluation scenario
+metric_direction: maximize
+tracking_backend: agents/research/<study-id>/runs.jsonl
+artifact_backend: playground/step1-static-mnist/runs/ and agents/research/<study-id>/artifacts/
+data_version_source: torchvision MNIST with deterministic split_seed=20260717 and recorded stream checksums
+
+editable_surface:
+  - playground/step1-static-mnist/
+  - agents/research/<study-id>/
+
+protected_files:
+  - playground/step1-static-mnist/experiment.py evaluation and data-split functions
+  - playground/step1-static-mnist/continual_experiment.py evaluation, stream, and metric functions
+  - seed set, optimizer settings, architecture, data split, stream order, and test cadence
+
+budget: each study must declare a CyberEngine GPU-hour ceiling before launch
+stop_policy: preserve failures; stop on non-finite metrics, checksum mismatch, unavailable GPU, or 6-hour limit; retry once only for external infrastructure failure
+seed_policy: paired seeds 7, 42, and 123 for every condition
+
+graph_backend:
+  mermaid: research_graph.mmd
+  json: research_graph.json
+  json_schema: dl-research/templates/research-graph.schema.json
+
+baseline_source: study-specific matched BP control recorded in the raw artifact
+reporting_target: agents/research/<study-id>/05-synthesis.md
+remote_constraints: local tree is canonical; remote rootless Podman image localhost/nma-neuroai-step1-rocm:7.2.1; GPU is required

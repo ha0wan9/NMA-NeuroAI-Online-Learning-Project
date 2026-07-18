@@ -1,0 +1,6 @@
+FROM docker.io/rocm/pytorch:rocm7.2.1_ubuntu24.04_py3.12_pytorch_release_2.9.1
+
+RUN python3 -m pip install --no-cache-dir seaborn==0.13.2
+
+LABEL org.opencontainers.image.title="NMA NeuroAI Step 1 ROCm runtime"
+LABEL org.opencontainers.image.description="AMD ROCm PyTorch runtime plus the pinned PC library's plotting dependency"

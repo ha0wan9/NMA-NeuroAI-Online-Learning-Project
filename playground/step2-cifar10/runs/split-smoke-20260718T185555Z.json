@@ -1,0 +1,821 @@
+{
+  "protocol_id": "split-cifar10-paper-pc-extension-v1",
+  "claim_status": "project extension; not part of Song et al. Figure 4i",
+  "created_at": "2026-07-18T18:56:04.209182+00:00",
+  "protocol": {
+    "seeds": [
+      42
+    ],
+    "methods": [
+      "bp",
+      "pc"
+    ],
+    "tasks": 5,
+    "epochs_per_task": 1,
+    "batch_size": 200,
+    "pc_steps": 16,
+    "pc_state_lr": 0.5,
+    "bp_lr": 7.5e-05,
+    "pc_lr": 2.5e-05,
+    "validation_fraction": 0.1,
+    "split_seed": 20260717,
+    "max_train_samples_per_task": 40,
+    "max_eval_samples_per_task": 40,
+    "data_root": "data",
+    "device": "cuda"
+  },
+  "regime_notes": {
+    "regime": "class-incremental, five disjoint class pairs, shared ten-way head",
+    "stream": "one pass per task, predict before update, no replay or future access",
+    "task_information": "boundaries used by evaluator but not passed to either model",
+    "learning_rates": "fixed before launch from paper source-data cross-seed means; SplitCIFAR test data was not used for tuning",
+    "updates": "paper learning-rule semantics retained: T=16 and parameter updates at every inference step for both RBP and PC"
+  },
+  "base_split_checksums": {
+    "train": "794f0421f60f3b88f32395db0f11da80b88d32f05c13a11d4c7f7d12816ea529",
+    "validation": "a4e249c15621124f607429c78961056d32ac2c5bef3cc2e324df746c14938a45"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.19.14-200.fc43.x86_64-x86_64-with-glibc2.39",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "torchvision": "0.24.0+rocm7.2.1.gitb919bd0c",
+    "numpy": "2.4.4",
+    "device": "cuda",
+    "device_name": "AMD Radeon Graphics",
+    "execution_host": "cyberengine",
+    "runtime_image": "localhost/nma-neuroai-step1-rocm:7.2.1",
+    "runtime_image_id": "237054ff517b7a110e24afca9bd2df843c277ca5967758f283c3ec0cfafa3e51",
+    "paper_source_revision": "625d52678b3d4cab2dbc403b1d6ee0cfc004aea0",
+    "pc_submodule_revision": "5bf803c3636a39928488941f05539c70ab4df0b1"
+  },
+  "seed_results": [
+    {
+      "seed": 42,
+      "task_specs": [
+        {
+          "task_id": 0,
+          "classes": [
+            0,
+            1
+          ],
+          "train_samples": 40,
+          "validation_samples": 40,
+          "test_samples": 40,
+          "stream_checksum": "b0dc39bd6e99fc6e6dd3367c05219c9661cadad21fdc5c128d0c325f7e3b1f81",
+          "validation_checksum": "f6bb02610530b2ecf84672c22237dde409fc888cd578db8b18f0becc2327d539",
+          "test_checksum": "91bafd9e1ed2ced601f9b42a338b2c6edd54d42c6c99dc7d39c385f5f226bc90"
+        },
+        {
+          "task_id": 1,
+          "classes": [
+            2,
+            3
+          ],
+          "train_samples": 40,
+          "validation_samples": 40,
+          "test_samples": 40,
+          "stream_checksum": "a833d21ab196d21e8766f066939da0164fc80870937ad05ca0b5de867d491649",
+          "validation_checksum": "8fc459c4820c5d88e8981c9e2ee67d86cd9243917d4085edc70eefcb5b1c303b",
+          "test_checksum": "0b464e3cc10645eaf8da5e9e9e137dd2256c49e80d12131b8308e8b44673ea0e"
+        },
+        {
+          "task_id": 2,
+          "classes": [
+            4,
+            5
+          ],
+          "train_samples": 40,
+          "validation_samples": 40,
+          "test_samples": 40,
+          "stream_checksum": "21230c2c65942e42fae62a10d1cccc0f6e1b2c27dfcd2e723cb7c17f688de43e",
+          "validation_checksum": "6ce0ac438a27659cb3dab097326319479dbfd62a9108676682e31c473252ae3c",
+          "test_checksum": "cbb8d6b385848715a832773fdb4b3bacdcaeea06c3248bd7896c613b76feebda"
+        },
+        {
+          "task_id": 3,
+          "classes": [
+            6,
+            7
+          ],
+          "train_samples": 40,
+          "validation_samples": 40,
+          "test_samples": 40,
+          "stream_checksum": "57ae940ecab6475a0fd04e324c16843b76d3fa48c13a4dc823cdd6fab2554232",
+          "validation_checksum": "e4617d9aa9e06a6df6074801e60382859161874e8770c6c42507f5be07ebe78a",
+          "test_checksum": "f6dfbbafdadd2cc09e236aeac10fdd28f30ce7f65391b06c5f6b38123a9625bc"
+        },
+        {
+          "task_id": 4,
+          "classes": [
+            8,
+            9
+          ],
+          "train_samples": 40,
+          "validation_samples": 40,
+          "test_samples": 40,
+          "stream_checksum": "8ee2265b0c87b72ca4bc56c9998fe5d282a4a77d0585171a90f51b0dac4b42da",
+          "validation_checksum": "5c8e0cc53ed143c8c6d2501e68026256d0b83585f8c96849dd4b178e1b31f6bb",
+          "test_checksum": "11098ed645a55ebe7bba55f22358b21ab7082f4dee43104c5c7d90d2120d17eb"
+        }
+      ],
+      "runs": [
+        {
+          "method": "bp",
+          "seed": 42,
+          "parameter_lr": 7.5e-05,
+          "test_accuracy_matrix": [
+            [
+              0.175,
+              0.0,
+              0.325,
+              0.05,
+              0.025
+            ],
+            [
+              0.675,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.6,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.45,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.4,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.6,
+              0.125
+            ]
+          ],
+          "validation_accuracy_matrix": [
+            [
+              0.15,
+              0.0,
+              0.6,
+              0.0,
+              0.1
+            ],
+            [
+              0.575,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.625,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.35,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.475,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.55,
+              0.2
+            ]
+          ],
+          "metrics": {
+            "final_average_accuracy": 0.145,
+            "prequential_accuracy": 0.01,
+            "backward_transfer": -0.28125,
+            "average_forgetting": 0.43125,
+            "mean_adaptation_gain": 0.335,
+            "adaptation_gain_by_task": [
+              0.5,
+              0.6,
+              0.45,
+              0.0,
+              0.125
+            ],
+            "final_accuracy_by_task": [
+              0.0,
+              0.0,
+              0.0,
+              0.6,
+              0.125
+            ],
+            "post_training_accuracy_by_task": [
+              0.675,
+              0.6,
+              0.45,
+              0.0,
+              0.125
+            ],
+            "prequential_accuracy_by_task": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "samples_seen": 200,
+          "stream_processing_seconds": 1.1862688180117402,
+          "evaluation_seconds": 2.609852724985103,
+          "learned_parameter_count": 4275402,
+          "final_latent_state_elements": 0,
+          "peak_latent_state_elements": 0,
+          "pc_first_batch_dynamics_by_task": null,
+          "peak_accelerator_memory_bytes": 199263232,
+          "initial_parameter_checksum": "5360b2acc1f117ab2cd4fa5ed744735dbef3568ee6d34cfa9a73d357cc4d2112"
+        },
+        {
+          "method": "pc",
+          "seed": 42,
+          "parameter_lr": 2.5e-05,
+          "test_accuracy_matrix": [
+            [
+              0.175,
+              0.0,
+              0.325,
+              0.05,
+              0.025
+            ],
+            [
+              0.675,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.125,
+              0.45,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.625,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.4,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.025,
+              0.575
+            ]
+          ],
+          "validation_accuracy_matrix": [
+            [
+              0.15,
+              0.0,
+              0.6,
+              0.0,
+              0.1
+            ],
+            [
+              0.575,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.05,
+              0.375,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.55,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.45,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.55
+            ]
+          ],
+          "metrics": {
+            "final_average_accuracy": 0.12,
+            "prequential_accuracy": 0.01,
+            "backward_transfer": -0.53125,
+            "average_forgetting": 0.53125,
+            "mean_adaptation_gain": 0.51,
+            "adaptation_gain_by_task": [
+              0.5,
+              0.45,
+              0.625,
+              0.4,
+              0.575
+            ],
+            "final_accuracy_by_task": [
+              0.0,
+              0.0,
+              0.0,
+              0.025,
+              0.575
+            ],
+            "post_training_accuracy_by_task": [
+              0.675,
+              0.45,
+              0.625,
+              0.4,
+              0.575
+            ],
+            "prequential_accuracy_by_task": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "samples_seen": 200,
+          "stream_processing_seconds": 0.4012781129858922,
+          "evaluation_seconds": 0.12708931502129417,
+          "learned_parameter_count": 4275402,
+          "final_latent_state_elements": 1003520,
+          "peak_latent_state_elements": 1003520,
+          "pc_first_batch_dynamics_by_task": [
+            {
+              "task_id": 0,
+              "loss": [
+                19.322643280029297,
+                16.55715560913086,
+                15.632455825805664,
+                14.835478782653809,
+                14.165386199951172,
+                13.575492858886719,
+                13.039665222167969,
+                12.545950889587402,
+                12.080442428588867,
+                11.655340194702148,
+                11.255805015563965,
+                10.875429153442383,
+                10.514001846313477,
+                10.178059577941895,
+                9.851125717163086,
+                9.539793014526367
+              ],
+              "energy": [
+                0.0,
+                0.7841485142707825,
+                1.1972310543060303,
+                1.1145298480987549,
+                1.1355634927749634,
+                1.1250029802322388,
+                1.134963035583496,
+                1.1371495723724365,
+                1.1413350105285645,
+                1.127495527267456,
+                1.1216546297073364,
+                1.1133739948272705,
+                1.1102514266967773,
+                1.0956116914749146,
+                1.0926833152770996,
+                1.0874720811843872
+              ],
+              "overall": [
+                19.322643280029297,
+                17.341304779052734,
+                16.829687118530273,
+                15.950008392333984,
+                15.300950050354004,
+                14.700495719909668,
+                14.174628257751465,
+                13.683100700378418,
+                13.221776962280273,
+                12.782835960388184,
+                12.377459526062012,
+                11.988802909851074,
+                11.624253273010254,
+                11.27367115020752,
+                10.943809509277344,
+                10.627264976501465
+              ],
+              "overall_decreased": true
+            },
+            {
+              "task_id": 1,
+              "loss": [
+                23.469696044921875,
+                20.198856353759766,
+                19.098072052001953,
+                18.398284912109375,
+                17.80267333984375,
+                17.23880958557129,
+                16.661853790283203,
+                16.09128189086914,
+                15.521110534667969,
+                14.970170974731445,
+                14.418439865112305,
+                13.90340805053711,
+                13.39126205444336,
+                12.914051055908203,
+                12.457505226135254,
+                12.025938987731934
+              ],
+              "energy": [
+                0.0,
+                1.0248591899871826,
+                1.4073199033737183,
+                1.590742826461792,
+                1.6379278898239136,
+                1.635852575302124,
+                1.6132060289382935,
+                1.5760431289672852,
+                1.5405197143554688,
+                1.4992023706436157,
+                1.471541166305542,
+                1.4351997375488281,
+                1.4054219722747803,
+                1.3788528442382812,
+                1.3583699464797974,
+                1.3363009691238403
+              ],
+              "overall": [
+                23.469696044921875,
+                21.22371482849121,
+                20.50539207458496,
+                19.98902702331543,
+                19.440601348876953,
+                18.874662399291992,
+                18.275060653686523,
+                17.66732406616211,
+                17.061630249023438,
+                16.46937370300293,
+                15.889981269836426,
+                15.338607788085938,
+                14.796684265136719,
+                14.292903900146484,
+                13.815875053405762,
+                13.362239837646484
+              ],
+              "overall_decreased": true
+            },
+            {
+              "task_id": 2,
+              "loss": [
+                22.033123016357422,
+                18.935565948486328,
+                17.831626892089844,
+                17.119688034057617,
+                16.506397247314453,
+                15.890562057495117,
+                15.266143798828125,
+                14.649195671081543,
+                14.038270950317383,
+                13.460540771484375,
+                12.894771575927734,
+                12.381216049194336,
+                11.88542366027832,
+                11.422842979431152,
+                10.995691299438477,
+                10.596160888671875
+              ],
+              "energy": [
+                0.0,
+                0.97084641456604,
+                1.3537344932556152,
+                1.499345064163208,
+                1.5152435302734375,
+                1.5010215044021606,
+                1.4683915376663208,
+                1.4354944229125977,
+                1.4046127796173096,
+                1.3708140850067139,
+                1.3533623218536377,
+                1.3268626928329468,
+                1.3064693212509155,
+                1.2945952415466309,
+                1.2795543670654297,
+                1.2653530836105347
+              ],
+              "overall": [
+                22.033123016357422,
+                19.90641212463379,
+                19.185361862182617,
+                18.619033813476562,
+                18.02164077758789,
+                17.391584396362305,
+                16.734535217285156,
+                16.08469009399414,
+                15.442883491516113,
+                14.831355094909668,
+                14.248133659362793,
+                13.708078384399414,
+                13.191892623901367,
+                12.717437744140625,
+                12.275245666503906,
+                11.8615140914917
+              ],
+              "overall_decreased": true
+            },
+            {
+              "task_id": 3,
+              "loss": [
+                22.4614315032959,
+                19.190208435058594,
+                18.1265926361084,
+                17.471633911132812,
+                16.918685913085938,
+                16.376174926757812,
+                15.823760032653809,
+                15.253154754638672,
+                14.683553695678711,
+                14.112380981445312,
+                13.565628051757812,
+                13.03939437866211,
+                12.529199600219727,
+                12.047830581665039,
+                11.601898193359375,
+                11.183988571166992
+              ],
+              "energy": [
+                0.0,
+                1.023327112197876,
+                1.4224693775177002,
+                1.575573444366455,
+                1.572471261024475,
+                1.5418193340301514,
+                1.4832794666290283,
+                1.4344686269760132,
+                1.3806017637252808,
+                1.3453985452651978,
+                1.3026245832443237,
+                1.2684563398361206,
+                1.2366225719451904,
+                1.2124238014221191,
+                1.1900614500045776,
+                1.1692495346069336
+              ],
+              "overall": [
+                22.4614315032959,
+                20.21353530883789,
+                19.549062728881836,
+                19.04720687866211,
+                18.49115753173828,
+                17.917993545532227,
+                17.307039260864258,
+                16.687623977661133,
+                16.06415557861328,
+                15.457779884338379,
+                14.868252754211426,
+                14.30785083770752,
+                13.765822410583496,
+                13.26025390625,
+                12.791959762573242,
+                12.353238105773926
+              ],
+              "overall_decreased": true
+            },
+            {
+              "task_id": 4,
+              "loss": [
+                23.746414184570312,
+                20.209287643432617,
+                18.98077392578125,
+                18.175201416015625,
+                17.469764709472656,
+                16.763580322265625,
+                16.042438507080078,
+                15.324706077575684,
+                14.619401931762695,
+                13.962077140808105,
+                13.320972442626953,
+                12.71703052520752,
+                12.148744583129883,
+                11.6283597946167,
+                11.149120330810547,
+                10.70242691040039
+              ],
+              "energy": [
+                0.0,
+                1.113837480545044,
+                1.5191441774368286,
+                1.6535203456878662,
+                1.6341789960861206,
+                1.5904574394226074,
+                1.527339220046997,
+                1.4707794189453125,
+                1.4249986410140991,
+                1.3747869729995728,
+                1.3397321701049805,
+                1.3073874711990356,
+                1.2847992181777954,
+                1.2613288164138794,
+                1.2454744577407837,
+                1.2295199632644653
+              ],
+              "overall": [
+                23.746414184570312,
+                21.3231258392334,
+                20.49991798400879,
+                19.82872200012207,
+                19.10394287109375,
+                18.35403823852539,
+                17.569778442382812,
+                16.795486450195312,
+                16.044401168823242,
+                15.336864471435547,
+                14.660704612731934,
+                14.024417877197266,
+                13.433544158935547,
+                12.889688491821289,
+                12.3945951461792,
+                11.931946754455566
+              ],
+              "overall_decreased": true
+            }
+          ],
+          "peak_accelerator_memory_bytes": 242546688,
+          "initial_parameter_checksum": "5360b2acc1f117ab2cd4fa5ed744735dbef3568ee6d34cfa9a73d357cc4d2112"
+        }
+      ],
+      "pc_minus_bp": {
+        "final_average_accuracy": -0.024999999999999994,
+        "prequential_accuracy": 0.0,
+        "backward_transfer": -0.25,
+        "average_forgetting": 0.09999999999999998,
+        "mean_adaptation_gain": 0.175,
+        "stream_processing_ratio": 0.3382691232316627
+      }
+    }
+  ],
+  "aggregate_results": {
+    "methods": {
+      "bp": {
+        "final_average_accuracy": {
+          "values": [
+            0.145
+          ],
+          "mean": 0.145,
+          "sample_std": null
+        },
+        "prequential_accuracy": {
+          "values": [
+            0.01
+          ],
+          "mean": 0.01,
+          "sample_std": null
+        },
+        "backward_transfer": {
+          "values": [
+            -0.28125
+          ],
+          "mean": -0.28125,
+          "sample_std": null
+        },
+        "average_forgetting": {
+          "values": [
+            0.43125
+          ],
+          "mean": 0.43125,
+          "sample_std": null
+        },
+        "mean_adaptation_gain": {
+          "values": [
+            0.335
+          ],
+          "mean": 0.335,
+          "sample_std": null
+        }
+      },
+      "pc": {
+        "final_average_accuracy": {
+          "values": [
+            0.12
+          ],
+          "mean": 0.12,
+          "sample_std": null
+        },
+        "prequential_accuracy": {
+          "values": [
+            0.01
+          ],
+          "mean": 0.01,
+          "sample_std": null
+        },
+        "backward_transfer": {
+          "values": [
+            -0.53125
+          ],
+          "mean": -0.53125,
+          "sample_std": null
+        },
+        "average_forgetting": {
+          "values": [
+            0.53125
+          ],
+          "mean": 0.53125,
+          "sample_std": null
+        },
+        "mean_adaptation_gain": {
+          "values": [
+            0.51
+          ],
+          "mean": 0.51,
+          "sample_std": null
+        }
+      }
+    },
+    "pc_minus_bp": {
+      "final_average_accuracy": {
+        "values": [
+          -0.024999999999999994
+        ],
+        "mean": -0.024999999999999994,
+        "sample_std": null
+      },
+      "prequential_accuracy": {
+        "values": [
+          0.0
+        ],
+        "mean": 0.0,
+        "sample_std": null
+      },
+      "backward_transfer": {
+        "values": [
+          -0.25
+        ],
+        "mean": -0.25,
+        "sample_std": null
+      },
+      "average_forgetting": {
+        "values": [
+          0.09999999999999998
+        ],
+        "mean": 0.09999999999999998,
+        "sample_std": null
+      },
+      "mean_adaptation_gain": {
+        "values": [
+          0.175
+        ],
+        "mean": 0.175,
+        "sample_std": null
+      },
+      "stream_processing_ratio": {
+        "values": [
+          0.3382691232316627
+        ],
+        "mean": 0.3382691232316627,
+        "sample_std": null
+      }
+    }
+  }
+}

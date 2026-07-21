@@ -69,11 +69,18 @@ line-ending-normalized comparisons for CSV.
 
 ## Planned reproduction gate
 
-After the combined revision is committed and clean, reproduce
-`continual-mnist-pc-bp-v1` on CyberEngine with both scenarios, BP and PC,
-seeds `7/42/123`, and PC `T=20`. This deliberately reproduces the archived
-reference; it does not replace the later, separate interpretation that `T=5`
-is the cheapest effective tested setting.
+The imported CyberEngine launcher targets a contributor-specific SSH alias that
+is not available on the integration workstation. The workstation instead uses
+an NVIDIA RTX 4090 with driver 560.35.03 and the locked PyTorch 2.10 CUDA 12.6
+environment. `scripts/run-local-gpu.sh` requires CUDA, records source identity,
+and does not silently fall back to CPU.
+
+After the local-GPU adaptation is committed and clean, reproduce
+`continual-mnist-pc-bp-v1` with both scenarios, BP and PC, seeds `7/42/123`,
+and PC `T=20`. This deliberately reproduces the archived reference; it does
+not replace the later, separate interpretation that `T=5` is the cheapest
+effective tested setting. Exact runtime and memory agreement with the archived
+ROCm execution is not expected and remains outside the reproduction gate.
 
 Acceptance requires matching protocol fields, stream and initialization
 checksums, model/state counts, accuracy matrices, and derived non-timing

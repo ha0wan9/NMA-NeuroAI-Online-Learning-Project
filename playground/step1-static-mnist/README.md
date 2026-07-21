@@ -64,6 +64,17 @@ uv run --extra cpu python \
   playground/step1-static-mnist/experiment.py --print-config
 ```
 
+For the local NVIDIA GPU, use the locked CUDA 12.6 environment and provenance
+launcher:
+
+```bash
+uv sync --locked --extra cuda
+bash scripts/run-local-gpu.sh \
+  playground/step1-static-mnist/continual_experiment.py \
+  --scenarios split permuted --seeds 7 42 123 \
+  --output playground/step1-static-mnist/runs/continual-local.json
+```
+
 The NMA repository licenses software under BSD-3-Clause and educational
 content under CC BY 4.0. The pinned PredictiveCoding upstream did not include a
 license file when added here, so this harness imports the submodule and does

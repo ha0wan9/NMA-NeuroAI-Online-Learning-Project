@@ -12,6 +12,9 @@
 
 This two-week research project studies biologically plausible learning rules for online and continual learning. The current workflow moves from brainstorming to literature review, proposal, reproducible baselines, implementation of one or two candidate rules, fixed-protocol evaluation, and evidence-linked synthesis. Established results, interpretations, working hypotheses, and speculation should be labeled distinctly.
 
+- [Research project proposal](research-project-proposal.md) — the complete living proposal, canonical Q1–Q3, current evidence mapping, and refinement backlog.
+- [Learning Without Letting Go · Continual-Learning Atlas](.research/learning-without-letting-go.html) — project-level proposal mapping, model diagrams, protocols, achieved and non-achieved results, learning curves, audit boundaries, and Q1–Q3 refinements.
+
 ## Literature Review
 
 Follow the literature review in order:

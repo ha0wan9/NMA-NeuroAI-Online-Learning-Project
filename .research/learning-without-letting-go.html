@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Learning Without Letting Go · Continual-Learning Atlas</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f6f8fb, #0c1118);
+  --panel: light-dark(#ffffff, #151c25);
+  --panel-2: light-dark(#edf2f7, #1c2632);
+  --text: light-dark(#17202a, #edf3f8);
+  --muted: light-dark(#607080, #9aa9b8);
+  --border: light-dark(#d8e0e8, #2c3947);
+  --grid: light-dark(#dce4ec, #2a3744);
+  --blue: light-dark(#1677c8, #55b7ff);
+  --orange: light-dark(#cc6f1d, #ffa45d);
+  --green: light-dark(#23884d, #55d783);
+  --red: light-dark(#c43d45, #ff7278);
+  --purple: light-dark(#7755ba, #b69aff);
+  --teal: light-dark(#147f80, #54cccc);
+  --shadow: 0 10px 32px light-dark(rgb(30 55 80 / 8%), rgb(0 0 0 / 26%));
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; color: var(--text); background: var(--bg); font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color: var(--blue); text-underline-offset: 3px; }
+button { font: inherit; }
+button:focus-visible, a:focus-visible { outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent); outline-offset: 2px; }
+.top { position: sticky; top: 0; z-index: 20; padding: 10px 20px; background: color-mix(in srgb, var(--panel) 94%, transparent); border-bottom: 1px solid var(--border); backdrop-filter: blur(14px); }
+.top-row { max-width: 1480px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.brand span { color: var(--blue); }
+.phase-flow { max-width: 1480px; margin: 9px auto 0; display: flex; align-items: center; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
+.phase-link { flex: 1 0 auto; min-width: 104px; padding: 5px 9px; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); background: var(--panel-2); text-decoration: none; text-align: center; font-size: 11px; }
+.phase-link.done { color: var(--green); border-color: color-mix(in srgb, var(--green) 35%, var(--border)); }
+.phase-link.partial { color: var(--orange); border-color: color-mix(in srgb, var(--orange) 38%, var(--border)); }
+.phase-link.active { color: var(--panel); background: var(--blue); border-color: var(--blue); }
+.theme { border: 1px solid var(--border); border-radius: 7px; padding: 5px 10px; color: var(--text); background: var(--panel-2); cursor: pointer; }
+.shell { width: min(1480px, calc(100% - 32px)); margin: auto; padding: 34px 0 64px; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, .6fr); align-items: end; gap: 30px; padding: 18px 0 34px; }
+.eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height: .98; letter-spacing: -.055em; }
+.dek { max-width: 850px; margin: 18px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
+.status-panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
+.status-panel h2 { margin: 0; font-size: 16px; }
+.status-panel p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+.status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 16px; }
+.status-grid div { padding-top: 10px; border-top: 1px solid var(--border); }
+.status-grid strong { display: block; font-size: 22px; }
+.status-grid span { color: var(--muted); font-size: 11px; }
+.section { scroll-margin-top: 105px; padding: 34px 0; border-top: 1px solid var(--border); }
+.section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 20px; }
+.section-head h2 { margin: 0; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.035em; }
+.section-head p { max-width: 620px; margin: 0; color: var(--muted); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.pill.ok { color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); }
+.pill.warn { color: var(--orange); background: color-mix(in srgb, var(--orange) 12%, transparent); }
+.pill.fail { color: var(--red); background: color-mix(in srgb, var(--red) 12%, transparent); }
+.pill.info { color: var(--blue); background: color-mix(in srgb, var(--blue) 12%, transparent); }
+.step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.step { min-height: 160px; padding: 17px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.step-num { color: var(--muted); font-size: 11px; letter-spacing: .08em; }
+.step h3 { margin: 8px 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--muted); font-size: 13px; }
+.step .pill { margin-top: 13px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+.tab { border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; color: var(--text); background: var(--panel); cursor: pointer; }
+.tab[aria-pressed="true"] { color: var(--panel); border-color: var(--blue); background: var(--blue); }
+.model-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .5fr); gap: 16px; }
+.viz, .info-panel { border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.viz { padding: 12px; min-height: 320px; overflow: hidden; }
+.info-panel { padding: 18px; }
+.info-panel h3 { margin: 0 0 12px; }
+.setting-list { display: grid; gap: 0; margin: 0; }
+.setting-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--border); }
+.setting-row:first-child { border-top: 0; }
+.setting-row dt { color: var(--muted); }
+.setting-row dd { margin: 0; }
+.model-svg { width: 100%; height: auto; min-height: 300px; }
+.model-svg text { fill: var(--text); font-family: inherit; }
+.node { fill: var(--panel-2); stroke: var(--border); stroke-width: 1.5; }
+.node.pc { fill: color-mix(in srgb, var(--orange) 15%, var(--panel)); stroke: var(--orange); }
+.node.io { fill: color-mix(in srgb, var(--blue) 12%, var(--panel)); stroke: var(--blue); }
+.edge { stroke: var(--muted); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+.edge.local { stroke: var(--orange); stroke-dasharray: 5 4; }
+.protocol-grid { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); gap: 16px; }
+.protocol-list { display: grid; gap: 8px; }
+.protocol-button { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: var(--panel); text-align: left; cursor: pointer; }
+.protocol-button strong, .protocol-button span { display: block; }
+.protocol-button span { margin-top: 3px; color: var(--muted); font-size: 12px; }
+.protocol-button[aria-pressed="true"] { border-color: var(--blue); background: color-mix(in srgb, var(--blue) 9%, var(--panel)); }
+.protocol-detail { padding: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.protocol-detail h3 { margin: 0 0 4px; }
+.protocol-detail > p { margin: 0 0 14px; color: var(--muted); }
+.protocol-flow { display: flex; align-items: stretch; gap: 7px; overflow-x: auto; padding: 14px 0; }
+.flow-node { flex: 1 0 120px; display: grid; place-items: center; min-height: 76px; padding: 8px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel-2); text-align: center; font-size: 12px; }
+.flow-arrow { align-self: center; color: var(--muted); }
+.metric-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.metric-table th, .metric-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+.metric-table th { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.chart-card { padding: 15px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.chart-card.wide { grid-column: 1 / -1; }
+.chart-title { display: flex; justify-content: space-between; align-items: start; gap: 12px; margin-bottom: 8px; }
+.chart-title h3 { margin: 0; font-size: 16px; }
+.chart-title p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+.chart { width: 100%; min-height: 310px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+.swatch { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 3px; vertical-align: -1px; }
+.takeaway { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--orange); color: var(--muted); background: var(--panel-2); font-size: 13px; }
+.learning-controls { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.rq-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rq { padding: 18px; border: 1px solid var(--border); border-top: 4px solid var(--blue); border-radius: 12px; background: var(--panel); }
+.rq:nth-child(2) { border-top-color: var(--orange); }
+.rq:nth-child(3) { border-top-color: var(--purple); }
+.rq h3 { margin: 8px 0; font-size: 17px; }
+.rq p { margin: 0; color: var(--muted); font-size: 13px; }
+.rq ol { margin: 13px 0 0; padding-left: 20px; font-size: 13px; }
+.rq li { margin: 5px 0; }
+.source-grid { columns: 2; column-gap: 30px; }
+.source-grid li { break-inside: avoid; margin-bottom: 7px; }
+.footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+.tooltip { position: fixed; z-index: 50; display: none; max-width: 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--panel); box-shadow: var(--shadow); pointer-events: none; font-size: 12px; }
+@media (max-width: 980px) {
+  .hero, .model-layout, .protocol-grid { grid-template-columns: 1fr; }
+  .step-grid, .rq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .shell { width: min(100% - 20px, 1480px); }
+  .top { padding-inline: 10px; }
+  .step-grid, .rq-grid, .chart-grid { grid-template-columns: 1fr; }
+  .chart-card.wide { grid-column: auto; }
+  .chart { min-height: 0; }
+  .section-head { display: block; }
+  .section-head p { margin-top: 8px; }
+  .source-grid { columns: 1; }
+  .setting-row { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <div class="brand"><span>Learning Without Letting Go</span> · PC Continual-Learning Atlas</div>
+    <button class="theme" id="theme-button" type="button">Theme</button>
+  </div>
+  <nav class="phase-flow" aria-label="DL research lifecycle">
+    <a class="phase-link done" href="#proposal">P1 Frame · complete</a>
+    <a class="phase-link partial" href="#ecosystem">P2 Survey · partial</a>
+    <a class="phase-link done" href="#experiments">P3 Design · complete</a>
+    <a class="phase-link done" href="#experiments">P4 Prepare · done</a>
+    <a class="phase-link done" href="#experiments">P5 Launch · done</a>
+    <a class="phase-link done" href="#learning-curves">P6 Monitor · done</a>
+    <a class="phase-link done" href="#results">P7 Evaluate · done</a>
+    <a class="phase-link active" href="#next-steps">P8 Synthesize · active</a>
+    <a class="phase-link partial" href="#limitations">P9 Audit · warnings</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Biologically plausible online & continual learning</p>
+      <h1>From local inference<br>to continual failure modes.</h1>
+      <p class="dek">A project-level view of the Predictive Coding implementation, matched protocols, achieved and non-achieved results, learning dynamics, and the experiments that should come next.</p>
+    </div>
+    <aside class="status-panel" aria-label="Current project status">
+      <h2>Current state · 21 July 2026</h2>
+      <p>The complete living proposal and three canonical questions now organize three completed study lines. The literature audit remains open.</p>
+      <div class="status-grid">
+        <div><strong>3</strong><span>completed studies</span></div>
+        <div><strong>3</strong><span>canonical RQs</span></div>
+        <div><strong>1</strong><span>candidate rule</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section" id="ecosystem">
+    <div class="section-head">
+      <h2>Research lifecycle</h2>
+      <p>The proposal is complete and remains a living document. Q1–Q3 are fixed as the canonical frame; results refine their answers without silently replacing them. Literature closure and a second learning rule remain open.</p>
+    </div>
+    <div class="step-grid">
+      <article class="step"><div class="step-num">P1 · FRAME</div><h3>Complete living proposal</h3><p>“Learning Without Letting Go” defines the motivation, Predictive Coding candidate, Backpropagation comparator and canonical Q1–Q3.</p><span class="pill ok">Complete · continuously refined</span></article>
+      <article class="step"><div class="step-num">P2 · SURVEY</div><h3>50-paper evidence registry</h3><p>Reading roadmap, SOTA explorer and claim ledger exist; five weak evidence cells still block survey closure.</p><span class="pill warn">Audit needs Round N</span></article>
+      <article class="step"><div class="step-num">P3 · DESIGN</div><h3>Controlled study designs</h3><p>Relaxation, network scale and CIFAR reproduction/continual extension each have frozen H/E plans.</p><span class="pill info">Complete per study</span></article>
+      <article class="step"><div class="step-num">P4–P5 · PREPARE / LAUNCH</div><h3>Reproducible GPU execution</h3><p>ROCm container, paired initialization, stream checksums, immutable JSON, run ledgers and smoke gates.</p><span class="pill ok">Complete</span></article>
+      <article class="step"><div class="step-num">P6–P7 · MONITOR / EVALUATE</div><h3>Behavior + representation</h3><p>Accuracy matrices, prequential performance, adaptation, forgetting, runtime, memory, RDM drift and label alignment.</p><span class="pill ok">Complete</span></article>
+      <article class="step"><div class="step-num">P8–P9 · SYNTHESIZE / AUDIT</div><h3>Trade-off, not superiority</h3><p>Study syntheses are complete. Project synthesis is active; broad PC, causal drift and biological-superiority claims remain excluded.</p><span class="pill warn">Active · warnings</span></article>
+    </div>
+  </section>
+
+  <section class="section" id="proposal">
+    <div class="section-head">
+      <h2>Learning Without Letting Go</h2>
+      <p>The complete proposal asks whether inference-before-plasticity produces different static learning, continual behavior and stability–plasticity trade-offs from Backpropagation.</p>
+    </div>
+    <div class="takeaway"><strong>Proposal status:</strong> complete and living. The three questions below are canonical. Follow-up experiments refine their answers; they do not replace Q1–Q3.</div>
+    <div class="rq-grid" style="margin-top:16px">
+      <article class="rq"><span class="pill ok">Q1 · answered for frozen MLP</span><h3>How do PC and BP differ on the same static MNIST architecture?</h3><p>PC matches BP once inference is sufficient. T=1 is propagation-deficient; T≥5 produces nearly identical validation curves and final accuracy, at higher compute cost.</p><ol><li>BP: 98.267% final test</li><li>PC T=5: 98.193%</li><li>Learning curves saturate together</li></ol></article>
+      <article class="rq"><span class="pill warn">Q2 · descriptive answer</span><h3>How do PC and BP differ under fixed single-pass continual learning?</h3><p>PC is BP-like on Permuted MNIST. On SplitMNIST and SplitCIFAR-10, lower forgetting accompanies lower adaptation, prequential accuracy and label-aligned acquisition.</p><ol><li>Domain shift: near parity</li><li>Class incremental: both forget</li><li>Causal drift mechanism unresolved</li></ol></article>
+      <article class="rq"><span class="pill ok">Q3 · finite grid answered</span><h3>How does PC inference budget change stability, plasticity and cost?</h3><p>T=5 is the cheapest effective tested default for the two-layer MLP. More relaxation does not monotonically improve behavior, while runtime increases consistently.</p><ol><li>T=1: boundary failure</li><li>T=5: static saturation</li><li>T=10/20: more cost, no general win</li></ol></article>
+    </div>
+    <p style="margin:16px 0 0"><a href="../research-project-proposal.md">Read the complete proposal, motivation, evidence mapping and refinement log →</a></p>
+  </section>
+
+  <section class="section" id="models">
+    <div class="section-head">
+      <h2>Model settings</h2>
+      <p>Step 1 and Step 2 share the PC latent-energy idea but use different architectures and parameter-update schedules. Their results must not be pooled as one protocol.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Model family">
+      <button class="tab model-tab" data-model="mnist" type="button" aria-pressed="true">Step 1 · MNIST MLP</button>
+      <button class="tab model-tab" data-model="cifar" type="button" aria-pressed="false">Step 2 · CIFAR ConvNet</button>
+    </div>
+    <div class="model-layout">
+      <div class="viz" id="model-diagram" aria-live="polite"></div>
+      <aside class="info-panel">
+        <h3 id="model-title">MNIST MLP</h3>
+        <dl class="setting-list" id="model-settings"></dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="experiments">
+    <div class="section-head">
+      <h2>Experiment settings</h2>
+      <p>Choose a protocol to inspect the stream, controls, learning rule, evaluation cadence and claim ceiling.</p>
+    </div>
+    <div class="protocol-grid">
+      <div class="protocol-list" id="protocol-list"></div>
+      <article class="protocol-detail" id="protocol-detail" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section class="section" id="results">
+    <div class="section-head">
+      <h2>Achieved and non-achieved results</h2>
+      <p>Green marks validated capabilities. Orange and red preserve trade-offs, failed hypotheses and boundary conditions instead of hiding them.</p>
+    </div>
+    <div class="chart-grid">
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Relaxation threshold · Static MNIST</h3><p>Final accuracy and synchronized runtime, mean of seeds 7/42/123.</p></div><span class="pill ok">T≥5 parity</span></div>
+        <div class="chart" id="relaxation-chart"></div>
+        <div class="takeaway">Achieved: PC reaches BP-like static accuracy at T=5. Non-achieved: additional relaxation does not improve accuracy, while cost rises monotonically.</div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Stability–plasticity plane</h3><p>Prequential accuracy versus negative forgetting; upper-right is better.</p></div><span class="pill warn">Trade-off</span></div>
+        <div class="chart" id="tradeoff-chart"></div>
+        <div class="takeaway">PC's lower forgetting on class-incremental streams co-occurs with weaker acquisition. Permuted MNIST is much easier and should remain a separate regime.</div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Network scale · final accuracy</h3><p>Choose a scenario. PC uses T=5 for all architectures.</p></div><span class="pill fail">Depth failure</span></div>
+        <div class="tabs" role="group" aria-label="Architecture scenario">
+          <button class="tab scale-tab" data-scenario="static" type="button" aria-pressed="true">Static</button>
+          <button class="tab scale-tab" data-scenario="split" type="button" aria-pressed="false">Split</button>
+          <button class="tab scale-tab" data-scenario="permuted" type="button" aria-pressed="false">Permuted</button>
+        </div>
+        <div class="chart" id="scale-chart"></div>
+        <div class="takeaway">Width gives narrow, scenario-specific gains. Plain 256×4 depth hurts both methods and collapses deep PC on Permuted MNIST to 51.385%.</div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Old-task representation drift</h3><p>Final SplitCIFAR-10 boundary; log scale reveals almost-frozen early PC geometry.</p></div><span class="pill warn">Stable ≠ useful</span></div>
+        <div class="chart" id="drift-chart"></div>
+        <div class="takeaway">PC drift is lower at every layer, but label-alignment gain is also lower. Existing evidence supports reduced plasticity, not a causal retention mechanism.</div>
+      </article>
+      <article class="chart-card wide">
+        <div class="chart-title"><div><h3>What the project has and has not established</h3><p>Claim ceilings applied after matched-run review and methodology audit.</p></div></div>
+        <table class="metric-table">
+          <thead><tr><th>Result</th><th>Evidence status</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Static MNIST PC–BP parity at T≥5</td><td><span class="pill ok">Established</span></td><td>Implementation feasibility and a relaxation threshold.</td></tr>
+            <tr><td>Figure 4i CIFAR reproduction within ±1 pp</td><td><span class="pill ok">Promotable, narrow</span></td><td>Exact-as-practical reproduction of a test-informed archived protocol.</td></tr>
+            <tr><td>PC solves replay-free continual learning</td><td><span class="pill fail">Not achieved</span></td><td>Both methods catastrophically forget on SplitMNIST and SplitCIFAR-10.</td></tr>
+            <tr><td>Lower RDM drift causes lower forgetting</td><td><span class="pill fail">Not established</span></td><td>Current correlations are task-confounded and inconsistent.</td></tr>
+            <tr><td>Deeper PC scales under the frozen recipe</td><td><span class="pill fail">Rejected</span></td><td>Deep PC fails strongly; insufficient relaxation margin remains a candidate explanation.</td></tr>
+            <tr><td>General or biological PC superiority</td><td><span class="pill fail">Excluded</span></td><td>Autograd, batch updates, non-spiking units and unmatched update semantics limit the claim.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="learning-curves">
+    <div class="section-head">
+      <h2>Learning curves</h2>
+      <p>Q1 static learning, Q2 online adaptation and retention, and Q3 within-batch inference are shown separately so that unlike x-axes and metrics are never pooled.</p>
+    </div>
+    <div class="learning-controls" role="group" aria-label="Learning curve">
+      <button class="tab curve-tab" data-curve="mnist" type="button" aria-pressed="true">Q1 · Static MNIST</button>
+      <button class="tab curve-tab" data-curve="cifar" type="button" aria-pressed="false">Q1 · CIFAR reproduction</button>
+      <button class="tab curve-tab" data-curve="split-mnist" type="button" aria-pressed="false">Q2 · SplitMNIST adaptation</button>
+      <button class="tab curve-tab" data-curve="permuted-mnist" type="button" aria-pressed="false">Q2 · Permuted adaptation</button>
+      <button class="tab curve-tab" data-curve="split-cifar-prequential" type="button" aria-pressed="false">Q2 · SplitCIFAR adaptation</button>
+      <button class="tab curve-tab" data-curve="split-cifar-retention" type="button" aria-pressed="false">Q2 · SplitCIFAR retention</button>
+      <button class="tab curve-tab" data-curve="pc-inference" type="button" aria-pressed="false">Q3 · PC inference</button>
+    </div>
+    <article class="chart-card">
+      <div class="chart-title"><div><h3 id="curve-title">Static MNIST validation accuracy</h3><p id="curve-subtitle">Mean across paired project seeds; epoch 0 is the shared initialization.</p></div></div>
+      <div class="chart" id="learning-chart"></div>
+      <div class="legend" id="curve-legend"></div>
+      <div class="takeaway" id="curve-takeaway">PC T=5/10/20 tracks BP after the first epoch; PC T=1 remains far below the saturated cluster.</div>
+    </article>
+  </section>
+
+  <section class="section" id="next-steps">
+    <div class="section-head">
+      <h2>Next refinements under Q1–Q3</h2>
+      <p>These are follow-up experiments within the complete proposal. They sharpen comparison validity, mechanism and scaling without renaming the canonical questions.</p>
+    </div>
+    <div class="rq-grid">
+      <article class="rq"><span class="pill info">Q1 refinement · execute first</span><h3>Does the comparison survive fair update and compute budgets?</h3><p>Separate conventional one-update BP, archived repeated-update RBP, PC-last and PC-all under validation-only selection.</p><ol><li>Equal samples</li><li>Equal parameter updates</li><li>Equal wall-clock panels</li></ol></article>
+      <article class="rq"><span class="pill warn">Q2 refinement · mechanism</span><h3>Is lower drift useful stability or under-learning?</h3><p>Match post-task acquisition by intervening on early-layer plasticity, then compare drift and forgetting.</p><ol><li>PC early-layer LR ↑</li><li>RBP early-layer LR ↓</li><li>Adaptation matched within ±1 pp</li></ol></article>
+      <article class="rq"><span class="pill info">Q3 refinement · scaling</span><h3>Does relaxation need to grow with network depth?</h3><p>Run depth × relaxation with per-layer convergence diagnostics before changing architecture or optimizer.</p><ol><li>2-layer: T=3/5/10</li><li>4-layer: T=5/7/10</li><li>Permuted primary, Split secondary</li></ol></article>
+    </div>
+  </section>
+
+  <section class="section" id="limitations">
+    <div class="section-head"><h2>Audit boundaries</h2><p>These constraints travel with every chart and conclusion.</p></div>
+    <div class="step-grid">
+      <article class="step"><h3>Statistical scope</h3><p>Three independent seeds support descriptive paired comparisons, not broad superiority or significance claims.</p></article>
+      <article class="step"><h3>Online scope</h3><p>Batch size 500/200 is mini-batch continual learning, not strict sample-at-a-time online learning.</p></article>
+      <article class="step"><h3>Comparator scope</h3><p>CIFAR “BP” is archived repeated-update RBP. A conventional BP/SGD control is still missing.</p></article>
+      <article class="step"><h3>Biological scope</h3><p>Conceptually local errors are implemented with autograd, Adam/SGD, synchronized relaxation and one-hot targets.</p></article>
+      <article class="step"><h3>Protocol scope</h3><p>Step 1 updates PC parameters at the last relaxation step; Step 2 updates parameters at all 16 steps.</p></article>
+      <article class="step"><h3>Project scope</h3><p>The proposal and Q1–Q3 are complete. A second biologically plausible rule, noise study and bounded-replay study remain outside the implemented scope.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="sources">
+    <div class="section-head"><h2>Evidence map</h2><p>Every number in this page is embedded from an immutable run or deterministic summary.</p></div>
+    <ul class="source-grid">
+      <li><a href="../agents/research/haoran-experiments-report.md">Combined experiment report</a></li>
+      <li><a href="../research-project-proposal.md">Complete living research proposal</a></li>
+      <li><a href="../agents/research/pc-relaxation-plasticity/artifacts/tables.md">Relaxation deterministic tables</a></li>
+      <li><a href="../agents/research/pc-network-scale/artifacts/tables.md">Network-scale deterministic tables</a></li>
+      <li><a href="../agents/research/predictive-coding-cifar-baseline/04-evaluation.md">CIFAR evaluation</a></li>
+      <li><a href="../agents/research/predictive-coding-cifar-baseline/artifacts/h2e3-representation-summary.json">Representation summary JSON</a></li>
+      <li><a href="../playground/step1-static-mnist/runs/relaxation-sweep-v1.json">Raw relaxation sweep</a></li>
+      <li><a href="../playground/step1-static-mnist/runs/architecture-sweep-v2.json">Raw architecture sweep</a></li>
+      <li><a href="../playground/step2-cifar10/runs/paper-reproduction-v1.json">Raw CIFAR reproduction</a></li>
+      <li><a href="../playground/step2-cifar10/runs/split-cifar10-representations-v1.json">Raw representation run</a></li>
+      <li><a href="surveys/bioplausible-online-learning/sota-results-explorer.html">SOTA evidence explorer</a></li>
+    </ul>
+    <div class="footer">Generated as a project-level synthesis view. Raw artifacts and negative runs remain canonical; this page does not rewrite them.</div>
+  </section>
+</main>
+
+<div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+
+<script>
+const COLORS = { blue: "#55b7ff", orange: "#ffa45d", green: "#55d783", red: "#ff7278", purple: "#b69aff", teal: "#54cccc" };
+const MODELS = {
+  mnist: {
+    title: "Step 1 · MNIST MLP",
+    settings: [
+      ["Architecture", "784 → 256 → 256 → 10; ReLU; biases"],
+      ["Parameters", "269,322 learned parameters"],
+      ["Objective", "One-hot half squared error"],
+      ["BP update", "Adam 0.001; one update per batch"],
+      ["PC inference", "Latent SGD 0.01; T varied; update_p_at=last"],
+      ["Batch", "500"],
+    ],
+    nodes: [
+      {x:40,y:115,w:120,h:60,label:"Input",sub:"784 pixels",cls:"io"},
+      {x:205,y:115,w:125,h:60,label:"Linear + ReLU",sub:"256",cls:""},
+      {x:365,y:115,w:125,h:60,label:"Linear + ReLU",sub:"256",cls:""},
+      {x:530,y:115,w:120,h:60,label:"Output",sub:"10 logits",cls:"io"},
+      {x:205,y:220,w:125,h:48,label:"PC latent x₁",sub:"local energy",cls:"pc"},
+      {x:365,y:220,w:125,h:48,label:"PC latent x₂",sub:"local energy",cls:"pc"},
+    ],
+    edges:[[160,145,205,145,""],[330,145,365,145,""],[490,145,530,145,""],[267,175,267,220,"local"],[427,175,427,220,"local"]]
+  },
+  cifar: {
+    title: "Step 2 · CIFAR-10 ConvNet",
+    settings: [
+      ["Architecture", "Conv 3→64 → Conv 64→128 → FC 8192→512→10"],
+      ["Parameters", "4,275,402 learned parameters"],
+      ["Objective", "One-hot half squared error"],
+      ["RBP control", "16 Adam updates per batch; weight decay 0.01"],
+      ["PC inference", "T=16; latent SGD 0.5; update_p_at=all"],
+      ["Batch", "200"],
+    ],
+    nodes: [
+      {x:20,y:105,w:100,h:62,label:"Input",sub:"3×32×32",cls:"io"},
+      {x:145,y:105,w:110,h:62,label:"Conv1",sub:"64×16×16",cls:""},
+      {x:280,y:105,w:110,h:62,label:"Conv2",sub:"128×8×8",cls:""},
+      {x:415,y:105,w:105,h:62,label:"FC1",sub:"512",cls:""},
+      {x:545,y:105,w:100,h:62,label:"Output",sub:"10 logits",cls:"io"},
+      {x:145,y:218,w:110,h:46,label:"PC latent",sub:"conv1",cls:"pc"},
+      {x:280,y:218,w:110,h:46,label:"PC latent",sub:"conv2",cls:"pc"},
+      {x:415,y:218,w:105,h:46,label:"PC latent",sub:"fc1",cls:"pc"},
+    ],
+    edges:[[120,136,145,136,""],[255,136,280,136,""],[390,136,415,136,""],[520,136,545,136,""],[200,167,200,218,"local"],[335,167,335,218,"local"],[467,167,467,218,"local"]]
+  }
+};
+
+const PROTOCOLS = [
+  { id:"static-mnist", title:"Static MNIST", note:"Feasibility + relaxation", regime:"Stationary supervised", flow:["80/20 split","10 epochs","BP / PC","Validation each epoch","Final test"], settings:[["Seeds","7, 42, 123"],["Replay","None"],["PC T","1 / 5 / 10 / 20"],["Primary","final + early validation"],["Claim ceiling","static feasibility"]]},
+  { id:"continual-mnist", title:"Split + Permuted MNIST", note:"Class vs domain incrementality", regime:"One pass/task; no task ID", flow:["Realized stream","Predict before update","One batch update","Task boundary","Full accuracy matrix"], settings:[["Tasks","5"],["Replay","None"],["Scenarios","class / domain incremental"],["Metrics","prequential, adaptation, forgetting, BWT"],["Claim ceiling","scenario-specific"]]},
+  { id:"scale", title:"Network scale", note:"Width and depth interventions", regime:"Frozen optimizer; PC T=5", flow:["256×2 control","512×2 width","256×4 depth","3 seeds","Matched analysis"], settings:[["Parameters","269k / 670k / 401k"],["Scenarios","static / split / permuted"],["Invalid run","v1 preserved, excluded"],["Final protocol","pc-network-scale-v2"],["Decision","retain 256×2"]]},
+  { id:"cifar-static", title:"CIFAR Figure 4i", note:"Exact-as-practical reproduction", regime:"80 repeated passes", flow:["Source seed + LR","49,990 train","T=16 updates","Test each pass","Best test epoch"], settings:[["Seeds","paper seeds"],["Control","archived repeated-update RBP"],["Selection","test-informed, reproduced intentionally"],["Gate","all cells within ±1 pp"],["Claim ceiling","Figure 4i reproduction only"]]},
+  { id:"split-cifar", title:"SplitCIFAR-10 + RDM", note:"Behavior and representation", regime:"Class incremental; shared head", flow:["5 class pairs","Prequential update","Boundary eval","Fixed anchors","RDM + alignment"], settings:[["Seeds","7, 42, 123"],["Replay","None"],["Diagnostics","20 anchors/class; 4 layers"],["Control","same-revision diagnostics-off"],["Claim ceiling","observational, not causal"]]},
+];
+
+const DATA = {
+  relaxation: [
+    {name:"BP",accuracy:98.267,time:.021,color:COLORS.blue},
+    {name:"PC T=1",accuracy:84.457,time:.021,color:COLORS.red},
+    {name:"PC T=5",accuracy:98.193,time:.037,color:COLORS.green},
+    {name:"PC T=10",accuracy:98.183,time:.053,color:COLORS.orange},
+    {name:"PC T=20",accuracy:98.137,time:.087,color:COLORS.purple},
+  ],
+  tradeoff: [
+    {name:"SplitMNIST BP",x:60.144,y:-96.188,method:"BP"}, {name:"SplitMNIST PC T=5",x:57.512,y:-95.687,method:"PC"},
+    {name:"Permuted BP",x:86.955,y:-4.699,method:"BP"}, {name:"Permuted PC T=5",x:87.010,y:-4.964,method:"PC"},
+    {name:"SplitCIFAR RBP",x:82.074,y:-85.954,method:"BP"}, {name:"SplitCIFAR PC",x:76.042,y:-81.421,method:"PC"},
+  ],
+  scale: {
+    static:{bp:[98.267,98.490,98.107],pc:[98.193,98.447,97.533]},
+    split:{bp:[18.541,18.917,12.173],pc:[18.329,18.857,11.750]},
+    permuted:{bp:[91.544,92.534,83.622],pc:[91.326,91.257,51.385]},
+  },
+  drift:[
+    {layer:"conv1",bp:.009335,pc:.00000035}, {layer:"conv2",bp:.025365,pc:.000483},
+    {layer:"fc1",bp:.362578,pc:.296496}, {layer:"logits",bp:.870759,pc:.788836},
+  ],
+  curves: {
+    mnist:{
+      title:"Static MNIST validation accuracy",
+      subtitle:"Mean across paired seeds 7/42/123; epoch 0 is the shared initialization.",
+      takeaway:"PC T=5/10/20 tracks BP after the first epoch; PC T=1 is the preserved propagation-deficient boundary condition.",
+      xLabel:"epoch",yLabel:"validation accuracy (%)",yMin:0,yMax:100,xTicks:[0,2,4,6,8,10],yTicks:[0,25,50,75,100],pointRadius:3.5,
+      x:[0,1,2,3,4,5,6,7,8,9,10],series:[
+      {name:"BP",color:COLORS.blue,y:[10.15,94.742,96.314,97.008,97.356,97.608,97.842,97.961,97.958,98.025,98.122]},
+      {name:"PC T=1",color:COLORS.red,dash:"7 5",y:[10.15,71.983,76.322,78.389,79.942,80.975,81.731,82.458,82.906,83.311,83.581]},
+      {name:"PC T=5",color:COLORS.green,y:[10.15,94.764,96.336,97.019,97.364,97.622,97.800,97.961,97.936,98.042,98.108]},
+      {name:"PC T=10",color:COLORS.orange,y:[10.15,94.764,96.322,97.031,97.414,97.672,97.828,97.969,97.983,98.094,98.133]},
+      {name:"PC T=20",color:COLORS.purple,y:[10.15,94.825,96.264,97.033,97.389,97.614,97.786,97.906,97.933,98.039,98.061]},
+    ]},
+    cifar:{
+      title:"Figure 4i CIFAR-10 test accuracy",
+      subtitle:"Mean across archived paper seeds; the reproduced best-test selection is not leakage-free model development.",
+      takeaway:"Archived repeated-update RBP peaks early and then declines; PC learns more slowly and continues improving. This is not yet a conventional one-update BP comparison.",
+      xLabel:"training pass",yLabel:"test accuracy (%)",yMin:48,yMax:73,xTicks:[1,20,40,60,80],yTicks:[50,55,60,65,70],pointRadius:2,
+      x:Array.from({length:80},(_,i)=>i+1),series:[
+      {name:"Archived RBP",color:COLORS.blue,y:[61.452,65.980,67.622,68.228,68.160,68.054,68.548,68.609,68.293,68.687,68.554,68.316,68.425,68.139,68.163,68.078,68.003,68.058,68.014,67.990,67.942,67.878,67.694,68.024,67.694,67.810,67.289,67.639,67.548,67.605,67.296,67.544,67.357,67.252,67.197,67.429,67.099,67.544,67.194,67.364,66.969,67.418,66.759,66.830,66.837,67.099,66.810,66.813,66.480,66.616,66.813,66.609,66.293,66.646,66.799,66.432,66.503,66.350,66.422,66.395,66.255,66.548,66.517,66.357,66.163,66.466,66.282,66.187,66.398,66.269,65.983,66.211,66.296,65.932,66.061,66.544,65.918,66.010,66.037,66.214]},
+      {name:"PC",color:COLORS.orange,y:[50.571,53.330,55.221,56.527,57.476,58.037,58.602,59.177,59.259,60.388,60.575,61.163,61.320,61.466,62.075,61.980,62.231,62.701,62.973,63.265,63.252,63.731,64.214,64.071,64.731,64.806,64.619,65.442,65.422,65.524,65.707,66.068,66.061,66.500,66.748,66.969,67.177,67.605,67.816,67.548,67.925,68.116,68.170,68.446,68.748,68.724,68.643,69.044,69.014,69.357,69.374,69.588,69.837,69.748,70.061,69.847,70.490,70.418,70.425,70.340,70.537,70.439,70.850,70.762,70.711,70.748,70.854,70.993,70.663,70.850,70.626,70.946,70.687,70.500,70.867,70.752,70.857,70.677,70.959,70.619]},
+    ]},
+    "split-mnist":{
+      title:"SplitMNIST prequential accuracy by task",
+      subtitle:"Predict-before-update accuracy, averaged across seeds 7/42/123; every point measures adaptation before learning from that task batch.",
+      takeaway:"T=1 fails throughout. For T≥5, later-task prequential accuracy falls as relaxation increases, so reduced forgetting cannot be read as a free stability gain.",
+      xLabel:"task",yLabel:"prequential accuracy (%)",yMin:0,yMax:100,xTicks:[1,2,3,4,5],yTicks:[0,25,50,75,100],pointRadius:4,
+      x:[1,2,3,4,5],series:[
+        {name:"BP",color:COLORS.blue,y:[93.420,61.355,49.756,49.336,44.224]},
+        {name:"PC T=1",color:COLORS.red,dash:"7 5",y:[34.540,3.645,3.544,11.807,9.083]},
+        {name:"PC T=5",color:COLORS.green,y:[93.417,61.361,45.935,46.124,37.799]},
+        {name:"PC T=10",color:COLORS.orange,y:[93.414,62.027,43.126,43.400,37.365]},
+        {name:"PC T=20",color:COLORS.purple,y:[93.391,61.787,42.265,36.642,35.540]},
+      ]
+    },
+    "permuted-mnist":{
+      title:"Permuted MNIST prequential accuracy by task",
+      subtitle:"Predict-before-update accuracy, averaged across seeds 7/42/123 under the domain-incremental stream.",
+      takeaway:"BP and PC T=5/10/20 remain tightly clustered across all five domains. T=1 alone exposes the insufficient-propagation boundary.",
+      xLabel:"task",yLabel:"prequential accuracy (%)",yMin:40,yMax:90,xTicks:[1,2,3,4,5],yTicks:[40,50,60,70,80,90],pointRadius:4,
+      x:[1,2,3,4,5],series:[
+        {name:"BP",color:COLORS.blue,y:[87.374,87.357,87.416,86.455,86.172]},
+        {name:"PC T=1",color:COLORS.red,dash:"7 5",y:[49.558,50.044,48.544,44.417,44.956]},
+        {name:"PC T=5",color:COLORS.green,y:[87.394,87.367,87.526,86.429,86.337]},
+        {name:"PC T=10",color:COLORS.orange,y:[87.401,87.430,87.553,86.626,86.633]},
+        {name:"PC T=20",color:COLORS.purple,y:[87.509,87.634,87.414,86.681,85.990]},
+      ]
+    },
+    "split-cifar-prequential":{
+      title:"SplitCIFAR-10 prequential accuracy by task",
+      subtitle:"Predict-before-update accuracy, averaged across paired seeds 7/42/123; RBP and PC use the reproduced all-step update semantics.",
+      takeaway:"PC is below RBP on every incoming task, showing weaker acquisition before update. This plasticity gap must accompany any claim about its lower forgetting or drift.",
+      xLabel:"task",yLabel:"prequential accuracy (%)",yMin:65,yMax:90,xTicks:[1,2,3,4,5],yTicks:[65,70,75,80,85,90],pointRadius:4,
+      x:[1,2,3,4,5],series:[
+        {name:"Archived RBP",color:COLORS.blue,y:[85.363,74.633,78.108,86.143,85.339]},
+        {name:"PC",color:COLORS.orange,y:[80.992,70.969,71.003,77.604,79.727]},
+      ]
+    },
+    "split-cifar-retention":{
+      title:"SplitCIFAR-10 retained accuracy after each boundary",
+      subtitle:"Mean test accuracy over tasks seen so far, then averaged across paired seeds 7/42/123; boundary 1 follows the first trained task.",
+      takeaway:"Both methods collapse as classes accumulate: RBP falls from 91.4% to 18.1%, and PC from 86.9% to 17.0%. Neither solves catastrophic forgetting.",
+      xLabel:"task boundary",yLabel:"seen-task accuracy (%)",yMin:0,yMax:100,xTicks:[1,2,3,4,5],yTicks:[0,25,50,75,100],pointRadius:4,
+      x:[1,2,3,4,5],series:[
+        {name:"Archived RBP",color:COLORS.blue,y:[91.400,38.825,27.489,23.258,18.057]},
+        {name:"PC",color:COLORS.orange,y:[86.900,37.842,25.022,22.013,16.973]},
+      ]
+    },
+    "pc-inference":{
+      title:"PC first-batch inference objective",
+      subtitle:"SplitCIFAR-10 PC objective at each of 16 relaxation iterations, normalized within each first task batch and averaged over 15 seed×task traces.",
+      takeaway:"The final objective is 41.7% of its initial value, confirming effective relaxation. Intermediate descent is not monotonic, so iteration count alone is not a convergence certificate.",
+      xLabel:"relaxation iteration",yLabel:"objective (% of initial)",yMin:35,yMax:105,xTicks:[0,3,6,9,12,15],yTicks:[40,60,80,100],pointRadius:3.5,
+      x:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],series:[
+        {name:"PC overall objective",color:COLORS.purple,y:[100.000,84.196,79.317,79.039,94.896,71.702,59.644,56.137,53.074,50.608,48.739,47.190,45.748,44.360,43.023,41.741]},
+      ]
+    }
+  }
+};
+
+function svgBase(width=720,height=330) {
+  return {width,height,left:58,right:18,top:20,bottom:48};
+}
+function esc(value){ return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function axisSvg(cfg,xMin,xMax,yMin,yMax,xTicks,yTicks,xLabel,yLabel){
+  const w=cfg.width-cfg.left-cfg.right,h=cfg.height-cfg.top-cfg.bottom;
+  const x=v=>cfg.left+(v-xMin)/(xMax-xMin)*w, y=v=>cfg.top+h-(v-yMin)/(yMax-yMin)*h;
+  let out=`<line x1="${cfg.left}" y1="${cfg.top+h}" x2="${cfg.left+w}" y2="${cfg.top+h}" stroke="var(--muted)"/><line x1="${cfg.left}" y1="${cfg.top}" x2="${cfg.left}" y2="${cfg.top+h}" stroke="var(--muted)"/>`;
+  yTicks.forEach(t=>{out+=`<line x1="${cfg.left}" y1="${y(t)}" x2="${cfg.left+w}" y2="${y(t)}" stroke="var(--grid)"/><text x="${cfg.left-8}" y="${y(t)+4}" text-anchor="end" fill="var(--muted)" font-size="11">${t}</text>`});
+  xTicks.forEach(t=>{out+=`<text x="${x(t)}" y="${cfg.top+h+20}" text-anchor="middle" fill="var(--muted)" font-size="11">${t}</text>`});
+  out+=`<text x="${cfg.left+w/2}" y="${cfg.height-7}" text-anchor="middle" fill="var(--muted)" font-size="11">${esc(xLabel)}</text><text transform="translate(13 ${cfg.top+h/2}) rotate(-90)" text-anchor="middle" fill="var(--muted)" font-size="11">${esc(yLabel)}</text>`;
+  return {out,x,y,w,h};
+}
+function tooltipBind(container, marks){
+  const tip=document.getElementById("tooltip");
+  container.querySelectorAll("[data-tip]").forEach(mark=>{
+    mark.addEventListener("pointerenter",()=>{tip.innerHTML=mark.dataset.tip;tip.style.display="block"});
+    mark.addEventListener("pointermove",e=>{tip.style.left=Math.min(e.clientX+12,window.innerWidth-275)+"px";tip.style.top=(e.clientY+12)+"px"});
+    mark.addEventListener("pointerleave",()=>{tip.style.display="none"});
+  });
+}
+function renderModel(kind){
+  const m=MODELS[kind];
+  document.getElementById("model-title").textContent=m.title;
+  document.getElementById("model-settings").innerHTML=m.settings.map(([a,b])=>`<div class="setting-row"><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("");
+  const nodes=m.nodes.map(n=>`<g><rect class="node ${n.cls}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="10"/><text x="${n.x+n.w/2}" y="${n.y+25}" text-anchor="middle" font-size="13" font-weight="700">${esc(n.label)}</text><text x="${n.x+n.w/2}" y="${n.y+43}" text-anchor="middle" font-size="11" fill="var(--muted)">${esc(n.sub)}</text></g>`).join("");
+  const edges=m.edges.map(e=>`<path class="edge ${e[4]}" d="M${e[0]} ${e[1]} L${e[2]} ${e[3]}"/>`).join("");
+  document.getElementById("model-diagram").innerHTML=`<svg class="model-svg" viewBox="0 0 680 310" role="img" aria-label="${esc(m.title)} architecture"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--muted)"/></marker></defs>${edges}${nodes}<text x="340" y="292" text-anchor="middle" font-size="11" fill="var(--muted)">Solid: feedforward path · dashed orange: latent prediction-error coupling</text></svg>`;
+}
+function renderProtocols(){
+  const list=document.getElementById("protocol-list");
+  list.innerHTML=PROTOCOLS.map((p,i)=>`<button class="protocol-button" data-protocol="${p.id}" type="button" aria-pressed="${i===0}"><strong>${esc(p.title)}</strong><span>${esc(p.note)}</span></button>`).join("");
+  list.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{list.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");renderProtocol(b.dataset.protocol)}));
+  renderProtocol(PROTOCOLS[0].id);
+}
+function renderProtocol(id){
+  const p=PROTOCOLS.find(x=>x.id===id);
+  document.getElementById("protocol-detail").innerHTML=`<h3>${esc(p.title)}</h3><p>${esc(p.regime)}</p><div class="protocol-flow">${p.flow.map((n,i)=>`${i?'<span class="flow-arrow">→</span>':''}<div class="flow-node">${esc(n)}</div>`).join("")}</div><table class="metric-table"><tbody>${p.settings.map(([a,b])=>`<tr><th>${esc(a)}</th><td>${esc(b)}</td></tr>`).join("")}</tbody></table>`;
+}
+function renderRelaxation(){
+  const cfg=svgBase(), a=axisSvg(cfg,0,5,80,100,[],[80,85,90,95,100],"condition","final accuracy (%)");
+  const bw=a.w/7, xs=[]; let marks="";
+  DATA.relaxation.forEach((d,i)=>{const cx=cfg.left+a.w*(i+.5)/5, top=a.y(d.accuracy), bh=cfg.top+a.h-top;xs.push(cx);marks+=`<rect data-tip="<b>${esc(d.name)}</b><br>accuracy ${d.accuracy.toFixed(3)}%<br>${d.time.toFixed(3)} s/1k" x="${cx-bw/2}" y="${top}" width="${bw}" height="${bh}" rx="4" fill="${d.color}"/><text x="${cx}" y="${top-6}" text-anchor="middle" fill="var(--text)" font-size="10">${d.accuracy.toFixed(1)}</text><text x="${cx}" y="${cfg.top+a.h+20}" text-anchor="middle" fill="var(--muted)" font-size="10">${esc(d.name)}</text>`});
+  const maxT=.09, ty=v=>cfg.top+a.h-v/maxT*a.h, points=DATA.relaxation.map((d,i)=>`${xs[i]},${ty(d.time)}`).join(" ");
+  marks+=`<polyline points="${points}" fill="none" stroke="${COLORS.orange}" stroke-width="2.5"/>`+DATA.relaxation.map((d,i)=>`<circle data-tip="runtime ${d.time.toFixed(3)} s/1k" cx="${xs[i]}" cy="${ty(d.time)}" r="4" fill="${COLORS.orange}"/>`).join("");
+  document.getElementById("relaxation-chart").innerHTML=`<svg viewBox="0 0 ${cfg.width} ${cfg.height}" aria-label="Relaxation accuracy and runtime">${a.out.replace(/<text x="[^>]*>condition<\/text>/,'')}${marks}<text x="${cfg.width-5}" y="14" text-anchor="end" fill="${COLORS.orange}" font-size="11">orange line: runtime</text></svg>`;
+  tooltipBind(document.getElementById("relaxation-chart"));
+}
+function renderTradeoff(){
+  const cfg=svgBase(), a=axisSvg(cfg,50,92,-100,0,[50,60,70,80,90],[-100,-75,-50,-25,0],"prequential accuracy (%)","− forgetting (higher is better)");
+  let marks="";
+  DATA.tradeoff.forEach(d=>{const c=d.method==="PC"?COLORS.orange:COLORS.blue;marks+=`<circle data-tip="<b>${esc(d.name)}</b><br>prequential ${d.x.toFixed(3)}%<br>forgetting ${(-d.y).toFixed(3)}%" cx="${a.x(d.x)}" cy="${a.y(d.y)}" r="8" fill="${c}" stroke="var(--panel)" stroke-width="2"/><text x="${a.x(d.x)+10}" y="${a.y(d.y)-8}" fill="var(--text)" font-size="10">${esc(d.name.replace('MNIST ','M ').replace('CIFAR ','C '))}</text>`});
+  document.getElementById("tradeoff-chart").innerHTML=`<svg viewBox="0 0 ${cfg.width} ${cfg.height}" aria-label="Stability plasticity scatter">${a.out}${marks}</svg><div class="legend"><span><i class="swatch" style="background:${COLORS.blue}"></i>BP / RBP</span><span><i class="swatch" style="background:${COLORS.orange}"></i>PC</span></div>`;
+  tooltipBind(document.getElementById("tradeoff-chart"));
+}
+function renderScale(scenario){
+  const d=DATA.scale[scenario], labels=["256×2","512×2","256×4"], cfg=svgBase(), all=[...d.bp,...d.pc], min=Math.max(0,Math.floor(Math.min(...all)-5)), max=Math.ceil(Math.max(...all)+3), a=axisSvg(cfg,0,3,min,max,[],[min,Math.round((min+max)/2),max],"architecture","final accuracy (%)");
+  const group=a.w/3,bw=group*.25;let marks="";
+  labels.forEach((lab,i)=>{const cx=cfg.left+group*(i+.5);[[d.bp[i],-bw*.58,COLORS.blue,"BP / RBP"],[d.pc[i],bw*.58,COLORS.orange,"PC"]].forEach(([v,off,c,m])=>{const top=a.y(v);marks+=`<rect data-tip="<b>${m} · ${lab}</b><br>${v.toFixed(3)}%" x="${cx+off-bw/2}" y="${top}" width="${bw}" height="${cfg.top+a.h-top}" rx="4" fill="${c}"/><text x="${cx+off}" y="${top-5}" text-anchor="middle" fill="var(--text)" font-size="9">${v.toFixed(1)}</text>`});marks+=`<text x="${cx}" y="${cfg.top+a.h+20}" text-anchor="middle" fill="var(--muted)" font-size="11">${lab}</text>`});
+  document.getElementById("scale-chart").innerHTML=`<svg viewBox="0 0 ${cfg.width} ${cfg.height}" aria-label="Architecture scale results">${a.out}${marks}</svg><div class="legend"><span><i class="swatch" style="background:${COLORS.blue}"></i>BP / RBP</span><span><i class="swatch" style="background:${COLORS.orange}"></i>PC</span></div>`;
+  tooltipBind(document.getElementById("scale-chart"));
+}
+function renderDrift(){
+  const cfg=svgBase(), log=v=>Math.log10(v), a=axisSvg(cfg,0,4,-7,0,[],[-7,-5,-3,-1,0],"layer","log₁₀ RDM drift");
+  const group=a.w/4,bw=group*.25;let marks="";
+  DATA.drift.forEach((d,i)=>{const cx=cfg.left+group*(i+.5);[[d.bp,-bw*.58,COLORS.blue,"RBP"],[d.pc,bw*.58,COLORS.orange,"PC"]].forEach(([v,off,c,m])=>{const lv=log(v),top=a.y(lv);marks+=`<rect data-tip="<b>${m} · ${d.layer}</b><br>RDM drift ${v.toPrecision(5)}" x="${cx+off-bw/2}" y="${top}" width="${bw}" height="${cfg.top+a.h-top}" rx="4" fill="${c}"/>`});marks+=`<text x="${cx}" y="${cfg.top+a.h+20}" text-anchor="middle" fill="var(--muted)" font-size="11">${d.layer}</text>`});
+  document.getElementById("drift-chart").innerHTML=`<svg viewBox="0 0 ${cfg.width} ${cfg.height}" aria-label="Representation drift by layer">${a.out}${marks}</svg><div class="legend"><span><i class="swatch" style="background:${COLORS.blue}"></i>RBP</span><span><i class="swatch" style="background:${COLORS.orange}"></i>PC</span></div>`;
+  tooltipBind(document.getElementById("drift-chart"));
+}
+function renderCurve(kind){
+  const data=DATA.curves[kind], cfg={...svgBase(920,390),left:68,bottom:52}, xMin=Math.min(...data.x),xMax=Math.max(...data.x),a=axisSvg(cfg,xMin,xMax,data.yMin,data.yMax,data.xTicks,data.yTicks,data.xLabel,data.yLabel);
+  let marks="";
+  data.series.forEach(s=>{const pts=data.x.map((x,i)=>`${a.x(x)},${a.y(s.y[i])}`).join(" "),dash=s.dash?` stroke-dasharray="${s.dash}"`:"";marks+=`<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5"${dash}/>`+data.x.map((x,i)=>`<circle data-tip="<b>${esc(s.name)}</b><br>${esc(data.xLabel)} ${x}<br>${s.y[i].toFixed(3)}%" cx="${a.x(x)}" cy="${a.y(s.y[i])}" r="${data.pointRadius}" fill="${s.color}"/>`).join("")});
+  document.getElementById("learning-chart").innerHTML=`<svg viewBox="0 0 ${cfg.width} ${cfg.height}" role="img" aria-label="${esc(data.title)}">${a.out}${marks}</svg>`;
+  document.getElementById("curve-legend").innerHTML=data.series.map(s=>`<span><i class="swatch" style="background:${s.color}"></i>${esc(s.name)}${s.dash?' · dashed boundary':''}</span>`).join("");
+  document.getElementById("curve-title").textContent=data.title;
+  document.getElementById("curve-subtitle").textContent=data.subtitle;
+  document.getElementById("curve-takeaway").textContent=data.takeaway;
+  tooltipBind(document.getElementById("learning-chart"));
+}
+function setupTabs(selector,callback){document.querySelectorAll(selector).forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(selector).forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");callback(b)}))}
+
+document.getElementById("theme-button").addEventListener("click",()=>{document.documentElement.style.colorScheme=document.documentElement.style.colorScheme==="light"?"dark":"light"});
+setupTabs(".model-tab",b=>renderModel(b.dataset.model));
+setupTabs(".scale-tab",b=>renderScale(b.dataset.scenario));
+setupTabs(".curve-tab",b=>renderCurve(b.dataset.curve));
+renderModel("mnist");
+renderProtocols();
+renderRelaxation();
+renderTradeoff();
+renderScale("static");
+renderDrift();
+renderCurve("mnist");
+</script>
+</body>
+</html>

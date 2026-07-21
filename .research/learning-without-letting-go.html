@@ -122,20 +122,48 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 .rq p { margin: 0; color: var(--muted); font-size: 13px; }
 .rq ol { margin: 13px 0 0; padding-left: 20px; font-size: 13px; }
 .rq li { margin: 5px 0; }
+.claim-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.claim-card { position: relative; min-height: 205px; padding: 17px; border: 1px solid var(--border); border-top: 4px solid var(--blue); border-radius: 12px; background: var(--panel); }
+.claim-card:nth-child(2) { border-top-color: var(--purple); }
+.claim-card:nth-child(3) { border-top-color: var(--orange); }
+.claim-card:nth-child(4) { border-top-color: var(--green); }
+.claim-card h3 { margin: 8px 0 7px; font-size: 16px; }
+.claim-card p { margin: 0; color: var(--muted); font-size: 13px; }
+.claim-card ul { margin: 12px 0 0; padding-left: 18px; font-size: 12px; }
+.claim-card li { margin: 5px 0; }
+.verdict-banner { display: grid; grid-template-columns: auto 1fr; gap: 13px; align-items: center; margin-bottom: 16px; padding: 15px 17px; border: 1px solid color-mix(in srgb, var(--green) 42%, var(--border)); border-radius: 12px; background: color-mix(in srgb, var(--green) 8%, var(--panel)); }
+.verdict-banner strong { color: var(--green); font-size: 18px; white-space: nowrap; }
+.verdict-banner p { margin: 0; }
+.claim-table-wrap { overflow-x: auto; }
+.claim-table { width: 100%; border-collapse: collapse; }
+.claim-table th, .claim-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.claim-table th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.claim-table td:not(:first-child), .claim-table th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+.scope-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.scope-list li { display: grid; grid-template-columns: 86px 1fr; gap: 10px; padding-bottom: 9px; border-bottom: 1px solid var(--border); }
+.scope-list li:last-child { border-bottom: 0; }
+.scope-list span:last-child { color: var(--muted); font-size: 13px; }
+.protocol-notes { margin-top: 16px; padding: 14px 17px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.protocol-notes summary { cursor: pointer; font-weight: 700; }
+.protocol-notes ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 28px; margin: 14px 0 0; padding-left: 20px; }
+.protocol-notes li { color: var(--muted); font-size: 13px; }
 .source-grid { columns: 2; column-gap: 30px; }
 .source-grid li { break-inside: avoid; margin-bottom: 7px; }
 .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
 .tooltip { position: fixed; z-index: 50; display: none; max-width: 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--panel); box-shadow: var(--shadow); pointer-events: none; font-size: 12px; }
 @media (max-width: 980px) {
   .hero, .model-layout, .protocol-grid { grid-template-columns: 1fr; }
-  .step-grid, .rq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-grid, .rq-grid, .claim-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 680px) {
   .shell { width: min(100% - 20px, 1480px); }
   .top { padding-inline: 10px; }
-  .step-grid, .rq-grid, .chart-grid { grid-template-columns: 1fr; }
+  .step-grid, .rq-grid, .claim-grid, .chart-grid { grid-template-columns: 1fr; }
   .chart-card.wide { grid-column: auto; }
   .chart { min-height: 0; }
+  .verdict-banner { grid-template-columns: 1fr; }
+  .scope-list li { grid-template-columns: 1fr; gap: 3px; }
+  .protocol-notes ul { grid-template-columns: 1fr; }
   .section-head { display: block; }
   .section-head p { margin-top: 8px; }
   .source-grid { columns: 1; }
@@ -208,6 +236,80 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
       <article class="rq"><span class="pill ok">Q3 · finite grid answered</span><h3>How does PC inference budget change stability, plasticity and cost?</h3><p>T=5 is the cheapest effective tested default for the two-layer MLP. More relaxation does not monotonically improve behavior, while runtime increases consistently.</p><ol><li>T=1: boundary failure</li><li>T=5: static saturation</li><li>T=10/20: more cost, no general win</li></ol></article>
     </div>
     <p style="margin:16px 0 0"><a href="../research-project-proposal.md">Read the complete proposal, motivation, evidence mapping and refinement log →</a></p>
+  </section>
+
+  <section class="section" id="paper-claim">
+    <div class="section-head">
+      <h2>What did the paper claim on CIFAR-10?</h2>
+      <p>This separates Song et al.'s Figure 4i claim from our reproduction and from our later SplitCIFAR-10 extension.</p>
+    </div>
+    <div class="verdict-banner">
+      <strong>Yes — narrowly verified</strong>
+      <p>Under Song et al.'s archived, test-informed Figure 4i winning configurations, our exact-as-practical three-seed rerun reproduced all six PC and repeated-update BP best-test accuracies within 1 percentage point and the reported PC advantage (+2.30 pp on average). We did not rerun the seven-learning-rate search or establish general, causal, biological, scaling or continual-learning superiority.</p>
+    </div>
+    <div class="claim-grid" aria-label="Paper claim verification ladder">
+      <article class="claim-card">
+        <span class="pill info">1 · Paper claim</span>
+        <h3>Does the advantage scale to a larger vision problem?</h3>
+        <p>Song et al. use a CIFAR-10 convolutional network to support the statement that prospective configuration shows a “notable advantage” over backpropagation on larger networks and problems.</p>
+        <ul><li>Static image classification</li><li>Not continual CIFAR-10</li><li>Figure 4i; architecture in 4j</li></ul>
+      </article>
+      <article class="claim-card">
+        <span class="pill info">2 · What 4i measures</span>
+        <h3>Minimum test error after independent tuning</h3>
+        <p>The plotted endpoint is the best test-set performance observed during 80 training epochs, after each rule independently searches seven learning rates.</p>
+        <ul><li>Batch 200; Adam; weight decay 0.01</li><li>Three archived seeds</li><li>Test-informed LR and epoch selection</li></ul>
+      </article>
+      <article class="claim-card">
+        <span class="pill warn">3 · Comparator detail</span>
+        <h3>“BP” means 16 repeated updates per batch</h3>
+        <p>PC runs 16 inference steps and updates weights at every step. The paper also repeats the BP weight update 16 times per batch for its fairness convention.</p>
+        <ul><li>Useful label: paper-protocol RBP</li><li>Not conventional one-update BP/SGD</li><li>Both methods use the same 4.28M-parameter learned architecture</li></ul>
+      </article>
+      <article class="claim-card">
+        <span class="pill ok">4 · Our verification</span>
+        <h3>Six of six source-target cells passed</h3>
+        <p>We reran the three official seeds with the archived winning learning rate for each method and seed. Every reproduced best accuracy landed within the preregistered ±1 percentage-point source target.</p>
+        <ul><li>Matched initialization and data checksums</li><li>Finite metrics and valid PC descent</li><li>5.75 synchronized update hours</li></ul>
+      </article>
+    </div>
+
+    <div class="chart-grid" style="margin-top:16px">
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Published outcome vs our reproduction</h3><p>Accuracy is shown for readability; Figure 4i reports the equivalent minimum test error.</p></div><span class="pill ok">6 / 6 pass</span></div>
+        <div class="claim-table-wrap">
+          <table class="claim-table">
+            <thead><tr><th>Evidence</th><th>RBP best accuracy</th><th>PC best accuracy</th><th>PC − RBP</th></tr></thead>
+            <tbody>
+              <tr><td>Archived Figure 4i source</td><td>69.112%</td><td>71.599%</td><td>+2.486 pp</td></tr>
+              <tr><td>Our ROCm reproduction</td><td>68.966%</td><td>71.262%</td><td>+2.296 pp</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="takeaway">Verified: the published PC-over-RBP ordering and source values are reproducible under the archived winning settings. PC required 1.228× RBP synchronized update time and about 72.9 MB more peak allocated accelerator memory.</div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-title"><div><h3>Claim ceiling</h3><p>What this verification licenses us to say — and what it does not.</p></div></div>
+        <ul class="scope-list">
+          <li><span class="pill ok">Verified</span><span>Exact-as-practical reproduction of the selected Figure 4i best-test numerical outcome on this hardware/software stack.</span></li>
+          <li><span class="pill warn">Descriptive</span><span>PC's reproduced mean best accuracy is 2.296 pp above paper-protocol RBP; three seeds do not establish a broad significance claim.</span></li>
+          <li><span class="pill fail">Not verified</span><span>Superiority over conventional one-update BP, leakage-free model selection, field-wide scaling, causal reduced interference, or biological superiority.</span></li>
+          <li><span class="pill fail">Separate study</span><span>Replay-free SplitCIFAR-10 is our project extension. The paper's Figure 4i is static CIFAR-10; its continual-learning panels 4d–e use FashionMNIST.</span></li>
+        </ul>
+      </article>
+    </div>
+    <details class="protocol-notes">
+      <summary>Protocol details worth remembering</summary>
+      <ul>
+        <li><strong>Architecture:</strong> 3×32×32 → Conv64 → Conv128 → Linear512 → 10, with 4,275,402 learned parameters; PC inserts three latent layers.</li>
+        <li><strong>Data quirk:</strong> the archived subset helper omits one example per class, yielding 49,990 train and 9,990 test images.</li>
+        <li><strong>Evaluation quirk:</strong> the test loader is shuffled with <code>drop_last=True</code> and is evaluated after every epoch.</li>
+        <li><strong>Selection:</strong> each method/seed uses its archived winning learning rate and its best test epoch; our project did not rerun the full seven-rate grid.</li>
+        <li><strong>Update semantics:</strong> PC uses T=16 and updates parameters at every inference step; the paper-protocol RBP control also performs 16 updates per batch.</li>
+        <li><strong>Provenance:</strong> the local PC library is newer than the archived nested copy, so this is exact-as-practical rather than bitwise reproduction.</li>
+      </ul>
+    </details>
+    <p style="margin:16px 0 0"><a href="https://www.nature.com/articles/s41593-023-01514-1">Primary paper and Figure 4 →</a> · <a href="../agents/research/predictive-coding-cifar-baseline/04-evaluation.md">Our registered evaluation →</a> · <a href="../playground/step2-cifar10/runs/paper-reproduction-v1.json">Raw reproduction artifact →</a></p>
   </section>
 
   <section class="section" id="models">
@@ -336,11 +438,13 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
   <section class="section" id="sources">
     <div class="section-head"><h2>Evidence map</h2><p>Every number in this page is embedded from an immutable run or deterministic summary.</p></div>
     <ul class="source-grid">
+      <li><a href="https://www.nature.com/articles/s41593-023-01514-1">Song et al. (2024) primary paper and Figure 4</a></li>
       <li><a href="../agents/research/haoran-experiments-report.md">Combined experiment report</a></li>
       <li><a href="../research-project-proposal.md">Complete living research proposal</a></li>
       <li><a href="../agents/research/pc-relaxation-plasticity/artifacts/tables.md">Relaxation deterministic tables</a></li>
       <li><a href="../agents/research/pc-network-scale/artifacts/tables.md">Network-scale deterministic tables</a></li>
       <li><a href="../agents/research/predictive-coding-cifar-baseline/04-evaluation.md">CIFAR evaluation</a></li>
+      <li><a href="../agents/research/predictive-coding-cifar-baseline/audits/2026-07-19-baseline-closeout.md">CIFAR methodology audit</a></li>
       <li><a href="../agents/research/predictive-coding-cifar-baseline/artifacts/h2e3-representation-summary.json">Representation summary JSON</a></li>
       <li><a href="../playground/step1-static-mnist/runs/relaxation-sweep-v1.json">Raw relaxation sweep</a></li>
       <li><a href="../playground/step1-static-mnist/runs/architecture-sweep-v2.json">Raw architecture sweep</a></li>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the Step 1 static-MNIST PC/BP feasibility comparison."""
+"""Matched static-MNIST comparison of backpropagation and predictive coding."""
 
 from __future__ import annotations
 
@@ -9,358 +9,439 @@ import json
 import os
 import platform
 import random
-import subprocess
 import sys
-import tempfile
 import time
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[2]
-SUBMODULE = ROOT / "playground" / "predictive-coding"
-if str(SUBMODULE) not in sys.path:
-    sys.path.insert(0, str(SUBMODULE))
-
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader, Subset
-from torchvision import datasets, transforms
-
-try:
-    import predictive_coding as pc
-except ImportError as exc:  # pragma: no cover - exercised by setup failures
-    raise SystemExit(
-        "Predictive-coding submodule unavailable; run "
-        "`git submodule update --init --recursive` from the repository root."
-    ) from exc
-
-
-PROTOCOL_ID = "step1-static-mnist-v0.1"
-INTERPRETATION = "static-feasibility-only"
-
 
 @dataclass(frozen=True)
-class ExperimentConfig:
-    name: str
-    train_size: int
-    test_size: int
-    epochs: int
-    hidden_size: int
-    batch_size: int
-    inference_steps: int
-    parameter_lr: float
-    latent_lr: float
+class Protocol:
+    seeds: tuple[int, ...] = (7, 42, 123)
+    methods: tuple[str, ...] = ("bp", "pc")
+    epochs: int = 10
+    batch_size: int = 500
+    hidden_size: int = 256
+    hidden_layers: int = 2
+    parameter_lr: float = 0.001
+    pc_steps: int = 20
+    pc_state_lr: float = 0.01
+    validation_fraction: float = 0.2
+    split_seed: int = 20260717
+    max_train_samples: int | None = None
+    max_valid_samples: int | None = None
+    max_test_samples: int | None = None
+    data_root: str = "data"
+    device: str = "auto"
+
+    def validate(self) -> None:
+        if not self.seeds:
+            raise ValueError("at least one seed is required")
+        if not self.methods or set(self.methods) - {"bp", "pc"}:
+            raise ValueError("methods must contain only 'bp' and/or 'pc'")
+        for name in ("epochs", "batch_size", "hidden_size", "hidden_layers", "pc_steps"):
+            if getattr(self, name) <= 0:
+                raise ValueError(f"{name} must be positive")
+        if self.parameter_lr <= 0 or self.pc_state_lr <= 0:
+            raise ValueError("learning rates must be positive")
+        if not 0 < self.validation_fraction < 1:
+            raise ValueError("validation_fraction must be between 0 and 1")
+        for name in ("max_train_samples", "max_valid_samples", "max_test_samples"):
+            value = getattr(self, name)
+            if value is not None and value <= 0:
+                raise ValueError(f"{name} must be positive when set")
 
 
-CONFIGS = {
-    "smoke": ExperimentConfig(
-        name="smoke",
-        train_size=1_000,
-        test_size=500,
-        epochs=1,
-        hidden_size=64,
-        batch_size=100,
-        inference_steps=5,
-        parameter_lr=0.001,
-        latent_lr=0.01,
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--seeds", type=int, nargs="+", default=[7, 42, 123])
+    parser.add_argument("--methods", choices=("bp", "pc"), nargs="+", default=["bp", "pc"])
+    parser.add_argument("--epochs", type=int, default=10)
+    parser.add_argument("--batch-size", type=int, default=500)
+    parser.add_argument("--hidden-size", type=int, default=256)
+    parser.add_argument("--hidden-layers", type=int, default=2)
+    parser.add_argument("--parameter-lr", type=float, default=0.001)
+    parser.add_argument("--pc-steps", type=int, default=20)
+    parser.add_argument("--pc-state-lr", type=float, default=0.01)
+    parser.add_argument("--validation-fraction", type=float, default=0.2)
+    parser.add_argument("--split-seed", type=int, default=20260717)
+    parser.add_argument("--max-train-samples", type=int)
+    parser.add_argument("--max-valid-samples", type=int)
+    parser.add_argument("--max-test-samples", type=int)
+    parser.add_argument("--data-root", default="data")
+    parser.add_argument("--device", default="auto")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--print-config", action="store_true")
+    return parser.parse_args(argv)
+
+
+def protocol_from_args(args: argparse.Namespace) -> Protocol:
+    protocol = Protocol(
+        seeds=tuple(args.seeds), methods=tuple(args.methods), epochs=args.epochs,
+        batch_size=args.batch_size, hidden_size=args.hidden_size,
+        hidden_layers=args.hidden_layers,
+        parameter_lr=args.parameter_lr, pc_steps=args.pc_steps,
+        pc_state_lr=args.pc_state_lr, validation_fraction=args.validation_fraction,
+        split_seed=args.split_seed, max_train_samples=args.max_train_samples,
+        max_valid_samples=args.max_valid_samples, max_test_samples=args.max_test_samples,
+        data_root=args.data_root, device=args.device,
     )
-}
+    protocol.validate()
+    return protocol
 
 
-def seed_everything(seed: int) -> dict[str, Any]:
+def load_runtime() -> dict[str, Any]:
+    try:
+        import numpy as np
+        import torch
+        import torch.nn as nn
+        import torch.nn.functional as functional
+        import torch.optim as optim
+        import torchvision
+        from torchvision import datasets, transforms
+    except ImportError as exc:
+        raise RuntimeError(
+            "PyTorch runtime unavailable. Install torch, torchvision, numpy, pandas, "
+            "matplotlib, seaborn, and tqdm before running the experiment."
+        ) from exc
+
+    pc_root = Path(__file__).resolve().parents[1] / "predictive-coding"
+    if not (pc_root / "predictive_coding" / "pc_trainer.py").exists():
+        raise RuntimeError("predictive-coding submodule is missing; initialize git submodules")
+    sys.path.insert(0, str(pc_root))
+    try:
+        import predictive_coding as pc
+    except ImportError as exc:
+        raise RuntimeError(
+            "Predictive-coding dependencies are unavailable. See this experiment's README."
+        ) from exc
+    return locals()
+
+
+def seed_everything(seed: int, torch: Any, np: Any) -> None:
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
     torch.use_deterministic_algorithms(True)
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cudnn.deterministic = True
+
+
+def source_provenance() -> dict[str, Any]:
+    """Return source identity injected by a remote launcher, when available."""
     return {
-        "seed": seed,
-        "deterministic_algorithms": True,
-        "cudnn_benchmark": False,
-        "cudnn_deterministic": True,
+        "repository_commit": os.getenv("EXPERIMENT_REPOSITORY_COMMIT"),
+        "repository_dirty": os.getenv("EXPERIMENT_REPOSITORY_DIRTY") == "true",
+        "pc_submodule_commit": os.getenv("EXPERIMENT_PC_SUBMODULE_COMMIT"),
+        "pc_submodule_dirty": os.getenv("EXPERIMENT_PC_SUBMODULE_DIRTY") == "true",
     }
 
 
-def stratified_indices(targets: torch.Tensor, count: int, seed: int) -> list[int]:
-    """Select a deterministic, class-balanced subset and realized order."""
-    generator = torch.Generator().manual_seed(seed)
-    labels = sorted(int(label) for label in torch.unique(targets))
-    per_class, remainder = divmod(count, len(labels))
-    selected: list[int] = []
-    for offset, label in enumerate(labels):
-        candidates = torch.where(targets == label)[0]
-        take = per_class + (offset < remainder)
-        if take > len(candidates):
-            raise ValueError(f"requested {take} examples for class {label}, found {len(candidates)}")
-        order = torch.randperm(len(candidates), generator=generator)
-        selected.extend(candidates[order[:take]].tolist())
-    realized = torch.randperm(len(selected), generator=generator).tolist()
-    return [selected[index] for index in realized]
+def limited_subset(dataset: Any, limit: int | None, torch: Any) -> Any:
+    if limit is None or limit >= len(dataset):
+        return dataset
+    return torch.utils.data.Subset(dataset, range(limit))
 
 
-def sequence_hash(values: list[int]) -> str:
-    payload = ",".join(map(str, values)).encode("ascii")
-    return hashlib.sha256(payload).hexdigest()
+def resolved_dataset_indices(dataset: Any) -> list[int]:
+    if not hasattr(dataset, "indices"):
+        return list(range(len(dataset)))
+    parent = resolved_dataset_indices(dataset.dataset)
+    return [parent[int(index)] for index in dataset.indices]
 
 
-def load_data(config: ExperimentConfig, seed: int) -> tuple[DataLoader, DataLoader, dict[str, str]]:
+def dataset_index_checksum(dataset: Any) -> str:
+    payload = json.dumps(resolved_dataset_indices(dataset), separators=(",", ":"))
+    return hashlib.sha256(payload.encode()).hexdigest()
+
+
+def make_datasets(protocol: Protocol, runtime: dict[str, Any]) -> tuple[Any, Any, Any]:
+    torch, datasets, transforms = runtime["torch"], runtime["datasets"], runtime["transforms"]
     transform = transforms.Compose([transforms.ToTensor(), transforms.Lambda(torch.flatten)])
-    train = datasets.MNIST(ROOT / "data", train=True, download=True, transform=transform)
-    test = datasets.MNIST(ROOT / "data", train=False, download=True, transform=transform)
-    train_indices = stratified_indices(train.targets, config.train_size, seed)
-    test_indices = stratified_indices(test.targets, config.test_size, seed + 10_000)
-    train_loader = DataLoader(
-        Subset(train, train_indices), batch_size=config.batch_size, shuffle=False, num_workers=0
+    full_train = datasets.MNIST(protocol.data_root, train=True, download=True, transform=transform)
+    test = datasets.MNIST(protocol.data_root, train=False, download=True, transform=transform)
+    valid_size = round(len(full_train) * protocol.validation_fraction)
+    train_size = len(full_train) - valid_size
+    generator = torch.Generator().manual_seed(protocol.split_seed)
+    train, valid = torch.utils.data.random_split(full_train, [train_size, valid_size], generator=generator)
+    return (
+        limited_subset(train, protocol.max_train_samples, torch),
+        limited_subset(valid, protocol.max_valid_samples, torch),
+        limited_subset(test, protocol.max_test_samples, torch),
     )
-    test_loader = DataLoader(Subset(test, test_indices), batch_size=500, shuffle=False, num_workers=0)
-    identity = {
-        "dataset": "MNIST",
-        "train_indices_sha256": sequence_hash(train_indices),
-        "test_indices_sha256": sequence_hash(test_indices),
-        "realized_train_order_sha256": sequence_hash(train_indices * config.epochs),
-    }
-    return train_loader, test_loader, identity
 
 
-def build_model(config: ExperimentConfig, method: str, seed: int) -> nn.Sequential:
-    seed_everything(seed)
-    layers: list[nn.Module] = [nn.Linear(784, config.hidden_size)]
-    if method == "pc":
-        layers.append(pc.PCLayer())
-    layers.extend([nn.ReLU(), nn.Linear(config.hidden_size, config.hidden_size)])
-    if method == "pc":
-        layers.append(pc.PCLayer())
-    layers.extend([nn.ReLU(), nn.Linear(config.hidden_size, 10)])
-    return nn.Sequential(*layers).train()
+def make_loader(dataset: Any, protocol: Protocol, seed: int, shuffle: bool, torch: Any) -> Any:
+    generator = torch.Generator().manual_seed(seed)
+    return torch.utils.data.DataLoader(
+        dataset, batch_size=protocol.batch_size, shuffle=shuffle, generator=generator,
+        num_workers=0, drop_last=False,
+    )
 
 
-def trainable_parameter_hash(model: nn.Module) -> str:
+def build_models(protocol: Protocol, runtime: dict[str, Any]) -> dict[str, Any]:
+    nn, pc = runtime["nn"], runtime["pc"]
+    bp_modules = []
+    input_size = 784
+    for _ in range(protocol.hidden_layers):
+        bp_modules.extend((nn.Linear(input_size, protocol.hidden_size), nn.ReLU()))
+        input_size = protocol.hidden_size
+    bp_modules.append(nn.Linear(input_size, 10))
+    bp = nn.Sequential(*bp_modules)
+
+    pc_modules = []
+    input_size = 784
+    for _ in range(protocol.hidden_layers):
+        pc_modules.extend((
+            nn.Linear(input_size, protocol.hidden_size), pc.PCLayer(), nn.ReLU(),
+        ))
+        input_size = protocol.hidden_size
+    pc_modules.append(nn.Linear(input_size, 10))
+    pc_model = nn.Sequential(*pc_modules)
+    bp_linears = [module for module in bp if isinstance(module, nn.Linear)]
+    pc_linears = [module for module in pc_model if isinstance(module, nn.Linear)]
+    for source, target in zip(bp_linears, pc_linears, strict=True):
+        target.load_state_dict(source.state_dict())
+    return {"bp": bp, "pc": pc_model}
+
+
+def parameter_checksum(model: Any, nn: Any) -> str:
     digest = hashlib.sha256()
-    for parameter in model.parameters():
-        digest.update(parameter.detach().cpu().contiguous().numpy().tobytes())
+    for module in model.modules():
+        if isinstance(module, nn.Linear):
+            for parameter in module.parameters():
+                digest.update(parameter.detach().cpu().numpy().tobytes())
     return digest.hexdigest()
 
 
-@torch.no_grad()
-def evaluate(model: nn.Module, loader: DataLoader) -> float:
+def learned_parameter_count(model: Any, nn: Any) -> int:
+    return sum(
+        parameter.numel()
+        for module in model.modules()
+        if isinstance(module, nn.Linear)
+        for parameter in module.parameters()
+    )
+
+
+def latent_state_elements(model: Any, pc: Any) -> int:
+    return sum(
+        module.get_x().numel()
+        for module in model.modules()
+        if isinstance(module, pc.PCLayer) and module.get_x() is not None
+    )
+
+
+def squared_error(logits: Any, target: Any) -> Any:
+    return 0.5 * (logits - target).pow(2).sum()
+
+
+def evaluate(model: Any, loader: Any, device: Any, runtime: dict[str, Any]) -> dict[str, float]:
+    torch, functional = runtime["torch"], runtime["functional"]
     model.eval()
-    correct = total = 0
-    for inputs, targets in loader:
-        predictions = model(inputs).argmax(dim=1)
-        correct += int((predictions == targets).sum())
-        total += len(targets)
-    model.train()
-    return correct / total
+    loss_sum, correct, count = 0.0, 0, 0
+    with torch.no_grad():
+        for inputs, labels in loader:
+            inputs, labels = inputs.to(device), labels.to(device)
+            logits = model(inputs)
+            targets = functional.one_hot(labels, num_classes=10).float()
+            loss_sum += squared_error(logits, targets).item()
+            correct += (logits.argmax(dim=1) == labels).sum().item()
+            count += labels.numel()
+    return {"loss_per_example": loss_sum / count, "accuracy": correct / count}
 
 
-def run_method(
-    method: str,
-    config: ExperimentConfig,
-    seed: int,
-    train_loader: DataLoader,
-    test_loader: DataLoader,
-    stream_identity: dict[str, str],
+def synchronize(device: Any, torch: Any) -> None:
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
+
+
+def warmup_methods(protocol: Protocol, device: Any, runtime: dict[str, Any]) -> None:
+    """Run one discarded update per selected method before timing."""
+    torch, functional, optim, pc = (
+        runtime["torch"], runtime["functional"], runtime["optim"], runtime["pc"]
+    )
+    inputs = torch.zeros(min(protocol.batch_size, 8), 784, device=device)
+    labels = torch.arange(inputs.shape[0], device=device) % 10
+    targets = functional.one_hot(labels, num_classes=10).float()
+    for method in protocol.methods:
+        model = build_models(protocol, runtime)[method].to(device)
+        model.train()
+        if method == "bp":
+            optimizer = optim.Adam(model.parameters(), lr=protocol.parameter_lr)
+            optimizer.zero_grad()
+            squared_error(model(inputs), targets).backward()
+            optimizer.step()
+        else:
+            trainer = pc.PCTrainer(
+                model, T=protocol.pc_steps, optimizer_x_fn=optim.SGD,
+                optimizer_x_kwargs={"lr": protocol.pc_state_lr}, update_p_at="last",
+                optimizer_p_fn=optim.Adam,
+                optimizer_p_kwargs={"lr": protocol.parameter_lr},
+            )
+            trainer.train_on_batch(
+                inputs=inputs, loss_fn=squared_error,
+                loss_fn_kwargs={"target": targets},
+            )
+        synchronize(device, torch)
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+
+
+def train_method(
+    method: str, model: Any, datasets: tuple[Any, Any, Any], protocol: Protocol,
+    seed: int, device: Any, runtime: dict[str, Any],
 ) -> dict[str, Any]:
-    model = build_model(config, method, seed)
-    initial_hash = trainable_parameter_hash(model)
-    updates = 0
-    started = time.perf_counter()
-    if method == "pc":
-        trainer = pc.PCTrainer(
-            model,
-            T=config.inference_steps,
-            optimizer_x_fn=torch.optim.SGD,
-            optimizer_x_kwargs={"lr": config.latent_lr},
-            optimizer_p_fn=torch.optim.Adam,
-            optimizer_p_kwargs={"lr": config.parameter_lr},
-            update_p_at="last",
-        )
+    torch, nn, functional, optim, pc = (
+        runtime["torch"], runtime["nn"], runtime["functional"],
+        runtime["optim"], runtime["pc"]
+    )
+    train_set, valid_set, test_set = datasets
+    train_loader = make_loader(train_set, protocol, seed, True, torch)
+    train_eval_loader = make_loader(train_set, protocol, seed, False, torch)
+    valid_loader = make_loader(valid_set, protocol, seed, False, torch)
+    test_loader = make_loader(test_set, protocol, seed, False, torch)
+    model.to(device)
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats(device)
+    optimizer = None
+    trainer = None
+    if method == "bp":
+        optimizer = optim.Adam(model.parameters(), lr=protocol.parameter_lr)
     else:
-        optimizer = torch.optim.Adam(model.parameters(), lr=config.parameter_lr)
+        trainer = pc.PCTrainer(
+            model, T=protocol.pc_steps, optimizer_x_fn=optim.SGD,
+            optimizer_x_kwargs={"lr": protocol.pc_state_lr}, update_p_at="last",
+            optimizer_p_fn=optim.Adam, optimizer_p_kwargs={"lr": protocol.parameter_lr},
+        )
 
-    for _epoch in range(config.epochs):
+    history = [{"epoch": 0, "samples_seen": 0, "validation": evaluate(model, valid_loader, device, runtime)}]
+    samples_seen, timed_update_samples, dynamics = 0, 0, None
+    update_seconds, diagnostic_update_seconds = 0.0, 0.0
+    for epoch in range(1, protocol.epochs + 1):
+        model.train()
+        epoch_update_started = None
         for inputs, labels in train_loader:
-            targets = F.one_hot(labels, num_classes=10).float()
-            if method == "pc":
-                trainer.train_on_batch(
-                    inputs=inputs,
-                    loss_fn=lambda output, target: 0.5 * (output - target).pow(2).sum(),
-                    loss_fn_kwargs={"target": targets},
-                )
-            else:
+            inputs, labels = inputs.to(device), labels.to(device)
+            targets = functional.one_hot(labels, num_classes=10).float()
+            is_diagnostic_batch = dynamics is None if method == "pc" else samples_seen == 0
+            if is_diagnostic_batch:
+                synchronize(device, torch)
+                diagnostic_started = time.perf_counter()
+            elif epoch_update_started is None:
+                synchronize(device, torch)
+                epoch_update_started = time.perf_counter()
+            if method == "bp":
                 optimizer.zero_grad()
-                loss = 0.5 * (model(inputs) - targets).pow(2).sum()
+                loss = squared_error(model(inputs), targets)
                 loss.backward()
                 optimizer.step()
-            updates += 1
-
+            else:
+                capture = dynamics is None
+                results = trainer.train_on_batch(
+                    inputs=inputs, loss_fn=squared_error,
+                    loss_fn_kwargs={"target": targets},
+                    is_return_results_every_t=capture,
+                )
+                if capture:
+                    dynamics = {
+                        "loss": results["loss"], "energy": results["energy"],
+                        "overall": results["overall"],
+                        "overall_decreased": (
+                            results["overall"][-1] <= results["overall"][0]
+                            if len(results["overall"]) > 1 else None
+                        ),
+                    }
+            if is_diagnostic_batch:
+                synchronize(device, torch)
+                diagnostic_update_seconds += time.perf_counter() - diagnostic_started
+            else:
+                timed_update_samples += labels.numel()
+            samples_seen += labels.numel()
+        if epoch_update_started is not None:
+            synchronize(device, torch)
+            update_seconds += time.perf_counter() - epoch_update_started
+        history.append({
+            "epoch": epoch, "samples_seen": samples_seen,
+            "validation": evaluate(model, valid_loader, device, runtime),
+        })
     return {
-        "status": "completed",
-        "method": method,
-        "seed": seed,
-        "initial_parameters_sha256": initial_hash,
-        "stream_identity": stream_identity,
-        "metrics": {"test_accuracy": evaluate(model, test_loader)},
-        "resources": {
-            "duration_seconds": time.perf_counter() - started,
-            "parameter_updates": updates,
-            "inference_steps_per_update": config.inference_steps if method == "pc" else 0,
-            "peak_memory_bytes": None,
-        },
-        "warnings": [],
-        "errors": [],
-    }
-
-
-def git_output(*args: str) -> str:
-    result = subprocess.run(
-        ["git", *args], cwd=ROOT, text=True, capture_output=True, check=False
-    )
-    return result.stdout.strip()
-
-
-def provenance() -> dict[str, Any]:
-    return {
-        "repository_commit": git_output("rev-parse", "HEAD"),
-        "repository_dirty": bool(git_output("status", "--porcelain")),
-        "predictive_coding_commit": git_output(
-            "-C", str(SUBMODULE), "rev-parse", "HEAD"
+        "method": method, "seed": seed, "history": history,
+        "train_final": evaluate(model, train_eval_loader, device, runtime),
+        "test": evaluate(model, test_loader, device, runtime),
+        "training_seconds": update_seconds,
+        "timed_update_samples": timed_update_samples,
+        "diagnostic_update_seconds": diagnostic_update_seconds,
+        "learned_parameter_count": learned_parameter_count(model, nn),
+        "latent_state_elements": latent_state_elements(model, pc),
+        "pc_first_batch_dynamics": dynamics,
+        "peak_accelerator_memory_bytes": (
+            torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None
         ),
-        "python": platform.python_version(),
-        "torch": torch.__version__,
-        "torchvision": __import__("torchvision").__version__,
-        "platform": platform.platform(),
     }
 
 
-def atomic_write_new(record: dict[str, Any], destination: Path) -> None:
-    """Atomically create destination and refuse to replace prior evidence."""
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    descriptor, temporary_name = tempfile.mkstemp(
-        dir=destination.parent, prefix=f".{destination.name}.", suffix=".tmp"
-    )
-    temporary = Path(temporary_name)
-    try:
-        with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
-            json.dump(record, stream, indent=2, sort_keys=True)
-            stream.write("\n")
-        try:
-            os.link(temporary, destination)
-        except FileExistsError as exc:
-            raise FileExistsError(f"refusing to overwrite run artifact: {destination}") from exc
-    finally:
-        temporary.unlink(missing_ok=True)
-
-
-def validate_record(record: dict[str, Any]) -> None:
-    required = {
-        "schema_version",
-        "protocol_id",
-        "interpretation",
-        "status",
-        "config",
-        "seed",
-        "methods_requested",
-        "runs",
-        "provenance",
-    }
-    if missing := required - record.keys():
-        raise ValueError(f"record missing fields: {sorted(missing)}")
-    if record["protocol_id"] != PROTOCOL_ID or record["interpretation"] != INTERPRETATION:
-        raise ValueError("record does not belong to the Step 1 static protocol")
-    if record["status"] not in {"completed", "failed"}:
-        raise ValueError(f"invalid record status: {record['status']!r}")
-    if not record["runs"]:
-        raise ValueError("record contains no method runs")
-    identities = [run.get("stream_identity") for run in record["runs"]]
-    if any(identity != identities[0] for identity in identities[1:]):
-        raise ValueError("method runs do not share one realized stream")
-    completed = [run for run in record["runs"] if run.get("status") == "completed"]
-    if len(completed) > 1:
-        hashes = {run.get("initial_parameters_sha256") for run in completed}
-        if len(hashes) != 1:
-            raise ValueError("method runs do not share initial trainable parameters")
-
-
-def run_seed(config: ExperimentConfig, seed: int, methods: list[str]) -> dict[str, Any]:
-    seed_everything(seed)
-    train_loader, test_loader, stream_identity = load_data(config, seed)
-    runs: list[dict[str, Any]] = []
-    failed = False
-    for method in methods:
-        try:
-            runs.append(run_method(method, config, seed, train_loader, test_loader, stream_identity))
-        except Exception as error:  # preserve the failure before returning nonzero
-            failed = True
-            runs.append(
-                {
-                    "status": "failed",
-                    "method": method,
-                    "seed": seed,
-                    "stream_identity": stream_identity,
-                    "warnings": [],
-                    "errors": [repr(error)],
-                }
-            )
-            break
+def run(protocol: Protocol, runtime: dict[str, Any]) -> dict[str, Any]:
+    torch, np, nn = runtime["torch"], runtime["np"], runtime["nn"]
+    if protocol.device == "auto":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = torch.device(protocol.device)
+    if device.type == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("GPU execution was required, but PyTorch cannot access ROCm/CUDA")
+    datasets = make_datasets(protocol, runtime)
+    warmup_methods(protocol, device, runtime)
+    runs = []
+    for seed in protocol.seeds:
+        seed_everything(seed, torch, np)
+        models = build_models(protocol, runtime)
+        checksums = {name: parameter_checksum(model, nn) for name, model in models.items()}
+        if checksums["bp"] != checksums["pc"]:
+            raise RuntimeError("paired models do not share identical initial linear parameters")
+        for method in protocol.methods:
+            result = train_method(method, models[method], datasets, protocol, seed, device, runtime)
+            result["initial_parameter_checksum"] = checksums[method]
+            runs.append(result)
     return {
-        "schema_version": 1,
-        "protocol_id": PROTOCOL_ID,
-        "interpretation": INTERPRETATION,
-        "status": "failed" if failed else "completed",
-        "config": asdict(config),
-        "seed": seed,
-        "methods_requested": methods,
-        "runs": runs,
-        "provenance": provenance(),
-    }
-
-
-def printable_config() -> dict[str, Any]:
-    return {
-        "protocol_id": PROTOCOL_ID,
-        "interpretation": INTERPRETATION,
-        "configs": {name: asdict(config) for name, config in CONFIGS.items()},
-        "constraints": {
-            "device": "cpu",
-            "continual_learning": False,
-            "result_claims_authorized": False,
+        "protocol_id": "step1-static-mnist-v1",
+        "claim_status": "verified run output; interpretation requires paired-seed review",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "protocol": asdict(protocol),
+        "dataset_sizes": dict(zip(("train", "validation", "test"), map(len, datasets), strict=True)),
+        "dataset_index_checksums": {
+            name: dataset_index_checksum(dataset)
+            for name, dataset in zip(("train", "validation", "test"), datasets, strict=True)
         },
+        "environment": {
+            "python": platform.python_version(), "platform": platform.platform(),
+            "torch": torch.__version__, "torchvision": runtime["torchvision"].__version__,
+            "numpy": np.__version__, "device": str(device),
+            "execution_host": os.getenv("EXPERIMENT_EXECUTION_HOST"),
+            "runtime_image": os.getenv("EXPERIMENT_RUNTIME_IMAGE"),
+            "runtime_image_id": os.getenv("EXPERIMENT_RUNTIME_IMAGE_ID"),
+            **source_provenance(),
+        },
+        "runs": runs,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--print-config", action="store_true")
-    parser.add_argument("--config", choices=CONFIGS)
-    parser.add_argument("--device", choices=["cpu"], default="cpu")
-    parser.add_argument("--methods", choices=["pc", "bp"], nargs="+", default=["pc", "bp"])
-    parser.add_argument("--seeds", type=int, nargs="+", default=[0])
-    parser.add_argument(
-        "--output-dir", type=Path, default=Path(__file__).resolve().parent / "results"
-    )
-    args = parser.parse_args(argv)
+    args = parse_args(argv)
+    protocol = protocol_from_args(args)
     if args.print_config:
-        print(json.dumps(printable_config(), indent=2, sort_keys=True))
+        print(json.dumps(asdict(protocol), indent=2))
         return 0
-    if args.config is None:
-        parser.error("--config is required unless --print-config is used")
-
-    any_failed = False
-    for seed in args.seeds:
-        destination = args.output_dir / f"{args.config}-seed-{seed}.json"
-        if destination.exists():
-            raise FileExistsError(f"refusing to overwrite run artifact: {destination}")
-        record = run_seed(CONFIGS[args.config], seed, args.methods)
-        validate_record(record)
-        atomic_write_new(record, destination)
-        print(destination)
-        any_failed = any_failed or record["status"] != "completed"
-    return 1 if any_failed else 0
+    if args.output is None:
+        raise SystemExit("--output is required for experiment runs")
+    if args.output.exists():
+        raise SystemExit(f"refusing to overwrite existing run artifact: {args.output}")
+    results = run(protocol, load_runtime())
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+    print(args.output)
+    return 0
 
 
 if __name__ == "__main__":

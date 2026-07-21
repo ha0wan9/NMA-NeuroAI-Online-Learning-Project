@@ -1,0 +1,124 @@
+{
+  "protocol_id": "step1-static-mnist-v1",
+  "claim_status": "verified run output; interpretation requires paired-seed review",
+  "created_at": "2026-07-17T20:36:56.317118+00:00",
+  "protocol": {
+    "seeds": [
+      42
+    ],
+    "methods": [
+      "bp",
+      "pc"
+    ],
+    "epochs": 1,
+    "batch_size": 64,
+    "hidden_size": 256,
+    "parameter_lr": 0.001,
+    "pc_steps": 4,
+    "pc_state_lr": 0.01,
+    "validation_fraction": 0.2,
+    "split_seed": 20260717,
+    "max_train_samples": 256,
+    "max_valid_samples": 256,
+    "max_test_samples": 256,
+    "data_root": "data",
+    "device": "cuda"
+  },
+  "dataset_sizes": {
+    "train": 256,
+    "validation": 256,
+    "test": 256
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.19.14-200.fc43.x86_64-x86_64-with-glibc2.39",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "torchvision": "0.24.0+rocm7.2.1.gitb919bd0c",
+    "numpy": "2.4.4",
+    "device": "cuda"
+  },
+  "runs": [
+    {
+      "method": "bp",
+      "seed": 42,
+      "history": [
+        {
+          "epoch": 0,
+          "samples_seen": 0,
+          "validation": {
+            "loss_per_example": 0.5295227319002151,
+            "accuracy": 0.10546875
+          }
+        },
+        {
+          "epoch": 1,
+          "samples_seen": 256,
+          "validation": {
+            "loss_per_example": 0.3968643546104431,
+            "accuracy": 0.56640625
+          }
+        }
+      ],
+      "test": {
+        "loss_per_example": 0.3960969150066376,
+        "accuracy": 0.5703125
+      },
+      "training_seconds": 0.15379963300006239,
+      "parameter_count": 269322,
+      "pc_first_batch_dynamics": null,
+      "peak_accelerator_memory_bytes": 118839296,
+      "initial_parameter_checksum": "02a42c03bb2874cf7c0a776c2cdad90f600f05d6fea0640295ddc1acb4d28176"
+    },
+    {
+      "method": "pc",
+      "seed": 42,
+      "history": [
+        {
+          "epoch": 0,
+          "samples_seen": 0,
+          "validation": {
+            "loss_per_example": 0.5295227319002151,
+            "accuracy": 0.10546875
+          }
+        },
+        {
+          "epoch": 1,
+          "samples_seen": 256,
+          "validation": {
+            "loss_per_example": 0.39697474241256714,
+            "accuracy": 0.5703125
+          }
+        }
+      ],
+      "test": {
+        "loss_per_example": 0.39646467566490173,
+        "accuracy": 0.57421875
+      },
+      "training_seconds": 0.12288590000002841,
+      "parameter_count": 302090,
+      "pc_first_batch_dynamics": {
+        "loss": [
+          34.199851989746094,
+          34.09666442871094,
+          33.99504089355469,
+          33.894935607910156
+        ],
+        "energy": [
+          0.0,
+          0.0005167257622815669,
+          0.0020366464741528034,
+          0.004516515880823135
+        ],
+        "overall": [
+          34.199851989746094,
+          34.0971794128418,
+          33.99707794189453,
+          33.899452209472656
+        ],
+        "overall_decreased": true
+      },
+      "peak_accelerator_memory_bytes": 121261568,
+      "initial_parameter_checksum": "02a42c03bb2874cf7c0a776c2cdad90f600f05d6fea0640295ddc1acb4d28176"
+    }
+  ]
+}

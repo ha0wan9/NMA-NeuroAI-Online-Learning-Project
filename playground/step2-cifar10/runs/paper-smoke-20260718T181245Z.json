@@ -1,0 +1,130 @@
+{
+  "protocol_id": "song-2024-figure4i-cifar10-reproduction-v1",
+  "claim_status": "paper-protocol reproduction; test-informed model selection is preserved and disclosed",
+  "created_at": "2026-07-18T18:52:03.995411+00:00",
+  "protocol": {
+    "seeds": [
+      1482555873
+    ],
+    "methods": [
+      "bp",
+      "pc"
+    ],
+    "epochs": 1,
+    "batch_size": 200,
+    "pc_steps": 16,
+    "pc_state_lr": 0.5,
+    "train_per_class": 16,
+    "test_per_class": 20,
+    "bp_lr": null,
+    "pc_lr": null,
+    "data_root": "data",
+    "device": "cuda"
+  },
+  "paper_protocol_notes": {
+    "source": "Song et al. Nature Neuroscience 2024, official repository revision recorded below",
+    "selection": "per-seed learning rates and minimum test error were selected from archived source data",
+    "updates": "both RBP and PC use PCTrainer T=16 with parameter updates at every inference step",
+    "data": "archived subset helper omits one random example per class when the requested class size equals the dataset class size",
+    "test_caveat": "test batches are shuffled, drop_last=True, and evaluated every epoch exactly as in the archived protocol"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.19.14-200.fc43.x86_64-x86_64-with-glibc2.39",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "torchvision": "0.24.0+rocm7.2.1.gitb919bd0c",
+    "numpy": "2.4.4",
+    "device": "cuda",
+    "device_name": "AMD Radeon Graphics",
+    "execution_host": "cyberengine",
+    "runtime_image": "localhost/nma-neuroai-step1-rocm:7.2.1",
+    "runtime_image_id": "237054ff517b7a110e24afca9bd2df843c277ca5967758f283c3ec0cfafa3e51",
+    "paper_source_revision": "625d52678b3d4cab2dbc403b1d6ee0cfc004aea0",
+    "pc_submodule_revision": "5bf803c3636a39928488941f05539c70ab4df0b1"
+  },
+  "runs": [
+    {
+      "method": "bp",
+      "seed": 1482555873,
+      "parameter_lr": 7.5e-05,
+      "history": [
+        {
+          "epoch": 1,
+          "samples_seen": 0,
+          "test": {
+            "loss_per_example": 0.5039594268798828,
+            "accuracy": 0.13,
+            "samples": 200
+          }
+        }
+      ],
+      "best_test_accuracy": 0.13,
+      "best_epoch": 1,
+      "final_test_accuracy": 0.13,
+      "source_target_accuracy": 0.6921428627505595,
+      "absolute_target_difference": -0.5621428627505595,
+      "within_registered_one_pp_tolerance": false,
+      "initial_parameter_checksum": "85730b556d5898acf85609e36f7916a1293a8392ee5bca2f67f6ec8fa42a7c99",
+      "train_index_checksum": "df41efd964a3e347c52acdcda1360e13f8ff1c86b21558f6718ebe39c8f94152",
+      "test_index_checksum": "802d2b82753f1e2bec2efc99a1f4e2efe950a99f2171b0011abfb454a2bbc8ad",
+      "dataset_sizes": {
+        "train": 160,
+        "test": 200
+      },
+      "samples_seen": 0,
+      "update_seconds": 0.00046563900832552463,
+      "learned_parameter_count": 4275402,
+      "latent_state_elements": 0,
+      "pc_first_batch_dynamics": null,
+      "peak_accelerator_memory_bytes": 106216960
+    },
+    {
+      "method": "pc",
+      "seed": 1482555873,
+      "parameter_lr": 5e-05,
+      "history": [
+        {
+          "epoch": 1,
+          "samples_seen": 0,
+          "test": {
+            "loss_per_example": 0.5039594268798828,
+            "accuracy": 0.13,
+            "samples": 200
+          }
+        }
+      ],
+      "best_test_accuracy": 0.13,
+      "best_epoch": 1,
+      "final_test_accuracy": 0.13,
+      "source_target_accuracy": 0.7128571493893254,
+      "absolute_target_difference": -0.5828571493893254,
+      "within_registered_one_pp_tolerance": false,
+      "initial_parameter_checksum": "85730b556d5898acf85609e36f7916a1293a8392ee5bca2f67f6ec8fa42a7c99",
+      "train_index_checksum": "df41efd964a3e347c52acdcda1360e13f8ff1c86b21558f6718ebe39c8f94152",
+      "test_index_checksum": "802d2b82753f1e2bec2efc99a1f4e2efe950a99f2171b0011abfb454a2bbc8ad",
+      "dataset_sizes": {
+        "train": 160,
+        "test": 200
+      },
+      "samples_seen": 0,
+      "update_seconds": 0.00022244099818635732,
+      "learned_parameter_count": 4275402,
+      "latent_state_elements": 0,
+      "pc_first_batch_dynamics": null,
+      "peak_accelerator_memory_bytes": 125468160
+    }
+  ],
+  "aggregates": {
+    "bp": {
+      "best_test_accuracy_mean": 0.13,
+      "best_test_accuracy_sample_std": null,
+      "all_source_targets_within_one_pp": false
+    },
+    "pc": {
+      "best_test_accuracy_mean": 0.13,
+      "best_test_accuracy_sample_std": null,
+      "all_source_targets_within_one_pp": false
+    },
+    "pc_minus_bp_best_accuracy_mean": 0.0
+  }
+}

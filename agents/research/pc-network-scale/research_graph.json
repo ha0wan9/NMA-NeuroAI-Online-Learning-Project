@@ -1,0 +1,32 @@
+{
+  "study_id":"pc-network-scale",
+  "generated_utc":"2026-07-17T23:45:00Z",
+  "winning_route":"D-keep-baseline",
+  "nodes":[
+    {"id":"study","kind":"study","label":"pc-network-scale","status":"pass","uri":"05-synthesis.md","summary":"Width has narrow benefits; depth fails; retain baseline."},
+    {"id":"V1-invalid","kind":"evidence","label":"v1 initialization-order defect","status":"invalid","uri":"03-monitor.md","summary":"Preserved and excluded; v2 supersedes it."},
+    {"id":"H1","kind":"track","label":"H1: width","status":"inconclusive","uri":"H1-width/","summary":"Scenario-specific support only."},
+    {"id":"H2","kind":"track","label":"H2: depth","status":"fail","uri":"H2-depth/","summary":"Rejected under frozen protocol."},
+    {"id":"H1.E1","kind":"experiment","label":"256x2 baseline","status":"baseline","uri":"H1-width/E1-baseline-256x2/","summary":"Valid matched control."},
+    {"id":"H1.E2","kind":"experiment","label":"512x2 wide","status":"inconclusive","uri":"H1-width/E2-wide-512x2/","summary":"PC-Split and BP-Permuted narrow candidates."},
+    {"id":"H2.E1","kind":"experiment","label":"256x4 deep","status":"fail","uri":"H2-depth/E1-deep-256x4/","summary":"Broad degradation, especially deep-PC Permuted."},
+    {"id":"R-width-split","kind":"result","label":"Wide PC Split benefit","status":"pass","uri":"04-evaluation.md","summary":"Final +0.528 pp and adaptation +2.575 pp; forgetting remains catastrophic."},
+    {"id":"R-width-permuted","kind":"result","label":"Wide BP Permuted candidate","status":"inconclusive","uri":"04-evaluation.md","summary":"Mean final +0.990 pp with one negative paired seed."},
+    {"id":"R-depth-negative","kind":"result","label":"Depth negative result","status":"fail","uri":"04-evaluation.md","summary":"Both methods degrade; deep PC Permuted loses 39.941 pp."},
+    {"id":"D-keep-baseline","kind":"decision","label":"Retain 256x2 baseline","status":"promoted","uri":"05-synthesis.md","summary":"No larger architecture replaces the baseline."}
+  ],
+  "edges":[
+    {"source":"H1.E1","target":"V1-invalid","relation":"supersedes","summary":"Corrected v2 baseline supersedes invalid v1."},
+    {"source":"study","target":"H1","relation":"tests","summary":null},
+    {"source":"study","target":"H2","relation":"tests","summary":null},
+    {"source":"H1","target":"H1.E1","relation":"tests","summary":null},
+    {"source":"H1.E1","target":"H1.E2","relation":"depends-on","summary":"Shared control"},
+    {"source":"H1.E1","target":"H2.E1","relation":"depends-on","summary":"Shared control"},
+    {"source":"H1.E2","target":"R-width-split","relation":"supports","summary":null},
+    {"source":"H1.E2","target":"R-width-permuted","relation":"supports","summary":null},
+    {"source":"H2.E1","target":"R-depth-negative","relation":"supports","summary":null},
+    {"source":"R-width-split","target":"D-keep-baseline","relation":"supports","summary":"Benefit is narrow, not global."},
+    {"source":"R-width-permuted","target":"D-keep-baseline","relation":"supports","summary":"Seed disagreement prevents replacement."},
+    {"source":"R-depth-negative","target":"D-keep-baseline","relation":"supports","summary":"Depth is rejected."}
+  ]
+}

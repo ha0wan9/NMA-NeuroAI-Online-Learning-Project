@@ -30,6 +30,11 @@ comparison.
 - `continual-reference-v1.json`: preferred full-data, three-seed reference with
   final and peak latent-state accounting.
 - `continual-reference-v1-summary.md`: claim-labelled human-readable summary.
+- `continual-reference-v1-integration-reproduction.json`: clean-revision local
+  RTX 4090/CUDA 12.6 rerun of the frozen three-seed protocol. Structural,
+  stream, initialization, and objective-descent checks match; accuracy
+  matrices differ from the archived ROCm/PyTorch 2.9 run, so this is retained
+  as a cross-backend reproduction with an exact-numerics warning.
 
 - `relaxation-sweep-smoke-20260717.json`: first full-path four-level smoke;
   superseded for timing because it predates diagnostic-batch exclusion.

@@ -1,0 +1,79 @@
+{
+  "config": {
+    "batch_size": 100,
+    "epochs": 1,
+    "hidden_size": 64,
+    "inference_steps": 5,
+    "latent_lr": 0.01,
+    "name": "smoke",
+    "parameter_lr": 0.001,
+    "test_size": 500,
+    "train_size": 1000
+  },
+  "interpretation": "static-feasibility-only",
+  "methods_requested": [
+    "pc",
+    "bp"
+  ],
+  "protocol_id": "step1-static-mnist-v0.1",
+  "provenance": {
+    "platform": "Linux-6.1.0-44-amd64-x86_64-with-glibc2.36",
+    "predictive_coding_commit": "5bf803c3636a39928488941f05539c70ab4df0b1",
+    "python": "3.11.2",
+    "repository_commit": "8578702836092afc696fbf766187e20dd0e31ad9",
+    "repository_dirty": true,
+    "torch": "2.10.0+cpu",
+    "torchvision": "0.25.0+cpu"
+  },
+  "runs": [
+    {
+      "errors": [],
+      "initial_parameters_sha256": "934d4fcfe98d1b6d96f4c3e23785dd5e0202c620f1698b9378d3bbf1febe6ce4",
+      "method": "pc",
+      "metrics": {
+        "test_accuracy": 0.49
+      },
+      "resources": {
+        "duration_seconds": 32.303852758836,
+        "inference_steps_per_update": 5,
+        "parameter_updates": 10,
+        "peak_memory_bytes": null
+      },
+      "seed": 0,
+      "status": "completed",
+      "stream_identity": {
+        "dataset": "MNIST",
+        "realized_train_order_sha256": "5b13076235d4fbd5431dcbd09a655131b4e5e2d1835e0c705d675f96b7b4bb28",
+        "test_indices_sha256": "1f383a72959e11b947f090515f8e21426454d8db13e29fd0d59f00690447780f",
+        "train_indices_sha256": "5b13076235d4fbd5431dcbd09a655131b4e5e2d1835e0c705d675f96b7b4bb28"
+      },
+      "warnings": []
+    },
+    {
+      "errors": [],
+      "initial_parameters_sha256": "934d4fcfe98d1b6d96f4c3e23785dd5e0202c620f1698b9378d3bbf1febe6ce4",
+      "method": "bp",
+      "metrics": {
+        "test_accuracy": 0.484
+      },
+      "resources": {
+        "duration_seconds": 15.343218208756298,
+        "inference_steps_per_update": 0,
+        "parameter_updates": 10,
+        "peak_memory_bytes": null
+      },
+      "seed": 0,
+      "status": "completed",
+      "stream_identity": {
+        "dataset": "MNIST",
+        "realized_train_order_sha256": "5b13076235d4fbd5431dcbd09a655131b4e5e2d1835e0c705d675f96b7b4bb28",
+        "test_indices_sha256": "1f383a72959e11b947f090515f8e21426454d8db13e29fd0d59f00690447780f",
+        "train_indices_sha256": "5b13076235d4fbd5431dcbd09a655131b4e5e2d1835e0c705d675f96b7b4bb28"
+      },
+      "warnings": []
+    }
+  ],
+  "schema_version": 1,
+  "seed": 0,
+  "status": "completed"
+}

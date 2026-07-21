@@ -47,6 +47,22 @@ To validate another checkout, run `python3 scripts/validate_repository.py --root
 
 The validator checks the agreed repository harness, relative Markdown links, Project Meta artifact provenance, Python syntax, and exclusion of tracked local preference files. See [CI/CD guidance](agents/ci-cd.md) for the exact contract.
 
+## Local NVIDIA GPU
+
+This workstation uses the locked `cuda` extra, which selects the PyTorch CUDA
+12.6 wheels compatible with its NVIDIA driver. Initialize the environment and
+verify the GPU with:
+
+```bash
+uv sync --locked --extra cuda
+uv run --extra cuda python -c \
+  'import torch; print(torch.__version__, torch.cuda.get_device_name(0))'
+```
+
+Run an experiment through `scripts/run-local-gpu.sh` so its JSON records the
+repository and predictive-coding submodule revisions. The launcher requires
+CUDA and will not silently fall back to CPU.
+
 ## CI/CD
 
 GitHub Actions runs validation for pull requests, pushes to `main`, and manual dispatches. A validated push to `main` also produces a seven-day workflow artifact containing a `git archive` snapshot of tracked project files. This is continuous delivery for research review and handoff; there is no public deployment target.

@@ -1,0 +1,186 @@
+{
+  "protocol_id": "song-2024-figure4i-cifar10-reproduction-v1",
+  "claim_status": "paper-protocol reproduction; test-informed model selection is preserved and disclosed",
+  "created_at": "2026-07-18T18:54:22.435106+00:00",
+  "protocol": {
+    "seeds": [
+      1482555873
+    ],
+    "methods": [
+      "bp",
+      "pc"
+    ],
+    "epochs": 1,
+    "batch_size": 200,
+    "pc_steps": 16,
+    "pc_state_lr": 0.5,
+    "train_per_class": 40,
+    "test_per_class": 20,
+    "bp_lr": null,
+    "pc_lr": null,
+    "data_root": "data",
+    "device": "cuda"
+  },
+  "paper_protocol_notes": {
+    "source": "Song et al. Nature Neuroscience 2024, official repository revision recorded below",
+    "selection": "per-seed learning rates and minimum test error were selected from archived source data",
+    "updates": "both RBP and PC use PCTrainer T=16 with parameter updates at every inference step",
+    "data": "archived subset helper omits one random example per class when the requested class size equals the dataset class size",
+    "test_caveat": "test batches are shuffled, drop_last=True, and evaluated every epoch exactly as in the archived protocol"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.19.14-200.fc43.x86_64-x86_64-with-glibc2.39",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "torchvision": "0.24.0+rocm7.2.1.gitb919bd0c",
+    "numpy": "2.4.4",
+    "device": "cuda",
+    "device_name": "AMD Radeon Graphics",
+    "execution_host": "cyberengine",
+    "runtime_image": "localhost/nma-neuroai-step1-rocm:7.2.1",
+    "runtime_image_id": "237054ff517b7a110e24afca9bd2df843c277ca5967758f283c3ec0cfafa3e51",
+    "paper_source_revision": "625d52678b3d4cab2dbc403b1d6ee0cfc004aea0",
+    "pc_submodule_revision": "5bf803c3636a39928488941f05539c70ab4df0b1"
+  },
+  "runs": [
+    {
+      "method": "bp",
+      "seed": 1482555873,
+      "parameter_lr": 7.5e-05,
+      "history": [
+        {
+          "epoch": 1,
+          "samples_seen": 400,
+          "test": {
+            "loss_per_example": 0.4270978164672852,
+            "accuracy": 0.275,
+            "samples": 200
+          }
+        }
+      ],
+      "best_test_accuracy": 0.275,
+      "best_epoch": 1,
+      "final_test_accuracy": 0.275,
+      "source_target_accuracy": 0.6921428627505595,
+      "absolute_target_difference": -0.41714286275055945,
+      "within_registered_one_pp_tolerance": false,
+      "initial_parameter_checksum": "85730b556d5898acf85609e36f7916a1293a8392ee5bca2f67f6ec8fa42a7c99",
+      "train_index_checksum": "e24d822254cd414f21b331c1c2e84cef829a61a9063b3c0038e7787570590290",
+      "test_index_checksum": "802d2b82753f1e2bec2efc99a1f4e2efe950a99f2171b0011abfb454a2bbc8ad",
+      "dataset_sizes": {
+        "train": 400,
+        "test": 200
+      },
+      "samples_seen": 400,
+      "update_seconds": 4.826746475999244,
+      "learned_parameter_count": 4275402,
+      "latent_state_elements": 0,
+      "pc_first_batch_dynamics": null,
+      "peak_accelerator_memory_bytes": 223455232
+    },
+    {
+      "method": "pc",
+      "seed": 1482555873,
+      "parameter_lr": 5e-05,
+      "history": [
+        {
+          "epoch": 1,
+          "samples_seen": 400,
+          "test": {
+            "loss_per_example": 0.44261802673339845,
+            "accuracy": 0.215,
+            "samples": 200
+          }
+        }
+      ],
+      "best_test_accuracy": 0.215,
+      "best_epoch": 1,
+      "final_test_accuracy": 0.215,
+      "source_target_accuracy": 0.7128571493893254,
+      "absolute_target_difference": -0.49785714938932546,
+      "within_registered_one_pp_tolerance": false,
+      "initial_parameter_checksum": "85730b556d5898acf85609e36f7916a1293a8392ee5bca2f67f6ec8fa42a7c99",
+      "train_index_checksum": "e24d822254cd414f21b331c1c2e84cef829a61a9063b3c0038e7787570590290",
+      "test_index_checksum": "802d2b82753f1e2bec2efc99a1f4e2efe950a99f2171b0011abfb454a2bbc8ad",
+      "dataset_sizes": {
+        "train": 400,
+        "test": 200
+      },
+      "samples_seen": 400,
+      "update_seconds": 0.46187159200781025,
+      "learned_parameter_count": 4275402,
+      "latent_state_elements": 5017600,
+      "pc_first_batch_dynamics": {
+        "loss": [
+          101.04658508300781,
+          86.23458099365234,
+          81.14419555664062,
+          77.04826354980469,
+          75.83778381347656,
+          74.82752990722656,
+          73.75652313232422,
+          72.73779296875,
+          71.83496856689453,
+          71.04935455322266,
+          70.35736083984375,
+          69.7004623413086,
+          69.06356811523438,
+          68.44354248046875,
+          67.83798217773438,
+          67.251708984375
+        ],
+        "energy": [
+          0.0,
+          4.195301055908203,
+          17.85297966003418,
+          11.373098373413086,
+          11.75251579284668,
+          9.082801818847656,
+          8.66416072845459,
+          9.279410362243652,
+          9.320927619934082,
+          9.123519897460938,
+          9.178702354431152,
+          9.337789535522461,
+          9.411883354187012,
+          9.43741226196289,
+          9.498493194580078,
+          9.57201099395752
+        ],
+        "overall": [
+          101.04658508300781,
+          90.42988586425781,
+          98.99717712402344,
+          88.4213638305664,
+          87.59030151367188,
+          83.91033172607422,
+          82.42068481445312,
+          82.01720428466797,
+          81.15589904785156,
+          80.1728744506836,
+          79.53606414794922,
+          79.03825378417969,
+          78.47544860839844,
+          77.88095092773438,
+          77.33647155761719,
+          76.82372283935547
+        ],
+        "overall_decreased": true
+      },
+      "peak_accelerator_memory_bytes": 296355328
+    }
+  ],
+  "aggregates": {
+    "bp": {
+      "best_test_accuracy_mean": 0.275,
+      "best_test_accuracy_sample_std": null,
+      "all_source_targets_within_one_pp": false
+    },
+    "pc": {
+      "best_test_accuracy_mean": 0.215,
+      "best_test_accuracy_sample_std": null,
+      "all_source_targets_within_one_pp": false
+    },
+    "pc_minus_bp_best_accuracy_mean": -0.060000000000000026
+  }
+}

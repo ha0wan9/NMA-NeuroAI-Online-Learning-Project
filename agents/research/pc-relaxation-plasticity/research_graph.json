@@ -1,0 +1,28 @@
+{
+  "study_id": "pc-relaxation-plasticity",
+  "generated_utc": "2026-07-17T22:20:00Z",
+  "winning_route": null,
+  "nodes": [
+    {"id":"study","kind":"study","label":"pc-relaxation-plasticity","status":"inconclusive","uri":"05-synthesis.md","summary":"Relaxation depth changes trade-offs, but no global default is supported."},
+    {"id":"H1","kind":"track","label":"H1: relaxation depth","status":"pass","uri":"H1-relaxation-depth/","summary":"Depth changes accuracy, plasticity, stability, and cost non-monotonically."},
+    {"id":"H1.E1","kind":"experiment","label":"H1.E1: static MNIST","status":"pass","uri":"H1-relaxation-depth/E1-static/","summary":"T>=5 reaches an accuracy saturation region."},
+    {"id":"H1.E2","kind":"experiment","label":"H1.E2: SplitMNIST","status":"pass","uri":"H1-relaxation-depth/E2-split-mnist/","summary":"Deeper relaxation trades weaker acquisition for lower measured forgetting."},
+    {"id":"H1.E3","kind":"experiment","label":"H1.E3: Permuted MNIST","status":"inconclusive","uri":"H1-relaxation-depth/E3-permuted-mnist/","summary":"T=10 is the best tested PC mean but does not robustly beat BP."},
+    {"id":"R-static","kind":"result","label":"Static saturation","status":"pass","uri":"04-evaluation.md","summary":"T=5/10/20 are BP-like; more steps add cost without material accuracy gain."},
+    {"id":"R-split","kind":"result","label":"Split stability-plasticity trade-off","status":"pass","uri":"04-evaluation.md","summary":"Forgetting decreases as adaptation and prequential accuracy weaken."},
+    {"id":"R-permuted","kind":"result","label":"Permuted finite-grid candidate","status":"inconclusive","uri":"04-evaluation.md","summary":"T=10 beats T=5/20 per seed but has mixed paired signs versus BP."},
+    {"id":"D-no-default","kind":"decision","label":"No relaxation default promoted","status":"inconclusive","uri":"05-synthesis.md","summary":"Retain T=5 and T=10 only as setting-specific follow-up candidates."}
+  ],
+  "edges": [
+    {"source":"study","target":"H1","relation":"tests","summary":null},
+    {"source":"H1","target":"H1.E1","relation":"tests","summary":null},
+    {"source":"H1","target":"H1.E2","relation":"tests","summary":null},
+    {"source":"H1","target":"H1.E3","relation":"tests","summary":null},
+    {"source":"H1.E1","target":"R-static","relation":"supports","summary":null},
+    {"source":"H1.E2","target":"R-split","relation":"supports","summary":null},
+    {"source":"H1.E3","target":"R-permuted","relation":"supports","summary":null},
+    {"source":"R-static","target":"D-no-default","relation":"supports","summary":null},
+    {"source":"R-split","target":"D-no-default","relation":"supports","summary":null},
+    {"source":"R-permuted","target":"D-no-default","relation":"supports","summary":null}
+  ]
+}

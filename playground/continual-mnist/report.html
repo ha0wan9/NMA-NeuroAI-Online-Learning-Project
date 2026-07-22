@@ -116,6 +116,7 @@ footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border
 <tr><td>24</td><td><span class="tag tag-pc">PC</span> iPC</td><td>15.6%</td><td>76.8%</td><td>+6.3%</td></tr>
 </table>
 
+<p class="muted" style="margin-top:0.5rem;"><strong>Baselines:</strong> The canonical BP baseline uses Adam with lr=3e-4 (best vanilla BP result). The canonical PC baseline uses Adam with lr=3e-4, T=20, update_p_at="last" (best vanilla PC result). BP lr=1e-3 and PC lr=1e-3 are included as higher-learning-rate comparisons and underperform.</p>
 <div class="flex" style="margin-top:1rem;">
 <div class="card"><div class="big-num green">+16.1pp</div>Accuracy gain from CLASSP on PC</div>
 <div class="card"><div class="big-num green">−12.6pp</div>Forgetting reduction from CLASSP on PC</div>
@@ -140,7 +141,7 @@ footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border
 <h2>4. Findings &amp; Interpretation</h2>
 
 <h3>Finding 1: PC alone ≈ BP — but CLASSP changes everything</h3>
-<p>With Adam, PC (53.8%) and BP (54.0%) are statistically indistinguishable on 20 tasks. Neither has an inherent advantage in this regime. But <strong>CLASSP is a force multiplier for PC</strong>: +16pp accuracy on PC vs only +6pp on BP. Why? PC's weight updates are already more targeted (informed by converged latent states), so CLASSP's per-weight importance tracking has a cleaner signal to work with. BP's noisier gradients dilute CLASSP's effectiveness.</p>
+<p>With Adam, PC (53.8%) and BP (54.0%) differ by less than 0.3pp on 20 tasks (single seed 42). At this scale and seed, neither configuration shows a clear advantage. However, <strong>CLASSP benefits PC more than it benefits BP</strong>: +16pp accuracy on PC vs +6pp on BP. <em>Interpretation:</em> PC's weight updates are informed by converged latent states through iterative inference; this may produce gradients where CLASSP's per-weight importance tracking can more effectively discriminate which parameters protect prior tasks.</p>
 
 <h3>Finding 2: The threshold matters critically</h3>
 <p>CLASSP's gradient threshold creates a sharp cliff: <code>th=1e-5</code> is optimal (69.9%), <code>th=1e-6</code> destroys PC (20.1%). This suggests PC gradients have a specific dynamic range where the threshold must be tuned — too aggressive and learning collapses, too conservative (th=0) and forgetting is suboptimal.</p>
@@ -152,13 +153,13 @@ footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border
 <p>Salvatori et al. (2022) showed iPC outperforms standard PC on CNNs and AlexNet, but our results confirm it fails on small MLPs (15.6% accuracy). Intermediate weight updates (<code>update_p_at='all'</code>) disrupt the inference dynamics and produce unstable gradients at this scale.</p>
 
 <h3>Finding 5: PC+CLASSP scales better</h3>
-<p>The PC+CLASSP advantage is maintained and slightly grows from 20→50 tasks. This is the pattern you'd expect from a mechanism that genuinely reduces interference rather than just delaying it — the benefit compounds, making PC+CLASSP the clear winner for longer task sequences.</p>
+<p>The PC+CLASSP advantage continues to appear at 50 tasks. This observation, from a single seed, is consistent with the hypothesis that the benefit compounds rather than just delaying interference — but multi-seed replication is needed to establish this pattern with confidence.</p>
 
 <!-- ============================================================ -->
 <h2>5. Perspective</h2>
 
 <div class="warn">
-<strong>What this means for NeuroAI:</strong> Predictive coding has long been promoted as a biologically plausible alternative to backpropagation, but its continual learning advantage has been inconsistent in the literature. These results suggest PC's advantage is <em>latent</em> — it requires the right optimizer to unlock. CLASSP provides that key. This is philosophically satisfying: biological synapses don't use Adam, but they do exhibit history-dependent plasticity (metaplasticity). CLASSP's per-weight decay is a reasonable abstraction of synaptic metaplasticity, and PC's inference-then-update cycle mirrors cortical processing. The combination feels less like an engineering hack and more like two biologically-motivated mechanisms that genuinely complement each other.
+<strong>What this means for NeuroAI:</strong> Predictive coding has long been promoted as a biologically motivated alternative to backpropagation, but its continual learning advantage has been inconsistent in the literature. These results suggest PC's advantage is <em>latent</em> — 
 </div>
 
 <p>Three open questions from this work:</p>
@@ -189,7 +190,7 @@ python experiment.py --method pc --n-tasks 20 --T 20</pre>
 <p class="muted">Hardware: NVIDIA RTX 4090 (25.28 GB) · CUDA 12.6 · PyTorch 2.10.0 · Each 20-task run: ~5 min (BP) / ~7 min (PC)</p>
 
 <!-- ============================================================ -->
-<h2>7. References</h2>
+<h2>8. References</h2>
 <div class="muted" style="font-size:0.82rem;">
 <p>[1] Ludwig, O. (2024). <em>CLASSP: a Generalization of AdaGrad for Continual Learning.</em> arXiv:2405.09637</p>
 <p>[2] Salvatori, T. et al. (2022). <em>Incremental Predictive Coding: A Parallel and Differentiable Approach.</em> arXiv:2212.00720</p>
@@ -201,6 +202,17 @@ python experiment.py --method pc --n-tasks 20 --T 20</pre>
 
 <footer>
 Generated 2026-07-21 · All code at <code>playground/continual-mnist/</code> · Results at <code>playground/continual-mnist/results/</code> · Full analysis at <code>papers/RESULTS_SYNTHESIS.md</code>
+<!-- ============================================================ -->
+<h2>7. Caveats &amp; Limitations</h2>
+<ul>
+  <li><strong>Single seed (42).</strong> All experiments used one random seed. The reported differences have not been tested for statistical significance. Multi-seed replication is necessary before drawing general conclusions.</li>
+  <li><strong>Shallow architecture.</strong> Results apply to MLPs with 2 hidden layers (256 units). Behavior on deeper networks, CNNs, or transformers is unknown.</li>
+  <li><strong>Single epoch per task.</strong> Each task is seen exactly once. Multi-epoch protocols, replay buffers, or task-boundary information would change results.</li>
+  <li><strong>No stream checksum.</strong> The exact sample order within each task was not recorded. Reproducing identical results requires identical data ordering.</li>
+  <li><strong>Interpretation vs. fact.</strong> Mechanistic explanations (e.g., "cleaner gradients," "synergy") are hypotheses consistent with the observed numbers; they have not been directly tested through gradient analysis or ablation.</li>
+  <li><strong>Descriptive differences do not establish causality, biological superiority, or generalization beyond permuted MNIST.</strong></li>
+</ul>
+
 </footer>
 
 <!-- ============================================================ -->

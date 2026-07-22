@@ -1,0 +1,14 @@
+# Only track curated JSON result files and README.
+# All other outputs (checkpoints, TensorBoard, caches, future runs) are ignored.
+
+# Ignore everything
+*
+
+# Except curated JSON result artifacts
+!*.json
+
+# Except this README
+!README.md
+
+# Except this gitignore
+!.gitignore

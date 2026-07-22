@@ -39,4 +39,3 @@ Thumbs.db
 *.swo
 *~
 playground/continual-mnist/__pycache__/
-playground/continual-mnist/results/

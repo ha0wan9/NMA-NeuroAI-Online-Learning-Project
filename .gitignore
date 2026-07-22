@@ -15,6 +15,12 @@ htmlcov/
 # Generated experiment dashboards and self-contained interactive artifacts
 playground/step2-cifar10/runs/tensorboard/
 
+# Auditable experiment staging; validated artifacts are curated explicitly
+playground/continual-mnist/run-staging/
+
+# Local agent/session transcripts are never project memory
+session_logs/
+
 # Notebooks
 .ipynb_checkpoints/
 

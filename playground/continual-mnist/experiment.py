@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-Continual MNIST Experiment Harness — Unified entry point for all methods.
+Legacy-v0 Continual MNIST Experiment Harness.
+
+This file is retained to reproduce the July 21 exploratory artifacts. It
+recreates parameter optimizers at task boundaries and does not implement the
+corrected matched-lr-paper-v1 protocol. Do not use it for cross-task CLASSP or
+PC×CLASSP claims; use run_matched_lr_validation.py instead.
 
 Experiments:
   1. Vanilla PC vs Vanilla BP (baselines)
@@ -26,7 +31,7 @@ PC_LIB_PATH = os.path.join(os.path.dirname(__file__), '..', 'predictive-coding')
 sys.path.insert(0, PC_LIB_PATH)
 sys.path.insert(0, os.path.dirname(__file__))
 import predictive_coding as pc
-from classp_optimizer import CLASSP
+from legacy_classp_optimizer import CLASSP
 
 # ---------------------------------------------------------------------------
 # GPU

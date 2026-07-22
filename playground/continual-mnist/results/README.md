@@ -1,6 +1,18 @@
-# Continual MNIST Results — Audited Experiment Artifacts
+# Continual MNIST Results — `legacy-v0` Experiment Artifacts
 
-**Purpose:** This directory preserves all outputs from the predictive-coding + CLASSP continual learning sweep on permuted MNIST (July 21, 2026). Every result — including negative, failed, weak, tuning, and superseded outcomes — is retained as auditable evidence.
+**Status:** `legacy-v0`; preserved but invalid for cross-task CLASSP or
+PC×CLASSP interaction claims.
+
+**Purpose:** This directory preserves all outputs from the predictive-coding + CLASSP continual learning sweep on permuted MNIST (July 21, 2026). Every result — including negative, failed, weak, tuning, and superseded outcomes — is retained as auditable evidence. The JSON files are not deleted or rewritten.
+
+The optimizer was recreated at every task boundary, so its state did not span
+the continual stream. The historical CLASSP implementation also cleared prior
+accumulator history on coordinates that passed the threshold before adding
+their current value, and BP/PC used different objectives. Consequently, the recorded numbers are legacy
+observations about that implementation only; they cannot validate
+paper-equation CLASSP, cross-task protection, or a differential benefit to PC.
+The corrected registered study is
+[`matched-lr-paper-v1`](../../../.research/studies/pc-classp-matched-lr-paper-v1/protocol.md).
 
 ---
 
@@ -14,7 +26,7 @@
 | **Learning rates** | 1e-3 (default), 3e-4 (tuned) |
 | **Seeds** | 42 (single seed for all experiments) |
 
-### Canonical baselines
+### Legacy baseline labels
 | Name | File | Description |
 |------|------|-------------|
 | BP Adam baseline | `bp_adam_lr3e-4.json` | Best vanilla BP (Adam, lr=3e-4) |
@@ -67,7 +79,7 @@ Both are **negative results** (15-17% accuracy; iPC fails on small MLPs).
 
 ---
 
-## Metrics Computed
+## Legacy Metrics Computed
 
 - **Final average accuracy:** mean of test accuracy on all tasks after the final task.
 - **Forgetting:** peak accuracy on task *j* (measured immediately after training task *j*) minus final accuracy on task *j*. Averaged over tasks 1..N-1 (task 0 excluded from average to avoid initial-untrained contamination).
@@ -107,16 +119,16 @@ Both are **negative results** (15-17% accuracy; iPC fails on small MLPs).
 
 ---
 
-## Minimal Reproduction Commands
+## Legacy Reproduction Commands
 
 ```bash
 # From repo root, with .venv activated:
 
-# Canonical BP baseline
+# Legacy-v0 BP baseline
 python playground/continual-mnist/experiment.py \
   --method bp --n-tasks 20 --lr 0.0003
 
-# Canonical PC baseline
+# Legacy-v0 PC baseline
 python playground/continual-mnist/experiment.py \
   --method pc --n-tasks 20 --T 20 --lr 0.0003
 
@@ -129,7 +141,10 @@ python playground/continual-mnist/experiment.py \
 python playground/continual-mnist/sweep.py
 ```
 
-**Note:** Reproducing identical numerical results requires identical MNIST download, identical PyTorch/torchvision versions, identical CUDA determinism settings, and identical sample ordering within each task's DataLoader shuffle.
+**Note:** These commands reproduce the legacy implementation and must not be
+used as the corrected study runner. Reproducing identical numerical results
+also requires identical MNIST download, PyTorch/torchvision versions, CUDA
+determinism settings, and sample ordering.
 
 ---
 

@@ -51,6 +51,8 @@ footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border
 <h1>🧠 Continual Learning with Predictive Coding + CLASSP</h1>
 <p class="muted">Experiment Report — July 21, 2026 · NVIDIA RTX 4090 · Permuted MNIST</p>
 
+<div class="warn"><strong>Legacy-v0 audit notice:</strong> this report was produced from runs whose Adam/CLASSP state reset at every task boundary; the historical CLASSP accumulator was also defective and BP/PC used different losses. The numbers are preserved observations of that implementation, but none of the cross-task CLASSP, PC×CLASSP interaction, mechanistic, or biological claims below are supported. See the tracked <code>matched-lr-paper-v1</code> protocol for the corrected study.</div>
+
 <!-- ============================================================ -->
 <h2>1. Context</h2>
 

@@ -1,18 +1,21 @@
+"""Paper-equation CLASSP optimizer for continual learning.
+
+Normative source: Ludwig (2024), arXiv:2405.09637, equation (1) and
+Algorithm 1.  This implementation intentionally differs from the author's
+reference ``CLASSP.py`` at commit ``ea3fe3c67279e27db8edea73d5f3ad522bb15dc1``:
+
+* thresholding is elementwise, as equation (1) requires;
+* the accumulator adds elementwise ``abs(gradient) ** p``;
+* coordinates rejected by the threshold retain their prior accumulator; and
+* ``apply_decay=False`` keeps accumulating history and applies the unscaled
+  thresholded SGD update, matching the schedule described in section 4.1.
+
+With ``p=2`` and ``threshold=0``, the update is AdaGrad when epsilon is
+matched as an initial accumulator value (and PyTorch AdaGrad's additive
+post-root epsilon is set to zero).
 """
-CLASSP optimizer — Generalization of AdaGrad for Continual Learning.
 
-Reference: Ludwig (2024) arxiv:2405.09637
-
-CLASSP = Adaptive learning rate per weight with:
-  1. p-norm decay: scale lr by 1 / (eps + sum|grad|^p)^(1/p)
-  2. Threshold sparsity: only update weights where grad² > threshold
-
-Special cases:
-  p=2, threshold=0 → AdaGrad
-  p=1, threshold=0 → L1 version
-  p=inf → max-norm version
-"""
-
+import math
 import torch
 from torch.optim.optimizer import Optimizer
 from typing import Iterable, Optional
@@ -40,14 +43,16 @@ class CLASSP(Optimizer):
         eps: float = 1e-8,
         apply_decay: bool = True,
     ):
-        if lr < 0.0:
+        if not math.isfinite(lr) or lr < 0.0:
             raise ValueError(f"Invalid learning rate: {lr}")
-        if threshold < 0.0:
+        if not math.isfinite(threshold) or threshold < 0.0:
             raise ValueError(f"Invalid threshold: {threshold}")
-        if p <= 0.0:
+        if not math.isfinite(p) or p <= 0.0:
             raise ValueError(f"Invalid p: {p}")
-        if eps < 0.0:
+        if not math.isfinite(eps) or eps <= 0.0:
             raise ValueError(f"Invalid eps: {eps}")
+        if not isinstance(apply_decay, bool):
+            raise TypeError("apply_decay must be a bool")
 
         defaults = dict(
             lr=lr, threshold=threshold, p=p, eps=eps, apply_decay=apply_decay
@@ -55,28 +60,41 @@ class CLASSP(Optimizer):
         super().__init__(params, defaults)
 
     @torch.no_grad()
-    def step(self, closure=None):
-        """Performs a single optimization step."""
+    def step(self, closure=None, *, apply_decay: Optional[bool] = None):
+        """Perform one paper-equation optimization step.
+
+        ``apply_decay`` may override the parameter-group setting for this
+        step.  When false, the same threshold and accumulator updates apply,
+        but the accepted coordinates use the unscaled learning rate.  This is
+        the paper's first-task accumulation schedule, not a state reset.
+        """
         loss = None
         if closure is not None:
             with torch.enable_grad():
                 loss = closure()
+
+        if apply_decay is not None and not isinstance(apply_decay, bool):
+            raise TypeError("apply_decay must be a bool or None")
 
         for group in self.param_groups:
             lr = group["lr"]
             threshold = group["threshold"]
             p_norm = group["p"]
             eps = group["eps"]
-            apply_decay = group["apply_decay"]
+            use_decay = (
+                group["apply_decay"] if apply_decay is None else apply_decay
+            )
 
             for p in group["params"]:
                 if p.grad is None:
                     continue
 
-                grad = p.grad
+                grad = p.grad.detach()
 
                 if grad.is_sparse:
                     raise RuntimeError("CLASSP does not support sparse gradients")
+                if not torch.isfinite(grad).all():
+                    raise FloatingPointError("CLASSP received a non-finite gradient")
 
                 state = self.state[p]
 
@@ -89,34 +107,19 @@ class CLASSP(Optimizer):
                 state["step"] += 1
                 grad_sum = state["grad_sum"]
 
-                # Check threshold: only update if grad² > threshold
-                if threshold > 0.0:
-                    grad_sq = grad.pow(2)
-                    mask = grad_sq > threshold
-                    if not mask.any():
-                        continue  # skip this parameter entirely
-                    # Apply mask to gradient
-                    grad = grad * mask
-                    # Only update grad_sum for elements that pass the threshold
-                    if apply_decay:
-                        grad_sum.mul_(~mask)  # zero out previous accumulation for masked-out weights? No — keep old accum
-                        # Actually we should add |grad|^p only for elements that passed threshold
-                        grad_sum.add_(grad.abs().pow(p_norm))
-                else:
-                    if apply_decay:
-                        grad_sum.add_(grad.abs().pow(p_norm))
+                # Equation (1) is coordinate-wise and uses a strict inequality.
+                mask = grad.square() > threshold
+                if not bool(mask.any()):
+                    continue
 
-                if apply_decay:
-                    # Compute adaptive learning rate: lr / (eps + grad_sum)^(1/p)
+                accepted_grad = torch.where(mask, grad, torch.zeros_like(grad))
+                grad_sum.add_(accepted_grad.abs().pow(p_norm))
+
+                if use_decay:
                     denom = (grad_sum + eps).pow(1.0 / p_norm)
-                    # Avoid division by zero
-                    denom = denom.clamp(min=eps)
-                    step_size = lr / denom
+                    p.addcdiv_(accepted_grad, denom, value=-lr)
                 else:
-                    step_size = lr
-
-                # Update parameters
-                p.add_(grad * -step_size)
+                    p.add_(accepted_grad, alpha=-lr)
 
         return loss
 

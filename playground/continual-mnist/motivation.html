@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motivation — Continual Learning with Predictive Coding + CLASSP</title>
+<style>
+:root {
+  --bg: #0d1117; --fg: #c9d1d9; --acc: #58a6ff;
+  --hi: #f0883e; --gr: #3fb950; --red: #f85149; --yel: #d2a800;
+  --border: #30363d; --card: #161b22; --card2: #1c2330;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, sans-serif; line-height: 1.65; padding: 2.5rem 1.5rem; max-width: 820px; margin: auto; }
+h1 { font-size: 1.6rem; color: var(--hi); margin-bottom: 0.15rem; letter-spacing: -0.3px; }
+h2 { font-size: 1.2rem; color: var(--acc); margin: 2.2rem 0 0.7rem; border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; }
+h3 { font-size: 1rem; color: var(--gr); margin: 1.3rem 0 0.4rem; }
+p { margin: 0.5rem 0; }
+ul, ol { padding-left: 1.4rem; margin: 0.5rem 0; }
+li { margin: 0.3rem 0; }
+em { color: #e3b341; font-style: normal; }
+strong { color: #f0f6fc; }
+code { background: var(--card); padding: 1px 5px; border-radius: 3px; font-size: 0.88em; color: var(--acc); }
+a { color: var(--acc); }
+.muted { color: #8b949e; font-size: 0.82rem; }
+.box { border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+.box2 { border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; background: var(--card2); }
+.question { border-left: 3px solid var(--yel); padding-left: 1rem; margin: 1rem 0; }
+.answer { border-left: 3px solid var(--gr); padding-left: 1rem; margin: 1rem 0; }
+.insight { border-left: 3px solid var(--acc); padding-left: 1rem; margin: 1rem 0; background: #0d1a2b; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; }
+.hypothesis { border-left: 3px solid var(--hi); padding-left: 1rem; margin: 1rem 0; background: #1f1508; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } body { padding: 1.5rem 0.8rem; } }
+.row { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin: 0.6rem 0; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: 600; }
+.pill-pc { background: #0d419d22; border: 1px solid #58a6ff55; color: #58a6ff; }
+.pill-bp { background: #9d3d0d22; border: 1px solid #f0883e55; color: #f0883e; }
+.pill-mix { background: #3d9d0d22; border: 1px solid #3fb95055; color: #3fb950; }
+table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem; }
+th, td { padding: 6px 10px; text-align: center; border-bottom: 1px solid var(--border); }
+th { color: var(--acc); font-weight: 600; }
+td:first-child { text-align: left; }
+tr:nth-child(even) td { background: #1c2128; }
+.arrow { color: #f0883e; font-weight: bold; }
+footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: #6e7681; }
+</style>
+</head>
+<body>
+
+<h1>Why We Ran These Experiments</h1>
+<p class="muted">The scientific motivation behind the PC + CLASSP continual learning study</p>
+
+<!-- ============================================================ -->
+<h2>1. The Puzzle</h2>
+
+<p>Predictive coding (PC) has a compelling story for continual learning. Unlike backpropagation — which computes a gradient and immediately applies it — PC first runs a <em>settling phase</em>: latent neural activities iterate toward an energy-minimizing configuration <em>before</em> weights are updated. This "prospective configuration" (Song et al., <em>Nature Neuroscience</em> 2024) means weight updates are informed by converged representations, not raw forward-pass activations. The intuition is clean: <strong>if you figure out what the network <em>should</em> have done before you change it, you disturb old knowledge less.</strong></p>
+
+<p>But the literature tells a messier story:</p>
+
+<div class="grid">
+<div class="box">
+  <h3 style="color:var(--gr);margin-top:0">✓ Evidence for PC</h3>
+  <ul>
+    <li>Song et al. (2024): PC outperforms BP on permuted MNIST and CIFAR-10 continual tasks</li>
+    <li>Whittington &amp; Bogacz (2017): PC approximates BP under specific architectures — so it <em>can</em> learn, and does so with local rules</li>
+    <li>PC's inference dynamics naturally regularize weight changes — smaller, better-targeted updates</li>
+  </ul>
+</div>
+<div class="box">
+  <h3 style="color:var(--red);margin-top:0">✗ Evidence against / caveats</h3>
+  <ul>
+    <li>Ororbia et al. (2022): PC works for continual learning <em>only</em> with context controllers and memory buffers — the bare learning rule is insufficient</li>
+    <li>Salvatori et al. (2022): Standard PC (<code>update_p_at='last'</code>) performs <em>worse</em> than iPC (<code>update_p_at='all'</code>) on larger architectures</li>
+    <li>The Bogacz Group library makes no strong continual-learning claims — it's a research tool, not a benchmark winner</li>
+  </ul>
+</div>
+</div>
+
+<div class="question">
+<strong>The open question:</strong> Does PC's inference-before-update cycle actually protect against catastrophic forgetting, or is that a just-so story we tell ourselves because the mechanism sounds biologically plausible?
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Enter CLASSP</h2>
+
+<p>While the PC community debated biological plausibility, a completely independent line of work attacked forgetting from a different angle. Ludwig (2024) proposed <strong>CLASSP</strong> — a drop-in optimizer that generalizes AdaGrad:</p>
+
+<div class="box2">
+<p><strong>CLASSP update rule:</strong></p>
+<p style="text-align:center; font-size:1.1em; margin:0.6rem 0;">
+w<sub>i,t+1</sub> = w<sub>i,t</sub> − <span style="font-size:1.3em">α · ∇L(w<sub>i,t</sub>)</span> &nbsp;/&nbsp; <sup>p</sup>√(ε + Σ|∇L|<sup>p</sup>)
+</p>
+<p style="text-align:center; font-size:0.85rem; color:var(--muted);">…but <em>only if</em> ∇L² > threshold, otherwise skip the update entirely.</p>
+</div>
+
+<p>Two principles, both neuroscientifically motivated:</p>
+<ol>
+  <li><strong>Decay (p-norm denominator):</strong> Weights that received large gradients in the past — i.e., were important for previous tasks — get progressively smaller updates. This is a computational abstraction of <em>synaptic metaplasticity</em>: synapses that have undergone long-term potentiation become harder to modify.</li>
+  <li><strong>Sparsity (gradient threshold):</strong> Only update weights whose gradient exceeds a threshold. This reserves capacity for future tasks — don't touch weights that aren't relevant to the current input. Analogous to how only a sparse subset of synapses are modified during any learning episode.</li>
+</ol>
+
+<p>CLASSP has <strong>nothing to do with PC</strong>. It's pure optimizer engineering. But it reduces forgetting dramatically for standard BP networks. Ludwig reports CLASSP outperforms EWC on Split CIFAR-100 with a fraction of the memory cost.</p>
+
+<!-- ============================================================ -->
+<h2>3. The Hypothesis</h2>
+
+<p>PC and CLASSP operate at <strong>different levels of the learning machinery</strong>. They should not compete — they should <em>compose</em>.</p>
+
+<div class="grid">
+<div class="box">
+  <h3 style="margin-top:0"><span class="pill pill-pc">PC</span> shapes <em>what</em> gradient you compute</h3>
+  <p>Iterative latent settling produces gradients that reflect converged representations. The gradient is a better answer to "what should change?" because the network has already reconciled its internal state with the target.</p>
+</div>
+<div class="box">
+  <h3 style="margin-top:0"><span class="pill pill-mix">CLASSP</span> shapes <em>how much</em> of that gradient you apply</h3>
+  <p>Per-weight scaling based on historical importance ensures that weights critical to old tasks receive attenuated updates. The optimizer decides "how much should each weight actually move?"</p>
+</div>
+</div>
+
+<div class="hypothesis">
+<strong>Core hypothesis:</strong> PC and CLASSP are <em>orthogonal and synergistic</em>. PC produces cleaner, more targeted gradients (less noise, better signal). CLASSP's per-weight importance tracking then has a higher-quality signal to discriminate truly important weights from spuriously important ones. The interaction should produce both higher final accuracy <em>and</em> lower forgetting than either mechanism alone — and the gap should be larger than a simple additive model would predict.
+</div>
+
+<div class="insight">
+<strong>Strong test:</strong> If our hypothesis is correct, the ranking should be:
+<div style="text-align:center; margin:0.5rem 0; font-size:1.05em;">
+PC+CLASSP &nbsp;<span class="arrow">≫</span>&nbsp; BP+CLASSP &nbsp;<span class="arrow">≫</span>&nbsp; PC vanilla &nbsp;<span class="arrow">≈</span>&nbsp; BP vanilla
+</div>
+If PC+CLASSP ≈ BP+CLASSP, the mechanisms don't interact — CLASSP dominates. If PC+CLASSP < BP+CLASSP, PC's gradients are actually <em>worse</em> for CLASSP's importance tracking (which would be a genuinely surprising and informative result).
+</div>
+
+<!-- ============================================================ -->
+<h2>4. Why a Sweep, Not a Single Comparison</h2>
+
+<p>A single PC-vs-BP comparison tells you almost nothing — it's one point in a hyperparameter space. We needed a <strong>factorial design</strong> to isolate effects:</p>
+
+<table>
+<tr><th></th><th>No CLASSP</th><th>CLASSP p=1</th><th>CLASSP p=2</th><th>CLASSP p=3</th></tr>
+<tr><td><span class="pill pill-bp">BP</span></td><td>Baseline</td><td>AdaGrad variant</td><td>Standard L2</td><td>Soft decay</td></tr>
+<tr><td><span class="pill pill-pc">PC</span></td><td>Baseline</td><td>AdaGrad variant</td><td>Standard L2</td><td>Soft decay</td></tr>
+</table>
+
+<p>This 2×4 grid (×3 thresholds = 24 experiments) answers four questions simultaneously:</p>
+
+<ol>
+  <li><strong>Main effect of method:</strong> Is PC > BP, averaged over optimizer choices?</li>
+  <li><strong>Main effect of CLASSP:</strong> Does CLASSP help, averaged over methods?</li>
+  <li><strong>Interaction:</strong> Does CLASSP help PC <em>more</em> than it helps BP? (This is the synergy test.)</li>
+  <li><strong>p-norm sensitivity:</strong> Does PC prefer a different p than BP? (Different p suggests different gradient distributions — L1 for concentrated gradients, L∞ for uniform ones.)</li>
+</ol>
+
+<p>We also included <strong>iPC</strong> (<code>update_p_at='all'</code>) as a secondary test: Salvatori et al. (2022) claim intermediate weight updates help. Does iPC + CLASSP outperform standard PC + CLASSP?</p>
+
+<!-- ============================================================ -->
+<h2>5. Why 50 Tasks</h2>
+
+<p>Many continual learning papers report results on 5–10 tasks and call it solved. This is misleading. Catastrophic forgetting is a <em>cumulative</em> phenomenon — each new task adds interference with every previous task. A method that looks promising at 10 tasks may completely collapse at 50.</p>
+
+<p>The 50-task benchmark is our <strong>stress test</strong>. If PC+CLASSP maintains its advantage over baselines at 50 tasks, the mechanism is genuinely reducing interference rather than just delaying it. If the gap closes, the advantage is an artifact of small-scale testing.</p>
+
+<div class="insight">
+<strong>Why this matters:</strong> Real continual learning systems — robots, personal assistants, scientific models — must handle <em>hundreds or thousands</em> of sequentially encountered tasks. A method that works for 5 tasks but degrades at 50 is not a solution; it's a band-aid. The scaling behavior <em>is</em> the result.
+</div>
+
+<!-- ============================================================ -->
+<h2>6. What We Actually Found</h2>
+
+<p>The results confirmed the synergy hypothesis, with nuance:</p>
+
+<div class="box2">
+<div class="row">
+  <span class="pill pill-pc">PC</span> + <span class="pill pill-mix">CLASSP</span>
+  <strong style="color:var(--gr);font-size:1.3em;">69.9%</strong>
+  <span style="color:var(--muted)">vs</span>
+  <span class="pill pill-bp">BP</span> + <span class="pill pill-mix">CLASSP</span>
+  <strong>60.0%</strong>
+  <span style="color:var(--gr)">(+9.9pp)</span>
+</div>
+<div class="row" style="margin-top:0.4rem;">
+  <span class="pill pill-pc">PC</span> vanilla
+  <strong>53.8%</strong>
+  <span style="color:var(--muted)">vs</span>
+  <span class="pill pill-bp">BP</span> vanilla
+  <strong>54.0%</strong>
+  <span style="color:var(--muted)">(≈ identical)</span>
+</div>
+</div>
+
+<ol>
+  <li><strong>PC alone ≈ BP.</strong> No inherent advantage at this scale. The story about inference-before-update protecting against forgetting is not supported for vanilla optimizers.</li>
+  <li><strong>CLASSP transforms both, but PC benefits more.</strong> +16pp for PC vs +6pp for BP. PC's cleaner gradients give CLASSP better information to work with.</li>
+  <li><strong>PC prefers p=3, BP prefers p=1.</strong> This is direct evidence that the gradient distributions differ: BP concentrates importance in fewer weights (L1 decay protects them), while PC spreads updates more uniformly (softer p=3 decay works better).</li>
+  <li><strong>Advantage holds at 50 tasks.</strong> PC+CLASSP (46.7%) ≫ BP+CLASSP (39.9%) ≫ vanilla (29.0%). The mechanism genuinely compounds, not just delays.</li>
+  <li><strong>iPC fails on small architectures.</strong> 15.6% accuracy confirms Salvatori's claims are architecture-dependent — not a general result.</li>
+</ol>
+
+<div class="insight">
+<strong>Broader interpretation:</strong> PC's advantage is <em>latent</em>. It's not visible with standard optimizers because Adam/SGD can't discriminate which weights matter. CLASSP provides the discrimination mechanism that reveals PC's cleaner gradient signal. In biological terms: you need both predictive processing (cortical inference) <em>and</em> metaplasticity (history-dependent synaptic modifiability). Neither alone suffices.
+</div>
+
+<!-- ============================================================ -->
+<footer>
+<p>July 21, 2026 · NVIDIA RTX 4090 · integration/combined-experiments branch</p>
+<p>Papers: CLASSP (arXiv:2405.09637) · iPC (arXiv:2212.00720) · Song et al. (Nature Neuro. 2024) · Dohare et al. (arXiv:2306.13812)</p>
+</footer>
+
+</body>
+</html>

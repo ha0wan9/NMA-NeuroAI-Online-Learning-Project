@@ -33,6 +33,21 @@ environment versions, initial-parameter checksum, and accelerator peak memory
 when ROCm/CUDA is used. The first PC batch also records loss, energy, and total
 objective across relaxation steps.
 
+### Optional gradient-consistency diagnostic (Q1)
+
+Passing `--diagnostic-batch-size N` (default `0`, disabled) adds a
+`gradient_consistency` block to every run. On a fixed held-out probe of the
+first `N` test examples it computes the per-example gradient signal-to-noise
+ratio (`|mean| / std` across examples, per coordinate, aggregated per Linear
+layer) for the trained model. A common backpropagation probe is applied to both
+methods — predictive-coding value layers act as identities in eval mode — so BP
+and PC representations are measured with identical machinery and are directly
+comparable. This quantifies the consistency (covariance structure) of each
+rule's learned credit-assignment signal, the Q1 metric the earlier artifacts did
+not record. It measures the trained representation under a shared probe, not
+predictive coding's online relaxation-time update noise, which requires
+per-example relaxation and remains a GPU follow-up.
+
 ## Setup
 
 Initialize the pinned PC submodule:

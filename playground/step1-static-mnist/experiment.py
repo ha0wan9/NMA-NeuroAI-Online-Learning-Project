@@ -33,6 +33,7 @@ class Protocol:
     max_train_samples: int | None = None
     max_valid_samples: int | None = None
     max_test_samples: int | None = None
+    diagnostic_batch_size: int = 0
     data_root: str = "data"
     device: str = "auto"
 
@@ -52,6 +53,10 @@ class Protocol:
             value = getattr(self, name)
             if value is not None and value <= 0:
                 raise ValueError(f"{name} must be positive when set")
+        if self.diagnostic_batch_size < 0:
+            raise ValueError("diagnostic_batch_size must be zero (disabled) or positive")
+        if 0 < self.diagnostic_batch_size < 2:
+            raise ValueError("diagnostic_batch_size must be at least 2 to estimate variance")
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -70,6 +75,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--max-train-samples", type=int)
     parser.add_argument("--max-valid-samples", type=int)
     parser.add_argument("--max-test-samples", type=int)
+    parser.add_argument(
+        "--diagnostic-batch-size", type=int, default=0,
+        help="per-example gradient-consistency probe size on a fixed held-out batch "
+             "(0 disables; requires at least 2 examples)",
+    )
     parser.add_argument("--data-root", default="data")
     parser.add_argument("--device", default="auto")
     parser.add_argument("--output", type=Path)
@@ -86,6 +96,7 @@ def protocol_from_args(args: argparse.Namespace) -> Protocol:
         pc_state_lr=args.pc_state_lr, validation_fraction=args.validation_fraction,
         split_seed=args.split_seed, max_train_samples=args.max_train_samples,
         max_valid_samples=args.max_valid_samples, max_test_samples=args.max_test_samples,
+        diagnostic_batch_size=args.diagnostic_batch_size,
         data_root=args.data_root, device=args.device,
     )
     protocol.validate()
@@ -228,6 +239,86 @@ def squared_error(logits: Any, target: Any) -> Any:
     return 0.5 * (logits - target).pow(2).sum()
 
 
+def gradient_signal_to_noise(per_example_gradients: list[list[float]]) -> dict[str, float]:
+    """Coordinate-wise signal-to-noise ratio of a stack of per-example gradients.
+
+    Each inner list is one example's flattened gradient for a parameter tensor.
+    For every coordinate the SNR is ``|mean_e g| / (std_e g + eps)`` using the
+    population standard deviation across examples; a higher aggregate means more
+    consistent (less noisy) per-example credit assignment. This is the pure,
+    dependency-free reference implementation that ``gradient_consistency`` mirrors
+    with vectorised tensor operations for speed.
+    """
+    count = len(per_example_gradients)
+    if count < 2:
+        raise ValueError("need at least two per-example gradients to estimate variance")
+    width = len(per_example_gradients[0])
+    if width == 0 or any(len(gradient) != width for gradient in per_example_gradients):
+        raise ValueError("per-example gradients must be non-empty and equal length")
+    epsilon = 1e-12
+    ratios = []
+    for coordinate in range(width):
+        column = [gradient[coordinate] for gradient in per_example_gradients]
+        mean = sum(column) / count
+        variance = sum((value - mean) ** 2 for value in column) / count
+        ratios.append(abs(mean) / (variance ** 0.5 + epsilon))
+    ratios.sort()
+    middle = width // 2
+    median = ratios[middle] if width % 2 else 0.5 * (ratios[middle - 1] + ratios[middle])
+    return {"mean_snr": sum(ratios) / width, "median_snr": median, "coordinates": width}
+
+
+def gradient_consistency(
+    model: Any, batch: tuple[Any, Any], device: Any, runtime: dict[str, Any]
+) -> dict[str, Any]:
+    """Per-example gradient signal-to-noise across a fixed held-out probe batch.
+
+    A common backpropagation probe is applied to whichever trained model is passed
+    (predictive-coding value layers act as identities in eval mode), so BP and PC
+    representations are measured with identical machinery and are directly
+    comparable. This quantifies the consistency (covariance structure) of each
+    rule's learned credit-assignment signal — the Q1 diagnostic the archived runs
+    did not record. It does not capture predictive coding's online relaxation-time
+    update noise, which needs per-example relaxation and is the natural GPU
+    follow-up.
+    """
+    torch, nn = runtime["torch"], runtime["nn"]
+    functional = runtime["functional"]
+    inputs, labels = batch
+    inputs, labels = inputs.to(device), labels.to(device)
+    targets = functional.one_hot(labels, num_classes=10).float()
+    linears = [module for module in model.modules() if isinstance(module, nn.Linear)]
+    model.eval()
+    collected: list[list[Any]] = [[] for _ in linears]
+    for index in range(inputs.shape[0]):
+        model.zero_grad(set_to_none=True)
+        loss = squared_error(model(inputs[index : index + 1]), targets[index : index + 1])
+        loss.backward()
+        for position, linear in enumerate(linears):
+            collected[position].append(linear.weight.grad.detach().reshape(-1).clone())
+    model.zero_grad(set_to_none=True)
+    result: dict[str, Any] = {"probe_examples": int(inputs.shape[0]), "layers": {}}
+    for position, gradients in enumerate(collected):
+        stacked = torch.stack(gradients)
+        mean = stacked.mean(dim=0)
+        std = stacked.std(dim=0, unbiased=False)
+        snr = mean.abs() / (std + 1e-12)
+        result["layers"][f"linear_{position}"] = {
+            "mean_snr": float(snr.mean()),
+            "median_snr": float(snr.median()),
+            "coordinates": int(stacked.shape[1]),
+        }
+    return result
+
+
+def diagnostic_batch(test_set: Any, size: int, protocol: Protocol, runtime: dict[str, Any]) -> Any:
+    """Deterministic held-out probe batch: the first ``size`` test examples."""
+    torch = runtime["torch"]
+    probe = limited_subset(test_set, size, torch)
+    loader = torch.utils.data.DataLoader(probe, batch_size=size, shuffle=False, num_workers=0)
+    return next(iter(loader))
+
+
 def evaluate(model: Any, loader: Any, device: Any, runtime: dict[str, Any]) -> dict[str, float]:
     torch, functional = runtime["torch"], runtime["functional"]
     model.eval()
@@ -357,10 +448,15 @@ def train_method(
             "epoch": epoch, "samples_seen": samples_seen,
             "validation": evaluate(model, valid_loader, device, runtime),
         })
+    gradient_snr = None
+    if protocol.diagnostic_batch_size > 0:
+        probe = diagnostic_batch(test_set, protocol.diagnostic_batch_size, protocol, runtime)
+        gradient_snr = gradient_consistency(model, probe, device, runtime)
     return {
         "method": method, "seed": seed, "history": history,
         "train_final": evaluate(model, train_eval_loader, device, runtime),
         "test": evaluate(model, test_loader, device, runtime),
+        "gradient_consistency": gradient_snr,
         "training_seconds": update_seconds,
         "timed_update_samples": timed_update_samples,
         "diagnostic_update_seconds": diagnostic_update_seconds,

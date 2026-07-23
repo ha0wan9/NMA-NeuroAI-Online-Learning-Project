@@ -46,6 +46,39 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(protocol.hidden_size, 512)
         self.assertEqual(protocol.hidden_layers, 4)
 
+    def test_diagnostic_batch_size_defaults_off_and_parses(self):
+        default = experiment.protocol_from_args(experiment.parse_args([]))
+        self.assertEqual(default.diagnostic_batch_size, 0)
+        enabled = experiment.protocol_from_args(
+            experiment.parse_args(["--diagnostic-batch-size", "128"])
+        )
+        self.assertEqual(enabled.diagnostic_batch_size, 128)
+
+    def test_diagnostic_batch_size_rejects_too_small(self):
+        args = experiment.parse_args(["--diagnostic-batch-size", "1"])
+        with self.assertRaisesRegex(ValueError, "diagnostic_batch_size"):
+            experiment.protocol_from_args(args)
+        negative = experiment.parse_args(["--diagnostic-batch-size", "-4"])
+        with self.assertRaisesRegex(ValueError, "diagnostic_batch_size"):
+            experiment.protocol_from_args(negative)
+
+    def test_gradient_signal_to_noise_matches_hand_computation(self):
+        # A perfectly consistent coordinate (zero variance) and a noisy,
+        # zero-mean coordinate: SNR should be very large then ~zero.
+        stats = experiment.gradient_signal_to_noise([[2.0, 1.0], [2.0, -1.0]])
+        self.assertEqual(stats["coordinates"], 2)
+        # Coordinate 0: |mean|=2, std=0 -> 2/eps (huge); coordinate 1: mean=0 -> 0.
+        self.assertGreater(stats["mean_snr"], 1e6)
+        # A single coordinate with known mean/std gives an exact ratio.
+        one = experiment.gradient_signal_to_noise([[3.0], [1.0]])
+        self.assertAlmostEqual(one["mean_snr"], 2.0 / 1.0, places=6)
+
+    def test_gradient_signal_to_noise_rejects_degenerate_input(self):
+        with self.assertRaisesRegex(ValueError, "two per-example"):
+            experiment.gradient_signal_to_noise([[1.0, 2.0]])
+        with self.assertRaisesRegex(ValueError, "equal length"):
+            experiment.gradient_signal_to_noise([[1.0, 2.0], [3.0]])
+
     def test_sweep_levels_reject_duplicates_and_nonpositive_values(self):
         sweep_path = Path(__file__).with_name("relaxation_sweep.py")
         sweep_spec = importlib.util.spec_from_file_location("relaxation_sweep", sweep_path)

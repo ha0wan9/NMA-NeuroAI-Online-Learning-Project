@@ -49,4 +49,15 @@ comparison.
 - `architecture-sweep-v2.json`: preferred full three-seed architecture study
   comparing `256×2`, `512×2`, and `256×4` with BP and PC at `T=5`.
 
+- `q1-gradient-consistency-smoke-cpu.json`: reduced-scale CPU smoke
+  (seeds `7/42`, 3 epochs, 3000-sample subset, `T=5`) demonstrating the new
+  `--diagnostic-batch-size` Q1 gradient-consistency metric. It exercises the
+  per-example gradient signal-to-noise pipeline for BP and PC under a shared
+  128-example backprop probe. This is a metric-path proof, not a matched
+  comparison: it runs on CPU with a truncated dataset because the container has
+  no GPU, so the SNR magnitudes are directional only and must not be read as the
+  frozen ROCm reference numbers. Under the shared probe BP and PC land at similar
+  per-layer SNR (rising toward the output layer); capturing predictive coding's
+  own relaxation-time update noise is the GPU follow-up.
+
 Preserve failed and superseded artifacts rather than overwriting them.

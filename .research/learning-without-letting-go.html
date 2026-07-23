@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Learning Without Letting Go · Continual-Learning Atlas</title>
 <style>
 :root {
@@ -22,6 +22,9 @@
   --red: light-dark(#c43d45, #ff7278);
   --purple: light-dark(#7755ba, #b69aff);
   --teal: light-dark(#147f80, #54cccc);
+  --journey-accent: var(--blue);
+  --space-accent: var(--purple);
+  --accent-ink: light-dark(#ffffff, #0b1118);
   --shadow: 0 10px 32px light-dark(rgb(30 55 80 / 8%), rgb(0 0 0 / 26%));
 }
 * { box-sizing: border-box; }
@@ -34,24 +37,18 @@ button:focus-visible, a:focus-visible { outline: 3px solid color-mix(in srgb, va
 .top-row { max-width: 1480px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .brand span { color: var(--blue); }
-.phase-flow { max-width: 1480px; margin: 9px auto 0; display: flex; align-items: center; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
-.phase-link { flex: 1 0 auto; min-width: 104px; padding: 5px 9px; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); background: var(--panel-2); text-decoration: none; text-align: center; font-size: 11px; }
-.phase-link.done { color: var(--green); border-color: color-mix(in srgb, var(--green) 35%, var(--border)); }
-.phase-link.partial { color: var(--orange); border-color: color-mix(in srgb, var(--orange) 38%, var(--border)); }
-.phase-link.active { color: var(--panel); background: var(--blue); border-color: var(--blue); }
+.top-actions { display: flex; align-items: center; gap: 14px; }
+.top-nav { display: flex; gap: 12px; }
+.top-nav a { color: var(--muted); font-size: 12px; text-decoration: none; }
+.top-nav a:hover { color: var(--text); }
 .theme { border: 1px solid var(--border); border-radius: 7px; padding: 5px 10px; color: var(--text); background: var(--panel-2); cursor: pointer; }
 .shell { width: min(1480px, calc(100% - 32px)); margin: auto; padding: 34px 0 64px; }
-.hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, .6fr); align-items: end; gap: 30px; padding: 18px 0 34px; }
+.hero { max-width: 1080px; padding: 28px 0 34px; }
 .eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height: .98; letter-spacing: -.055em; }
 .dek { max-width: 850px; margin: 18px 0 0; color: var(--muted); font-size: clamp(16px, 2vw, 20px); }
-.status-panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
-.status-panel h2 { margin: 0; font-size: 16px; }
-.status-panel p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
-.status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 16px; }
-.status-grid div { padding-top: 10px; border-top: 1px solid var(--border); }
-.status-grid strong { display: block; font-size: 22px; }
-.status-grid span { color: var(--muted); font-size: 11px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: var(--muted); font-size: 12px; }
+.hero-meta strong { color: var(--text); }
 .section { scroll-margin-top: 105px; padding: 34px 0; border-top: 1px solid var(--border); }
 .section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 20px; }
 .section-head h2 { margin: 0; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.035em; }
@@ -61,6 +58,86 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 .pill.warn { color: var(--orange); background: color-mix(in srgb, var(--orange) 12%, transparent); }
 .pill.fail { color: var(--red); background: color-mix(in srgb, var(--red) 12%, transparent); }
 .pill.info { color: var(--blue); background: color-mix(in srgb, var(--blue) 12%, transparent); }
+.atlas { padding-top: 20px; border-top: 0; }
+.atlas-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+.atlas-toolbar-copy h2 { margin: 0; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.035em; }
+.atlas-toolbar-copy p { max-width: 760px; margin: 5px 0 0; color: var(--muted); }
+.view-switch { display: inline-flex; gap: 5px; padding: 5px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel-2); box-shadow: inset 0 1px 2px light-dark(rgb(28 55 80 / 6%), rgb(0 0 0 / 20%)); }
+.view-button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 8px; padding: 9px 14px; color: var(--muted); background: transparent; cursor: pointer; font-weight: 700; transition: color .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease; }
+.view-button::before { width: 8px; height: 8px; border: 2px solid currentColor; border-radius: 50%; content: ""; }
+.view-button[data-view="journey"] { --button-accent: var(--journey-accent); }
+.view-button[data-view="space"] { --button-accent: var(--space-accent); }
+.view-button:hover { color: var(--button-accent); background: color-mix(in srgb, var(--button-accent) 8%, transparent); }
+.view-button[aria-pressed="true"] { color: var(--accent-ink); border-color: var(--button-accent); background: var(--button-accent); box-shadow: 0 4px 12px color-mix(in srgb, var(--button-accent) 28%, transparent); }
+.view-button[aria-pressed="true"]::before { border-color: currentColor; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 20%, transparent); }
+.atlas-layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(330px, .72fr); gap: 16px; align-items: stretch; }
+.map-panel, .story-panel { border: 1px solid var(--border); border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
+.atlas[data-view="journey"] { --view-accent: var(--journey-accent); }
+.atlas[data-view="space"] { --view-accent: var(--space-accent); }
+.map-panel { min-height: 620px; padding: 18px; overflow: hidden; border-top: 3px solid var(--view-accent, var(--journey-accent)); background: linear-gradient(180deg, color-mix(in srgb, var(--view-accent, var(--journey-accent)) 5%, var(--panel)) 0, var(--panel) 100px); }
+.map-view[hidden] { display: none; }
+.map-note { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 12px; color: var(--muted); font-size: 12px; }
+.map-note strong { color: var(--view-accent, var(--text)); }
+.graph-node { --node-accent: var(--view-accent, var(--journey-accent)); position: relative; width: 100%; border: 1px solid color-mix(in srgb, var(--node-accent) 22%, var(--border)); border-radius: 9px; padding: 9px 10px; color: var(--text); background: color-mix(in srgb, var(--node-accent) 4%, var(--panel-2)); text-align: left; cursor: pointer; transition: border-color .16s ease, background .16s ease, transform .16s ease, box-shadow .16s ease; }
+.graph-node:hover { border-color: color-mix(in srgb, var(--node-accent) 72%, var(--border)); background: color-mix(in srgb, var(--node-accent) 10%, var(--panel)); transform: translateY(-1px); }
+.graph-node[aria-pressed="true"] { border-color: var(--node-accent); background: color-mix(in srgb, var(--node-accent) 16%, var(--panel)); box-shadow: inset 4px 0 var(--node-accent), 0 5px 14px color-mix(in srgb, var(--node-accent) 16%, transparent); }
+.graph-node.research { border-color: color-mix(in srgb, var(--node-accent) 48%, var(--border)); background: color-mix(in srgb, var(--node-accent) 13%, var(--panel)); font-weight: 750; }
+.graph-node.proposed { border-style: dashed; }
+.graph-node small { display: flex; align-items: center; gap: 5px; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 400; }
+.graph-node small::before { width: 6px; height: 6px; flex: 0 0 auto; border-radius: 50%; background: var(--status-color, var(--muted)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--status-color, var(--muted)) 16%, transparent); content: ""; }
+.graph-node.status-ok { --status-color: var(--green); }
+.graph-node.status-warn { --status-color: var(--orange); }
+.graph-node.status-fail { --status-color: var(--red); }
+.graph-node.status-info { --status-color: var(--blue); }
+.journey-root { position: relative; width: min(520px, 92%); margin: 8px auto 34px; }
+.journey-root .graph-node { --node-accent: var(--journey-accent); }
+.journey-root::after { position: absolute; left: 50%; bottom: -35px; width: 1px; height: 34px; background: var(--border); content: ""; }
+.journey-branches { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding-top: 24px; }
+.journey-branches::before { position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: var(--border); content: ""; }
+.journey-branch { position: relative; min-width: 0; --node-accent: var(--journey-accent); }
+.journey-branch[data-branch="foundation"] { --node-accent: var(--teal); }
+.journey-branch[data-branch="q1"] { --node-accent: var(--blue); }
+.journey-branch[data-branch="q2"] { --node-accent: var(--orange); }
+.journey-branch[data-branch="q3"] { --node-accent: var(--purple); }
+.journey-branch[data-branch="frontier"] { --node-accent: var(--green); }
+.journey-branch .graph-node { --node-accent: inherit; }
+.journey-branch::before { position: absolute; top: -24px; left: 50%; width: 1px; height: 24px; background: var(--border); content: ""; }
+.journey-children { display: grid; gap: 8px; margin-top: 12px; padding-left: 13px; border-left: 2px solid color-mix(in srgb, var(--node-accent) 45%, var(--border)); }
+.journey-children .graph-node::after { position: absolute; top: 50%; left: -15px; width: 14px; height: 2px; background: color-mix(in srgb, var(--node-accent) 45%, var(--border)); content: ""; }
+.space-map { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; min-height: 565px; padding: 28px 34px 32px 52px; }
+.space-map::before { position: absolute; top: 28px; bottom: 32px; left: calc(50% + 9px); width: 1px; background: var(--grid); content: ""; }
+.space-map::after { position: absolute; right: 34px; bottom: calc(50% + 2px); left: 52px; height: 1px; background: var(--grid); content: ""; }
+.axis-y, .axis-x { position: absolute; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.axis-y { top: 50%; left: 2px; transform: rotate(-90deg) translateX(-50%); transform-origin: left top; }
+.axis-x { right: 34px; bottom: 4px; }
+.quadrant { --quadrant-accent: var(--space-accent); position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 8px; margin: 4px; padding: 30px 14px 14px; border: 1px solid color-mix(in srgb, var(--quadrant-accent) 24%, var(--border)); border-radius: 12px; background: color-mix(in srgb, var(--quadrant-accent) 6%, transparent); }
+.quadrant[data-quadrant="classic-mechanism"] { --quadrant-accent: var(--purple); }
+.quadrant[data-quadrant="continual-mechanism"] { --quadrant-accent: var(--teal); }
+.quadrant[data-quadrant="classic-behavior"] { --quadrant-accent: var(--blue); }
+.quadrant[data-quadrant="continual-behavior"] { --quadrant-accent: var(--orange); }
+.quadrant-label { position: absolute; top: 8px; left: 14px; color: var(--quadrant-accent); font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.quadrant .graph-node { --node-accent: var(--quadrant-accent); }
+.quadrant .graph-node { width: auto; max-width: 210px; flex: 1 1 145px; }
+.space-center { position: absolute; z-index: 3; top: 50%; left: calc(50% + 9px); width: 160px; transform: translate(-50%, -50%); }
+.space-center .graph-node { --node-accent: var(--space-accent); border-radius: 999px; padding: 12px 15px; text-align: center; }
+.story-panel { position: sticky; top: 78px; align-self: start; min-height: 620px; padding: 20px; border-top: 3px solid var(--view-accent, var(--journey-accent)); background: linear-gradient(180deg, color-mix(in srgb, var(--view-accent, var(--journey-accent)) 5%, var(--panel)) 0, var(--panel) 100px); }
+.story-kicker { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.story-source { color: var(--muted); font-size: 11px; }
+.story-panel h3 { margin: 12px 0 5px; font-size: 24px; line-height: 1.15; letter-spacing: -.025em; }
+.story-summary { margin: 0 0 18px; color: var(--muted); }
+.story-fields { margin: 0; }
+.story-field { padding: 11px 0; border-top: 1px solid var(--border); }
+.story-field dt { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.story-field dd { margin: 4px 0 0; font-size: 13px; }
+.story-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+.story-action { border: 1px solid var(--border); border-radius: 7px; padding: 6px 9px; color: var(--text); background: var(--panel-2); text-decoration: none; cursor: pointer; font-size: 12px; }
+.story-action:hover { border-color: var(--blue); }
+.story-action.primary { color: var(--accent-ink); border-color: var(--view-accent, var(--blue)); background: var(--view-accent, var(--blue)); font-weight: 750; }
+.atlas-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; color: var(--muted); font-size: 11px; }
+.legend-line { display: inline-block; width: 20px; margin-right: 6px; border-top: 1px solid var(--muted); vertical-align: 3px; }
+.legend-line.dashed { border-top-style: dashed; }
+.legend-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 2px color-mix(in srgb, var(--orange) 16%, transparent); vertical-align: 1px; }
+.legend-inset { display: inline-block; width: 15px; height: 12px; margin-right: 6px; border: 1px solid var(--view-accent, var(--journey-accent)); border-left-width: 4px; border-radius: 3px; background: color-mix(in srgb, var(--view-accent, var(--journey-accent)) 12%, transparent); vertical-align: -2px; }
 .step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .step { min-height: 160px; padding: 17px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
 .step-num { color: var(--muted); font-size: 11px; letter-spacing: .08em; }
@@ -70,11 +147,18 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 .tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
 .tab { border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; color: var(--text); background: var(--panel); cursor: pointer; }
 .tab[aria-pressed="true"] { color: var(--panel); border-color: var(--blue); background: var(--blue); }
-.model-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .5fr); gap: 16px; }
+.model-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 16px; }
 .viz, .info-panel { border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
-.viz { padding: 12px; min-height: 320px; overflow: hidden; }
+.viz { padding: 16px; min-height: 360px; overflow: hidden; background: linear-gradient(145deg, color-mix(in srgb, var(--blue) 4%, var(--panel)), var(--panel)); }
 .info-panel { padding: 18px; }
 .info-panel h3 { margin: 0 0 12px; }
+.model-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-bottom: 14px; }
+.model-fact { padding: 9px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel-2); }
+.model-fact span, .model-fact strong { display: block; }
+.model-fact span { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.model-fact strong { margin-top: 3px; font-size: 11px; }
+.model-reading { margin-top: 14px; padding: 12px; border-left: 3px solid var(--orange); background: var(--panel-2); color: var(--muted); font-size: 12px; }
+.model-reading strong { display: block; margin-bottom: 3px; color: var(--orange); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
 .setting-list { display: grid; gap: 0; margin: 0; }
 .setting-row { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--border); }
 .setting-row:first-child { border-top: 0; }
@@ -82,11 +166,14 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 .setting-row dd { margin: 0; }
 .model-svg { width: 100%; height: auto; min-height: 300px; }
 .model-svg text { fill: var(--text); font-family: inherit; }
-.node { fill: var(--panel-2); stroke: var(--border); stroke-width: 1.5; }
-.node.pc { fill: color-mix(in srgb, var(--orange) 15%, var(--panel)); stroke: var(--orange); }
-.node.io { fill: color-mix(in srgb, var(--blue) 12%, var(--panel)); stroke: var(--blue); }
-.edge { stroke: var(--muted); stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
-.edge.local { stroke: var(--orange); stroke-dasharray: 5 4; }
+.band-label { font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+.column-divider { stroke: var(--border); stroke-width: 1; stroke-dasharray: 3 5; }
+.node { fill: var(--panel); stroke: color-mix(in srgb, var(--blue) 72%, var(--border)); stroke-width: 1.5; }
+.node.pc { fill: var(--panel); stroke: var(--orange); stroke-dasharray: 5 3; }
+.node.io { fill: var(--panel); stroke: var(--blue); stroke-width: 2; }
+.edge { stroke: var(--blue); stroke-width: 2; fill: none; marker-end: url(#arrow-forward); }
+.edge.local { stroke: var(--orange); stroke-dasharray: 5 4; marker-end: url(#arrow-local); }
+.error-node { fill: var(--panel); stroke: var(--orange); stroke-width: 1.5; }
 .protocol-grid { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); gap: 16px; }
 .protocol-list { display: grid; gap: 8px; }
 .protocol-button { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: var(--panel); text-align: left; cursor: pointer; }
@@ -152,12 +239,24 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
 .tooltip { position: fixed; z-index: 50; display: none; max-width: 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--panel); box-shadow: var(--shadow); pointer-events: none; font-size: 12px; }
 @media (max-width: 980px) {
-  .hero, .model-layout, .protocol-grid { grid-template-columns: 1fr; }
+  .model-layout, .protocol-grid, .atlas-layout { grid-template-columns: 1fr; }
+  .story-panel { position: static; min-height: 0; }
+  .journey-branches { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+  .journey-branches::before, .journey-branch::before, .journey-root::after { display: none; }
   .step-grid, .rq-grid, .claim-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 680px) {
   .shell { width: min(100% - 20px, 1480px); }
   .top { padding-inline: 10px; }
+  .top-nav { display: none; }
+  .atlas-toolbar { align-items: stretch; flex-direction: column; }
+  .view-switch { align-self: flex-start; }
+  .map-panel { min-height: 0; padding: 12px; }
+  .journey-branches { grid-template-columns: 1fr; }
+  .space-map { display: block; min-height: 0; padding: 0; }
+  .space-map::before, .space-map::after, .axis-x, .axis-y, .space-center { display: none; }
+  .quadrant { display: flex; min-height: 0; margin: 8px 0; padding: 34px 8px 16px; }
+  .quadrant .graph-node { max-width: none; }
   .step-grid, .rq-grid, .claim-grid, .chart-grid { grid-template-columns: 1fr; }
   .chart-card.wide { grid-column: auto; }
   .chart { min-height: 0; }
@@ -168,6 +267,7 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
   .section-head p { margin-top: 8px; }
   .source-grid { columns: 1; }
   .setting-row { grid-template-columns: 1fr; gap: 2px; }
+  .model-facts { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
@@ -176,66 +276,47 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 <header class="top">
   <div class="top-row">
     <div class="brand"><span>Learning Without Letting Go</span> · PC Continual-Learning Atlas</div>
-    <button class="theme" id="theme-button" type="button">Theme</button>
+    <div class="top-actions">
+      <nav class="top-nav" aria-label="Page sections">
+        <a href="#research-atlas">Explore</a>
+        <a href="#results">Evidence</a>
+        <a href="#learning-curves">Curves</a>
+        <a href="wiki/index.html">Wiki</a>
+        <a href="#sources">Sources</a>
+      </nav>
+      <button class="theme" id="theme-button" type="button">Theme</button>
+    </div>
   </div>
-  <nav class="phase-flow" aria-label="DL research lifecycle">
-    <a class="phase-link done" href="#proposal">P1 Frame · complete</a>
-    <a class="phase-link partial" href="#ecosystem">P2 Survey · partial</a>
-    <a class="phase-link done" href="#experiments">P3 Design · complete</a>
-    <a class="phase-link done" href="#experiments">P4 Prepare · done</a>
-    <a class="phase-link done" href="#experiments">P5 Launch · done</a>
-    <a class="phase-link done" href="#learning-curves">P6 Monitor · done</a>
-    <a class="phase-link done" href="#results">P7 Evaluate · done</a>
-    <a class="phase-link active" href="#next-steps">P8 Synthesize · active</a>
-    <a class="phase-link partial" href="#limitations">P9 Audit · warnings</a>
-  </nav>
 </header>
 
 <main class="shell">
   <section class="hero">
-    <div>
-      <p class="eyebrow">Biologically plausible online & continual learning</p>
-      <h1>From local inference<br>to continual failure modes.</h1>
-      <p class="dek">A project-level view of the Predictive Coding implementation, matched protocols, achieved and non-achieved results, learning dynamics, and the experiments that should come next.</p>
-    </div>
-    <aside class="status-panel" aria-label="Current project status">
-      <h2>Current state · 21 July 2026</h2>
-      <p>The complete living proposal and three canonical questions now organize three completed study lines. The literature audit remains open.</p>
-      <div class="status-grid">
-        <div><strong>3</strong><span>completed studies</span></div>
-        <div><strong>3</strong><span>canonical RQs</span></div>
-        <div><strong>1</strong><span>candidate rule</span></div>
+    <p class="eyebrow">Predictive coding beyond backpropagation</p>
+    <h1>Learning Without<br>Letting Go.</h1>
+    <p class="dek">Can local inference preserve old knowledge without giving up the ability to learn what comes next? Explore the project as a research journey or as a map of the question space.</p>
+    <div class="hero-meta"><span><strong>3</strong> canonical questions</span><span><strong>8</strong> completed experiment stories</span><span><strong>4</strong> proposed experiments</span><span>Evidence through 21 July 2026</span></div>
+  </section>
+
+  <section class="section atlas" id="research-atlas">
+    <div class="atlas-toolbar">
+      <div class="atlas-toolbar-copy">
+        <h2>One research graph, two ways to read it</h2>
+        <p>Journey follows the question tree. Research Space locates the same cards between classic and continual settings, and between behavioral outcomes and mechanistic explanation.</p>
       </div>
-    </aside>
-  </section>
-
-  <section class="section" id="ecosystem">
-    <div class="section-head">
-      <h2>Research lifecycle</h2>
-      <p>The proposal is complete and remains a living document. Q1–Q3 are fixed as the canonical frame; results refine their answers without silently replacing them. Literature closure and a second learning rule remain open.</p>
+      <div class="view-switch" role="group" aria-label="Research graph view">
+        <button class="view-button" data-view="journey" type="button" aria-pressed="true">Journey</button>
+        <button class="view-button" data-view="space" type="button" aria-pressed="false">Research Space</button>
+      </div>
     </div>
-    <div class="step-grid">
-      <article class="step"><div class="step-num">P1 · FRAME</div><h3>Complete living proposal</h3><p>“Learning Without Letting Go” defines the motivation, Predictive Coding candidate, Backpropagation comparator and canonical Q1–Q3.</p><span class="pill ok">Complete · continuously refined</span></article>
-      <article class="step"><div class="step-num">P2 · SURVEY</div><h3>50-paper evidence registry</h3><p>Reading roadmap, SOTA explorer and claim ledger exist; five weak evidence cells still block survey closure.</p><span class="pill warn">Audit needs Round N</span></article>
-      <article class="step"><div class="step-num">P3 · DESIGN</div><h3>Controlled study designs</h3><p>Relaxation, network scale and CIFAR reproduction/continual extension each have frozen H/E plans.</p><span class="pill info">Complete per study</span></article>
-      <article class="step"><div class="step-num">P4–P5 · PREPARE / LAUNCH</div><h3>Reproducible GPU execution</h3><p>ROCm container, paired initialization, stream checksums, immutable JSON, run ledgers and smoke gates.</p><span class="pill ok">Complete</span></article>
-      <article class="step"><div class="step-num">P6–P7 · MONITOR / EVALUATE</div><h3>Behavior + representation</h3><p>Accuracy matrices, prequential performance, adaptation, forgetting, runtime, memory, RDM drift and label alignment.</p><span class="pill ok">Complete</span></article>
-      <article class="step"><div class="step-num">P8–P9 · SYNTHESIZE / AUDIT</div><h3>Trade-off, not superiority</h3><p>Study syntheses are complete. Project synthesis is active; broad PC, causal drift and biological-superiority claims remain excluded.</p><span class="pill warn">Active · warnings</span></article>
+    <div class="atlas-layout">
+      <div class="map-panel">
+        <div class="map-note"><span id="view-purpose"><strong>Journey view</strong> · why each result made the next experiment necessary</span><span>Select any node</span></div>
+        <div class="map-view" id="journey-view" aria-label="Tree-shaped research journey"></div>
+        <div class="map-view" id="space-view" aria-label="Research space coordinate map" hidden></div>
+        <div class="atlas-legend"><span>Color = branch or quadrant</span><span><i class="legend-dot"></i>dot + text = evidence status</span><span><i class="legend-line dashed"></i>proposed</span><span><i class="legend-inset"></i>selected card</span></div>
+      </div>
+      <aside class="story-panel" id="story-panel" aria-live="polite"></aside>
     </div>
-  </section>
-
-  <section class="section" id="proposal">
-    <div class="section-head">
-      <h2>Learning Without Letting Go</h2>
-      <p>The complete proposal asks whether inference-before-plasticity produces different static learning, continual behavior and stability–plasticity trade-offs from Backpropagation.</p>
-    </div>
-    <div class="takeaway"><strong>Proposal status:</strong> complete and living. The three questions below are canonical. Follow-up experiments refine their answers; they do not replace Q1–Q3.</div>
-    <div class="rq-grid" style="margin-top:16px">
-      <article class="rq"><span class="pill ok">Q1 · answered for frozen MLP</span><h3>How do PC and BP differ on the same static MNIST architecture?</h3><p>PC matches BP once inference is sufficient. T=1 is propagation-deficient; T≥5 produces nearly identical validation curves and final accuracy, at higher compute cost.</p><ol><li>BP: 98.267% final test</li><li>PC T=5: 98.193%</li><li>Learning curves saturate together</li></ol></article>
-      <article class="rq"><span class="pill warn">Q2 · descriptive answer</span><h3>How do PC and BP differ under fixed single-pass continual learning?</h3><p>PC is BP-like on Permuted MNIST. On SplitMNIST and SplitCIFAR-10, lower forgetting accompanies lower adaptation, prequential accuracy and label-aligned acquisition.</p><ol><li>Domain shift: near parity</li><li>Class incremental: both forget</li><li>Causal drift mechanism unresolved</li></ol></article>
-      <article class="rq"><span class="pill ok">Q3 · finite grid answered</span><h3>How does PC inference budget change stability, plasticity and cost?</h3><p>T=5 is the cheapest effective tested default for the two-layer MLP. More relaxation does not monotonically improve behavior, while runtime increases consistently.</p><ol><li>T=1: boundary failure</li><li>T=5: static saturation</li><li>T=10/20: more cost, no general win</li></ol></article>
-    </div>
-    <p style="margin:16px 0 0"><a href="../research-project-proposal.md">Read the complete proposal, motivation, evidence mapping and refinement log →</a></p>
   </section>
 
   <section class="section" id="paper-claim">
@@ -419,7 +500,7 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
     <div class="rq-grid">
       <article class="rq"><span class="pill info">Q1 refinement · execute first</span><h3>Does the comparison survive fair update and compute budgets?</h3><p>Separate conventional one-update BP, archived repeated-update RBP, PC-last and PC-all under validation-only selection.</p><ol><li>Equal samples</li><li>Equal parameter updates</li><li>Equal wall-clock panels</li></ol></article>
       <article class="rq"><span class="pill warn">Q2 refinement · mechanism</span><h3>Is lower drift useful stability or under-learning?</h3><p>Match post-task acquisition by intervening on early-layer plasticity, then compare drift and forgetting.</p><ol><li>PC early-layer LR ↑</li><li>RBP early-layer LR ↓</li><li>Adaptation matched within ±1 pp</li></ol></article>
-      <article class="rq"><span class="pill info">Q3 refinement · scaling</span><h3>Does relaxation need to grow with network depth?</h3><p>Run depth × relaxation with per-layer convergence diagnostics before changing architecture or optimizer.</p><ol><li>2-layer: T=3/5/10</li><li>4-layer: T=5/7/10</li><li>Permuted primary, Split secondary</li></ol></article>
+      <article class="rq"><span class="pill info">Q3 refinement · mechanism</span><h3>Does inference quality explain the depth failure?</h3><p>Combine depth × relaxation with Neuromatch-style update diagnostics before changing architecture or optimizer.</p><ol><li>2-layer T=3/5/10; 4-layer T=5/7/10</li><li>Layerwise PC–BP update cosine</li><li>Preregistered update SNR + convergence</li></ol></article>
     </div>
   </section>
 
@@ -438,6 +519,7 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
   <section class="section" id="sources">
     <div class="section-head"><h2>Evidence map</h2><p>Every number in this page is embedded from an immutable run or deterministic summary.</p></div>
     <ul class="source-grid">
+      <li><a href="learning-without-letting-go-frontend-proposal.md">Front-end build proposal and acceptance criteria</a></li>
       <li><a href="https://www.nature.com/articles/s41593-023-01514-1">Song et al. (2024) primary paper and Figure 4</a></li>
       <li><a href="../agents/research/haoran-experiments-report.md">Combined experiment report</a></li>
       <li><a href="../research-project-proposal.md">Complete living research proposal</a></li>
@@ -460,9 +542,232 @@ h1 { max-width: 900px; margin: 0; font-size: clamp(38px, 6vw, 76px); line-height
 
 <script>
 const COLORS = { blue: "#55b7ff", orange: "#ffa45d", green: "#55d783", red: "#ff7278", purple: "#b69aff", teal: "#54cccc" };
+const RESEARCH_GRAPH = {
+  nodes: {
+    root: {
+      kind:"research", shortTitle:"Learning without letting go", title:"Can local inference preserve old knowledge without giving up new learning?", source:"Project thesis", status:"Current answer", statusClass:"warn",
+      summary:"The project compares Predictive Coding with Backpropagation across stationary, domain-incremental and class-incremental settings, then asks what produces the observed stability–plasticity behavior.",
+      story:[
+        ["Research space","Classic → continual on one axis; behavioral outcome → learning mechanism on the other."],
+        ["Current evidence","PC can match BP in static MNIST and reproduce a narrow paper-defined CIFAR result. In replay-free class-incremental streams, lower forgetting accompanies weaker acquisition."],
+        ["Backed conclusion","The present evidence supports a stability–plasticity trade-off, not general PC superiority or a solution to catastrophic forgetting."],
+        ["Open frontier","Measure update alignment, signal-to-noise and task-boundary interference to distinguish useful stability from reduced plasticity."]
+      ], actions:[{label:"Read canonical proposal",type:"link",target:"../research-project-proposal.md"},{label:"See backed claims",type:"anchor",target:"results"}]
+    },
+    foundation: {
+      kind:"research", shortTitle:"Foundation · Source validity", title:"Can the paper-defined implementation and comparator be reproduced?", source:"External-claim foundation", status:"Verified narrowly", statusClass:"ok",
+      summary:"Establish what the source paper actually tested before using its system as a project baseline.",
+      story:[
+        ["Question","Can the archived Figure 4i PC and repeated-update BP results be reproduced on the current hardware/software stack?"],
+        ["Why foundational","The paper claim, comparator semantics and selection rule must be explicit before they can motivate or constrain project extensions."],
+        ["Current answer","All six method–seed targets reproduce within ±1 percentage point under the archived winning configurations."],
+        ["Claim ceiling","This verifies one static, test-informed paper protocol. It is not conventional-BP or continual-learning evidence."]
+      ], actions:[{label:"Paper claim audit",type:"anchor",target:"paper-claim"},{label:"CIFAR learning curve",type:"curve",target:"cifar"}]
+    },
+    q1: {
+      kind:"research", shortTitle:"Q1 · Static MNIST", title:"How do PC and BP differ on the same static MNIST architecture?", source:"Canonical Q1", status:"Answered for frozen MLP", statusClass:"ok",
+      summary:"Compare learning dynamics and final error while holding the architecture and training setup fixed.",
+      story:[
+        ["Question","What differences remain when PC and BP use the same 784→256→256→10 MLP, objective, data split and paired seeds?"],
+        ["Why first","Continual-learning differences are uninterpretable if one method cannot first learn the matched stationary task."],
+        ["Current answer","Once inference is sufficient, PC and BP have nearly identical static validation curves and final accuracy; the reliable difference is added inference cost."],
+        ["Claim ceiling","This answer applies to the frozen MLP and finite relaxation grid, not to all architectures or learning rules."]
+      ], actions:[{label:"Static learning curve",type:"curve",target:"mnist"},{label:"Static protocol",type:"protocol",target:"static-mnist"}]
+    },
+    q2: {
+      kind:"research", shortTitle:"Q2 · Continual learning", title:"Does PC retain old knowledge while still acquiring new tasks?", source:"Canonical Q2", status:"Trade-off observed", statusClass:"warn",
+      summary:"Test online accuracy, adaptation, forgetting and backward transfer under fixed single-pass streams.",
+      story:[
+        ["Question","How do PC and BP differ under domain-incremental and class-incremental non-stationarity?"],
+        ["Required signature","A favorable result must reduce forgetting without materially reducing adaptation, prequential accuracy or final performance."],
+        ["Current answer","Permuted MNIST is near parity for effective PC settings. SplitMNIST and SplitCIFAR show catastrophic forgetting for both methods; PC's lower forgetting comes with weaker acquisition."],
+        ["Open mechanism","Behavior alone cannot tell whether PC reduces destructive interference or merely reduces update magnitude and representational change."]
+      ], actions:[{label:"Continual protocols",type:"protocol",target:"continual-mnist"},{label:"Stability–plasticity evidence",type:"anchor",target:"results"}]
+    },
+    q3: {
+      kind:"research", shortTitle:"Q3 · Inference & scale", title:"How do inference budget and network scale change PC behavior and cost?", source:"Canonical Q3", status:"Finite grid answered", statusClass:"ok",
+      summary:"Probe the learning rule by changing relaxation depth, width and depth while freezing the rest of the protocol.",
+      story:[
+        ["Question","Where is the useful PC relaxation boundary, and does the same recipe survive larger networks?"],
+        ["Current answer","T=1 is propagation-deficient; T≥5 saturates static performance while cost keeps rising. Width helps only selected cells, and plain depth harms both methods with an additional deep-PC continual collapse."],
+        ["Decision","Keep T=5 and 256×2 as economical tested candidates, not global optima."],
+        ["Open explanation","Deep PC used the minimum sufficient relaxation depth. A registered depth × relaxation diagnostic is needed before assigning cause."]
+      ], actions:[{label:"PC inference curve",type:"curve",target:"pc-inference"},{label:"Scale evidence",type:"anchor",target:"results"}]
+    },
+    frontier: {
+      kind:"research", shortTitle:"Mechanistic frontier", title:"Is PC's lower drift useful stability or under-learning?", source:"Q2/Q3 refinement", status:"Open", statusClass:"warn",
+      summary:"Move from endpoint behavior to representation and update-level explanations.",
+      story:[
+        ["Observed clue","PC changes old-task representational geometry less, but also develops less label-aligned structure and adapts less."],
+        ["Competing explanations","PC may reduce destructive interference, or its updates may simply be smaller, noisier or less aligned with task gradients."],
+        ["Evidence boundary","Current RDM measurements are observational and task-confounded; they do not establish mediation or causality."],
+        ["Next test","Match acquisition or inspect update direction/SNR before interpreting low drift as beneficial memory protection."]
+      ], actions:[{label:"Representation evidence",type:"anchor",target:"results"},{label:"Next refinements",type:"anchor",target:"next-steps"}]
+    },
+    "exp-cifar-repro": {
+      kind:"experiment", shortTitle:"CIFAR Figure 4i", title:"Reproduce the paper-defined static CIFAR-10 outcome", source:"CIFAR study · H1.E2", status:"Supported narrowly", statusClass:"ok",
+      summary:"A source-faithful baseline that separates implementation validity from broader superiority claims.",
+      story:[
+        ["Hypothesis","The archived prospective-configuration PC and repeated-update BP results can be reproduced within ±1 percentage point for every method–seed cell."],
+        ["Design","RBP versus PC, three official seeds, 80 passes, source-winning method/seed learning rates and the archived best-test selection rule."],
+        ["Goal","Verify the implementation and source protocol before extending the system to continual CIFAR-10."],
+        ["Rigor","Matched source seeds and data, preregistered tolerance, finite-metric and PC-descent gates; all six cells evaluated."],
+        ["Result","RBP 68.966% and PC 71.262% mean best accuracy; all six cells passed. PC used 1.228× update time and about 72.9 MB more peak memory."],
+        ["Verdict","The narrow reproduction hypothesis is supported. Conventional one-update BP and leakage-free selection remain unverified."],
+        ["Next","Use a controlled static task to isolate inference depth, then test a separate replay-free SplitCIFAR extension."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"cifar-static"},{label:"Learning curve",type:"curve",target:"cifar"},{label:"Claim audit",type:"anchor",target:"paper-claim"}]
+    },
+    "exp-static-relaxation": {
+      kind:"experiment", shortTitle:"Static relaxation sweep", title:"Find the effective PC inference boundary on static MNIST", source:"Relaxation study · H1.E1", status:"Threshold supported", statusClass:"ok",
+      summary:"Change only PC relaxation depth and observe learning speed, final accuracy and cost.",
+      story:[
+        ["Hypothesis","More relaxation changes static learning speed and final accuracy; a sufficient depth should allow upstream error propagation."],
+        ["Design","Fresh BP control versus PC T={1,5,10,20}; one MLP, objective, optimizer, split and paired seeds 7/42/123."],
+        ["Goal","Separate a propagation-deficient implementation boundary from useful inference and determine whether more steps keep helping."],
+        ["Rigor","T is the only intervention; paired initialization, deterministic split, ten epochs, shared metrics and synchronized timing."],
+        ["Result","T=1 loses 13.81 pp versus BP. T=5/10/20 cluster near 98.2%, while runtime rises monotonically."],
+        ["Verdict","A useful threshold is supported; the hypothesis that more relaxation monotonically improves accuracy is rejected."],
+        ["Next","Carry the same controlled sweep into domain- and class-incremental streams."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"static-mnist"},{label:"Learning curve",type:"curve",target:"mnist"},{label:"Result chart",type:"anchor",target:"results"}]
+    },
+    "exp-permuted-relaxation": {
+      kind:"experiment", shortTitle:"Permuted MNIST", title:"Test relaxation under domain-incremental shift", source:"Relaxation study · H1.E3", status:"Near parity", statusClass:"ok",
+      summary:"Raise non-stationarity while preserving the same labels and one-pass, no-replay protocol.",
+      story:[
+        ["Hypothesis","Relaxation depth changes PC plasticity and stability when the input domain changes across tasks."],
+        ["Design","BP versus PC T={1,5,10,20}; five deterministic pixel permutations, one pass per task, paired seeds and no replay."],
+        ["Goal","Ask whether the static inference threshold generalizes to domain shift without class competition."],
+        ["Rigor","Identical realized streams and architecture; adaptation, prequential accuracy, forgetting and final accuracy reported jointly."],
+        ["Result","BP and PC T=5/10/20 remain tightly clustered. T=10 has the best tested PC mean but mixed-sign paired differences versus BP."],
+        ["Verdict","Effective PC is BP-like here; T=10 is only a replication candidate, not an optimum."],
+        ["Next","Increase interference with class-incremental SplitMNIST."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"continual-mnist"},{label:"Learning curve",type:"curve",target:"permuted-mnist"}]
+    },
+    "exp-split-relaxation": {
+      kind:"experiment", shortTitle:"SplitMNIST", title:"Test whether lower forgetting preserves new-task plasticity", source:"Relaxation study · H1.E2", status:"Trade-off", statusClass:"warn",
+      summary:"Class-incremental learning exposes the difference between remembering less badly and learning well.",
+      story:[
+        ["Hypothesis","More relaxation may reduce interference while retaining sufficient acquisition of each incoming class pair."],
+        ["Design","BP versus PC T={1,5,10,20}; five class-pair tasks, shared head, one pass, no replay or model task ID."],
+        ["Goal","Measure stability and plasticity together instead of treating forgetting as a standalone success metric."],
+        ["Rigor","Paired seeds and streams; pre-update prequential accuracy, adaptation, final accuracy and forgetting/BWT share one frozen evaluator."],
+        ["Result","From T=5→10→20, forgetting falls, but adaptation and prequential accuracy also fall. All methods finish near catastrophic-forgetting levels."],
+        ["Verdict","The favorable stability-without-plasticity-loss hypothesis is rejected; the experiment supports a trade-off."],
+        ["Next","Test architecture dependence and a harder SplitCIFAR stream."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"continual-mnist"},{label:"Learning curve",type:"curve",target:"split-mnist"},{label:"Trade-off chart",type:"anchor",target:"results"}]
+    },
+    "exp-width-scale": {
+      kind:"experiment", shortTitle:"Width intervention", title:"Does greater width unlock capacity-dependent gains?", source:"Scale study · H1.E2", status:"Partial support", statusClass:"warn",
+      summary:"Double hidden width while freezing the learning recipe and all evaluation regimes.",
+      story:[
+        ["Hypothesis","Greater width may improve capacity-dependent accuracy or plasticity for BP and PC."],
+        ["Design","512×2 versus fresh 256×2 controls; matched BP and PC T=5 across static, SplitMNIST and Permuted MNIST."],
+        ["Goal","Determine whether observed PC behavior is tied to one small architecture or survives a 2.49× parameter increase."],
+        ["Rigor","Only width changes; seeds, streams, optimizer, objective, epochs and metrics remain frozen. Gains require ≥0.5 pp without >1 pp plasticity loss."],
+        ["Result","Wide PC improves SplitMNIST acquisition/final accuracy; wide BP improves Permuted MNIST. Static gains are small and PC Permuted final accuracy does not improve."],
+        ["Verdict","Width has narrow scenario-specific value, not a general scale benefit."],
+        ["Next","Probe depth separately rather than conflating larger width and greater depth."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"scale"},{label:"Scale chart",type:"anchor",target:"results"}]
+    },
+    "exp-depth-scale": {
+      kind:"experiment", shortTitle:"Depth intervention", title:"Does greater depth expose a PC propagation limit?", source:"Scale study · H2.E1", status:"Rejected", statusClass:"fail",
+      summary:"A preserved negative result: the frozen recipe does not scale cleanly to four hidden layers.",
+      story:[
+        ["Hypothesis","Greater depth may change PC credit propagation and stability under the same learning recipe."],
+        ["Design","256×4 versus 256×2; matched BP and PC with T=5 across static, SplitMNIST and Permuted MNIST."],
+        ["Goal","Test depth independently and reveal whether a minimally sufficient inference budget survives a deeper network."],
+        ["Rigor","All non-architecture variables frozen; invalid v1 RNG-interleaved results preserved but excluded, and v2 controls match frozen checksums."],
+        ["Result","Depth lowers every scenario mean for both methods. Deep PC collapses to 51.385% on Permuted MNIST, 39.941 pp below shallow PC."],
+        ["Verdict","The deep model is rejected under this protocol. Because BP also degrades and T=5 has minimal margin, the cause remains unresolved."],
+        ["Next","Register depth × relaxation and convergence diagnostics rather than retroactively tuning this artifact."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"scale"},{label:"Failure chart",type:"anchor",target:"results"}]
+    },
+    "exp-split-cifar": {
+      kind:"experiment", shortTitle:"SplitCIFAR behavior", title:"Stress the matched system on replay-free class-incremental CIFAR-10", source:"CIFAR study · H2.E2", status:"No continual win", statusClass:"fail",
+      summary:"A harder project extension, explicitly separate from the paper's static CIFAR claim.",
+      story:[
+        ["Hypothesis","PC and paper-protocol RBP exhibit distinguishable acquisition–retention behavior on a causal SplitCIFAR-10 stream."],
+        ["Design","Five class pairs, shared ten-way head, one pass per task, no replay or model task ID; paired project seeds 7/42/123."],
+        ["Goal","Test whether static PC performance transfers to a high-interference continual regime."],
+        ["Rigor","Matched initialization and stream checksums; fixed source-derived learning rates; plasticity, stability, final accuracy and cost reported together."],
+        ["Result","Final average accuracy is about 18.0% RBP versus 17.0% PC. PC forgets less, but prequential accuracy and adaptation are also lower."],
+        ["Verdict","Both methods catastrophically forget. PC's lower forgetting is not a continual-learning win."],
+        ["Next","Measure layerwise representational change to determine what kind of stability is occurring."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"split-cifar"},{label:"Adaptation curve",type:"curve",target:"split-cifar-prequential"},{label:"Retention curve",type:"curve",target:"split-cifar-retention"}]
+    },
+    "exp-representations": {
+      kind:"experiment", shortTitle:"Representation diagnostics", title:"Is lower representational drift a useful retention mechanism?", source:"CIFAR study · H2.E3", status:"Mechanism not established", statusClass:"warn",
+      summary:"Move from behavioral endpoints to old-task geometry and label-aligned structure.",
+      story:[
+        ["Hypothesis","If PC protects useful old knowledge, lower old-task RDM drift should coexist with retained label structure and a favorable acquisition–retention balance."],
+        ["Design","Twenty fixed anchors per class, four layers, six task-boundary checkpoints, RDM drift and label alignment, plus a diagnostics-off same-revision control."],
+        ["Goal","Distinguish beneficial representational stability from a model that simply changes and learns less."],
+        ["Rigor","Evaluation-only hooks, isolated anchor RNG, fixed checkpoints and behavior-neutral instrumentation; aggregate inference stays in original RDM space."],
+        ["Result","PC has lower old-task RDM drift at every layer, but smaller label-alignment gains and lower acquisition metrics. Drift–forgetting correlations are inconsistent and task-confounded."],
+        ["Verdict","Reduced plasticity is supported as an interpretation; causal drift-mediated retention is not established."],
+        ["Next","Match acquisition or compare update direction, magnitude and SNR at task boundaries."]
+      ], actions:[{label:"Protocol",type:"protocol",target:"split-cifar"},{label:"Drift evidence",type:"anchor",target:"results"}]
+    },
+    "next-fair-budget": {
+      kind:"experiment", shortTitle:"Fair-budget comparator", title:"Separate conventional BP, repeated-update RBP and PC under fair budgets", source:"Proposed Q1 refinement", status:"Proposed", statusClass:"info", proposed:true,
+      summary:"Resolve the largest comparator ambiguity in the static CIFAR result.",
+      story:[
+        ["Hypothesis","The apparent method ordering may change when sample exposure, parameter-update count, wall-clock cost and selection information are matched separately."],
+        ["Design","Conventional one-update BP, archived 16-update RBP, PC-last and PC-all; validation-only selection with equal-sample, equal-update and equal-time panels."],
+        ["Goal","Determine which part of the CIFAR advantage belongs to the learning rule rather than the archived fairness convention."],
+        ["Status","Not run. No outcome from this design is included in the backed claims."]
+      ], actions:[{label:"See next refinements",type:"anchor",target:"next-steps"}]
+    },
+    "next-update-diagnostics": {
+      kind:"experiment", shortTitle:"Update alignment & SNR", title:"Measure PC update fidelity instead of inferring it from accuracy", source:"Proposed W2D3 diagnostic", status:"Proposed", statusClass:"info", proposed:true,
+      summary:"Adapt Neuromatch microlearning diagnostics to PC's local updates.",
+      story:[
+        ["Hypothesis","The T=1→5 transition and deep-PC failure should be reflected in layerwise update alignment or signal-to-noise, not only endpoint accuracy."],
+        ["Design","On matched network states and batches, measure cosine similarity between PC updates and the BP gradient, update norms and a preregistered scale-invariant SNR."],
+        ["Goal","Explain when local PC updates provide a useful approximation and how that changes with relaxation and depth."],
+        ["Status","Not run. The sampling unit for SNR must be fixed before launch to avoid mixing batch, seed and estimator variance."]
+      ], actions:[{label:"See next refinements",type:"anchor",target:"next-steps"}]
+    },
+    "next-plasticity-match": {
+      kind:"experiment", shortTitle:"Acquisition-matched causality", title:"Match new-task acquisition before comparing drift and forgetting", source:"Proposed Q2 refinement", status:"Proposed", statusClass:"info", proposed:true,
+      summary:"Turn the under-learning alternative explanation into a controlled intervention.",
+      story:[
+        ["Hypothesis","If low PC drift is independently protective, it should predict better retention after PC and RBP are matched on post-task acquisition."],
+        ["Design","Intervene on early-layer plasticity or learning rate to match adaptation within ±1 pp, then compare drift, label alignment and forgetting."],
+        ["Goal","Test whether representational stability contributes beyond simply learning less."],
+        ["Status","Not run. This would be a new registered causal study, not a reinterpretation of H2.E3."]
+      ], actions:[{label:"See next refinements",type:"anchor",target:"next-steps"}]
+    },
+    "next-depth-relaxation": {
+      kind:"experiment", shortTitle:"Depth × relaxation", title:"Test whether inference budget must grow with network depth", source:"Proposed Q3 refinement", status:"Proposed", statusClass:"info", proposed:true,
+      summary:"Resolve one plausible cause of the deep-PC continual collapse.",
+      story:[
+        ["Hypothesis","Four-layer PC may require more than the minimum T=5 to achieve a comparable relaxation margin and useful upstream updates."],
+        ["Design","Two-layer T={3,5,10} and four-layer T={5,7,10}; Permuted MNIST primary, SplitMNIST secondary, with per-layer convergence and update diagnostics."],
+        ["Goal","Separate insufficient relaxation from architecture-wide optimization failure."],
+        ["Status","Not run. The completed depth artifact remains negative and must not be retroactively tuned."]
+      ], actions:[{label:"See next refinements",type:"anchor",target:"next-steps"}]
+    }
+  },
+  journeyBranches: [
+    {research:"foundation", children:["exp-cifar-repro","next-fair-budget"]},
+    {research:"q1", children:["exp-static-relaxation"]},
+    {research:"q2", children:["exp-permuted-relaxation","exp-split-relaxation","exp-split-cifar"]},
+    {research:"q3", children:["exp-width-scale","exp-depth-scale","next-depth-relaxation"]},
+    {research:"frontier", children:["exp-representations","next-update-diagnostics","next-plasticity-match"]}
+  ],
+  quadrants: [
+    {id:"classic-mechanism", label:"Classic × mechanism", nodes:["q3","exp-width-scale","exp-depth-scale","next-depth-relaxation","next-update-diagnostics"]},
+    {id:"continual-mechanism", label:"Continual × mechanism", nodes:["frontier","exp-representations","next-plasticity-match"]},
+    {id:"classic-behavior", label:"Classic × behavior", nodes:["foundation","q1","exp-cifar-repro","exp-static-relaxation","next-fair-budget"]},
+    {id:"continual-behavior", label:"Continual × behavior", nodes:["q2","exp-permuted-relaxation","exp-split-relaxation","exp-split-cifar"]}
+  ]
+};
 const MODELS = {
   mnist: {
     title: "Step 1 · MNIST MLP",
+    facts: [["Parameters","269k"],["Batch","500"],["PC inference","T varied"]],
+    reading: "The learned forward architecture is shared by BP and PC. PC adds inferred hidden states during relaxation; these are states of the hidden layers, not extra learned layers.",
     settings: [
       ["Architecture", "784 → 256 → 256 → 10; ReLU; biases"],
       ["Parameters", "269,322 learned parameters"],
@@ -472,17 +777,19 @@ const MODELS = {
       ["Batch", "500"],
     ],
     nodes: [
-      {x:40,y:115,w:120,h:60,label:"Input",sub:"784 pixels",cls:"io"},
-      {x:205,y:115,w:125,h:60,label:"Linear + ReLU",sub:"256",cls:""},
-      {x:365,y:115,w:125,h:60,label:"Linear + ReLU",sub:"256",cls:""},
-      {x:530,y:115,w:120,h:60,label:"Output",sub:"10 logits",cls:"io"},
-      {x:205,y:220,w:125,h:48,label:"PC latent x₁",sub:"local energy",cls:"pc"},
-      {x:365,y:220,w:125,h:48,label:"PC latent x₂",sub:"local energy",cls:"pc"},
+      {x:80,y:35,w:300,h:54,label:"Input",sub:"784 pixels",cls:"io"},
+      {x:80,y:120,w:300,h:54,label:"Linear + ReLU",sub:"hidden state · 256",cls:""},
+      {x:80,y:205,w:300,h:54,label:"Linear + ReLU",sub:"hidden state · 256",cls:""},
+      {x:80,y:290,w:300,h:54,label:"Output",sub:"10 logits",cls:"io"},
+      {x:500,y:120,w:160,h:54,label:"PC latent x₁",sub:"inferred state",cls:"pc"},
+      {x:500,y:205,w:160,h:54,label:"PC latent x₂",sub:"inferred state",cls:"pc"},
     ],
-    edges:[[160,145,205,145,""],[330,145,365,145,""],[490,145,530,145,""],[267,175,267,220,"local"],[427,175,427,220,"local"]]
+    edges:[[230,89,230,120,""],[230,174,230,205,""],[230,259,230,290,""],[380,147,500,147,"local"],[380,232,500,232,"local"]]
   },
   cifar: {
     title: "Step 2 · CIFAR-10 ConvNet",
+    facts: [["Parameters","4.28M"],["Batch","200"],["PC inference","T=16"]],
+    reading: "The convolutional and fully connected forward path is matched. PC relaxes three latent states and, in this Step 2 protocol, updates parameters at every inference iteration.",
     settings: [
       ["Architecture", "Conv 3→64 → Conv 64→128 → FC 8192→512→10"],
       ["Parameters", "4,275,402 learned parameters"],
@@ -492,16 +799,16 @@ const MODELS = {
       ["Batch", "200"],
     ],
     nodes: [
-      {x:20,y:105,w:100,h:62,label:"Input",sub:"3×32×32",cls:"io"},
-      {x:145,y:105,w:110,h:62,label:"Conv1",sub:"64×16×16",cls:""},
-      {x:280,y:105,w:110,h:62,label:"Conv2",sub:"128×8×8",cls:""},
-      {x:415,y:105,w:105,h:62,label:"FC1",sub:"512",cls:""},
-      {x:545,y:105,w:100,h:62,label:"Output",sub:"10 logits",cls:"io"},
-      {x:145,y:218,w:110,h:46,label:"PC latent",sub:"conv1",cls:"pc"},
-      {x:280,y:218,w:110,h:46,label:"PC latent",sub:"conv2",cls:"pc"},
-      {x:415,y:218,w:105,h:46,label:"PC latent",sub:"fc1",cls:"pc"},
+      {x:80,y:30,w:300,h:48,label:"Input",sub:"3 × 32 × 32",cls:"io"},
+      {x:80,y:96,w:300,h:48,label:"Conv1 + ReLU + MaxPool",sub:"64 × 16 × 16",cls:""},
+      {x:80,y:162,w:300,h:48,label:"Conv2 + ReLU + MaxPool",sub:"128 × 8 × 8",cls:""},
+      {x:80,y:228,w:300,h:48,label:"Fully connected + ReLU",sub:"512",cls:""},
+      {x:80,y:294,w:300,h:48,label:"Output",sub:"10 logits",cls:"io"},
+      {x:500,y:96,w:160,h:48,label:"PC latent x₁",sub:"conv1 state",cls:"pc"},
+      {x:500,y:162,w:160,h:48,label:"PC latent x₂",sub:"conv2 state",cls:"pc"},
+      {x:500,y:228,w:160,h:48,label:"PC latent x₃",sub:"fc1 state",cls:"pc"},
     ],
-    edges:[[120,136,145,136,""],[255,136,280,136,""],[390,136,415,136,""],[520,136,545,136,""],[200,167,200,218,"local"],[335,167,335,218,"local"],[467,167,467,218,"local"]]
+    edges:[[230,78,230,96,""],[230,144,230,162,""],[230,210,230,228,""],[230,276,230,294,""],[380,120,500,120,"local"],[380,186,500,186,"local"],[380,252,500,252,"local"]]
   }
 };
 
@@ -615,6 +922,103 @@ const DATA = {
   }
 };
 
+let activeResearchNode = "root";
+let activeResearchView = "journey";
+
+function graphNodeButton(id){
+  const n=RESEARCH_GRAPH.nodes[id];
+  return `<button class="graph-node ${n.kind} status-${esc(n.statusClass)} ${n.proposed?'proposed':''}" data-node="${esc(id)}" type="button" aria-pressed="${id===activeResearchNode}">${esc(n.shortTitle)}<small>${esc(n.status)}</small></button>`;
+}
+
+function renderJourney(){
+  const branches=RESEARCH_GRAPH.journeyBranches.map(branch=>`<div class="journey-branch" data-branch="${esc(branch.research)}">${graphNodeButton(branch.research)}<div class="journey-children">${branch.children.map(graphNodeButton).join("")}</div></div>`).join("");
+  document.getElementById("journey-view").innerHTML=`<div class="journey-root">${graphNodeButton("root")}</div><div class="journey-branches">${branches}</div>`;
+}
+
+function renderResearchSpace(){
+  const quadrants=RESEARCH_GRAPH.quadrants.map(q=>`<div class="quadrant" data-quadrant="${esc(q.id)}"><span class="quadrant-label">${esc(q.label)}</span>${q.nodes.map(graphNodeButton).join("")}</div>`).join("");
+  document.getElementById("space-view").innerHTML=`<div class="space-map"><span class="axis-y">Behavior → mechanism</span><span class="axis-x">Classic → continual</span>${quadrants}<div class="space-center">${graphNodeButton("root")}</div></div>`;
+}
+
+function bindGraphNodes(){
+  document.querySelectorAll(".graph-node").forEach(button=>button.addEventListener("click",()=>selectResearchNode(button.dataset.node)));
+}
+
+const EXPERIMENT_PAGE_PATHS = {
+  "exp-cifar-repro":"experiments/cifar-figure-4i.html",
+  "exp-static-relaxation":"experiments/static-mnist-relaxation.html",
+  "exp-permuted-relaxation":"experiments/permuted-mnist-relaxation.html",
+  "exp-split-relaxation":"experiments/split-mnist-relaxation.html",
+  "exp-width-scale":"experiments/width-intervention.html",
+  "exp-depth-scale":"experiments/depth-intervention.html",
+  "exp-split-cifar":"experiments/split-cifar-behavior.html",
+  "exp-representations":"experiments/split-cifar-representations.html",
+  "next-fair-budget":"experiments/fair-budget-comparator.html",
+  "next-update-diagnostics":"experiments/update-alignment-snr.html",
+  "next-plasticity-match":"experiments/acquisition-matched-causality.html",
+  "next-depth-relaxation":"experiments/depth-relaxation.html"
+};
+
+function renderStory(id){
+  const node=RESEARCH_GRAPH.nodes[id];
+  const fields=node.story.map(([label,value])=>`<div class="story-field"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join("");
+  const fullPage=EXPERIMENT_PAGE_PATHS[id]?`<a class="story-action primary" href="${esc(EXPERIMENT_PAGE_PATHS[id])}">Read full experiment →</a>`:"";
+  const actions=(node.actions||[]).map(action=>action.type==="link"
+    ? `<a class="story-action" href="${esc(action.target)}">${esc(action.label)} →</a>`
+    : action.type==="anchor"
+      ? `<a class="story-action" href="#${esc(action.target)}">${esc(action.label)} ↓</a>`
+      : `<button class="story-action" data-action="${esc(action.type)}" data-target="${esc(action.target)}" type="button">${esc(action.label)} ↓</button>`).join("");
+  document.getElementById("story-panel").innerHTML=`<div class="story-kicker"><span class="pill ${esc(node.statusClass)}">${esc(node.status)}</span><span class="story-source">${esc(node.kind)} · ${esc(node.source)}</span></div><h3>${esc(node.title)}</h3><p class="story-summary">${esc(node.summary)}</p><dl class="story-fields">${fields}</dl>${fullPage||actions?`<div class="story-actions">${fullPage}${actions}</div>`:""}`;
+  document.querySelectorAll(".story-action[data-action]").forEach(button=>button.addEventListener("click",()=>{
+    if(button.dataset.action==="protocol") activateProtocol(button.dataset.target);
+    if(button.dataset.action==="curve") activateCurve(button.dataset.target);
+  }));
+}
+
+function updateGraphSelection(){
+  document.querySelectorAll(".graph-node").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.node===activeResearchNode)));
+}
+
+function selectResearchNode(id,updateUrl=true){
+  if(!RESEARCH_GRAPH.nodes[id]) return;
+  activeResearchNode=id;
+  updateGraphSelection();
+  renderStory(id);
+  if(updateUrl) history.replaceState(null,"",`#node=${encodeURIComponent(id)}&view=${encodeURIComponent(activeResearchView)}`);
+}
+
+function setResearchView(view,updateUrl=true){
+  if(!["journey","space"].includes(view)) return;
+  activeResearchView=view;
+  document.getElementById("research-atlas").dataset.view=view;
+  document.getElementById("journey-view").hidden=view!=="journey";
+  document.getElementById("space-view").hidden=view!=="space";
+  document.querySelectorAll(".view-button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.view===view)));
+  document.getElementById("view-purpose").innerHTML=view==="journey"
+    ? "<strong>Journey view</strong> · why each result made the next experiment necessary"
+    : "<strong>Research Space</strong> · where each question sits between classic/continual and behavior/mechanism";
+  updateGraphSelection();
+  if(updateUrl) history.replaceState(null,"",`#node=${encodeURIComponent(activeResearchNode)}&view=${encodeURIComponent(view)}`);
+}
+
+function activateProtocol(id){
+  const button=document.querySelector(`.protocol-button[data-protocol="${id}"]`);
+  if(!button) return;
+  document.querySelectorAll(".protocol-button").forEach(item=>item.setAttribute("aria-pressed","false"));
+  button.setAttribute("aria-pressed","true");
+  renderProtocol(id);
+  document.getElementById("experiments").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function activateCurve(kind){
+  const button=document.querySelector(`.curve-tab[data-curve="${kind}"]`);
+  if(!button) return;
+  document.querySelectorAll(".curve-tab").forEach(item=>item.setAttribute("aria-pressed","false"));
+  button.setAttribute("aria-pressed","true");
+  renderCurve(kind);
+  document.getElementById("learning-curves").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
 function svgBase(width=720,height=330) {
   return {width,height,left:58,right:18,top:20,bottom:48};
 }
@@ -639,10 +1043,10 @@ function tooltipBind(container, marks){
 function renderModel(kind){
   const m=MODELS[kind];
   document.getElementById("model-title").textContent=m.title;
-  document.getElementById("model-settings").innerHTML=m.settings.map(([a,b])=>`<div class="setting-row"><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("");
-  const nodes=m.nodes.map(n=>`<g><rect class="node ${n.cls}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="10"/><text x="${n.x+n.w/2}" y="${n.y+25}" text-anchor="middle" font-size="13" font-weight="700">${esc(n.label)}</text><text x="${n.x+n.w/2}" y="${n.y+43}" text-anchor="middle" font-size="11" fill="var(--muted)">${esc(n.sub)}</text></g>`).join("");
-  const edges=m.edges.map(e=>`<path class="edge ${e[4]}" d="M${e[0]} ${e[1]} L${e[2]} ${e[3]}"/>`).join("");
-  document.getElementById("model-diagram").innerHTML=`<svg class="model-svg" viewBox="0 0 680 310" role="img" aria-label="${esc(m.title)} architecture"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--muted)"/></marker></defs>${edges}${nodes}<text x="340" y="292" text-anchor="middle" font-size="11" fill="var(--muted)">Solid: feedforward path · dashed orange: latent prediction-error coupling</text></svg>`;
+  document.getElementById("model-settings").innerHTML=`<div class="model-facts">${m.facts.map(([a,b])=>`<div class="model-fact"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>`).join("")}</div>`+m.settings.map(([a,b])=>`<div class="setting-row"><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("")+`<div class="model-reading"><strong>How to read the diagram</strong>${esc(m.reading)}</div>`;
+  const nodes=m.nodes.map((n,index)=>`<g><rect class="node ${n.cls}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="7"/><text x="${n.x+10}" y="${n.y+14}" font-size="8" font-weight="800" fill="var(--muted)">${String(index+1).padStart(2,"0")}</text><text x="${n.x+n.w/2}" y="${n.y+22}" text-anchor="middle" font-size="12" font-weight="700">${esc(n.label)}</text><text x="${n.x+n.w/2}" y="${n.y+39}" text-anchor="middle" font-size="10" fill="var(--muted)">${esc(n.sub)}</text></g>`).join("");
+  const edges=m.edges.map(e=>{const errorX=(e[0]+e[2])/2;return `<path class="edge ${e[4]}" d="M${e[0]} ${e[1]} L${e[2]} ${e[3]}"/>${e[4]?`<circle class="error-node" cx="${errorX}" cy="${e[1]}" r="8"/><text x="${errorX}" y="${e[1]+3}" text-anchor="middle" font-size="8" fill="var(--orange)">ε</text>`:""}`}).join("");
+  document.getElementById("model-diagram").innerHTML=`<svg class="model-svg" viewBox="0 0 720 425" role="img" aria-label="${esc(m.title)} architecture"><defs><marker id="arrow-forward" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--blue)"/></marker><marker id="arrow-local" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--orange)"/></marker></defs><text class="band-label" x="80" y="17" fill="var(--blue)">LEARNED FORWARD PATH · TOP TO BOTTOM</text><text class="band-label" x="500" y="17" fill="var(--orange)">PC INFERRED STATES</text><line class="column-divider" x1="440" y1="26" x2="440" y2="370"/>${edges}${nodes}<text x="360" y="410" text-anchor="middle" font-size="10" fill="var(--muted)">solid blue = forward computation · dashed orange + ε = local prediction-error coupling</text></svg>`;
 }
 function renderProtocols(){
   const list=document.getElementById("protocol-list");
@@ -698,6 +1102,10 @@ function renderCurve(kind){
 function setupTabs(selector,callback){document.querySelectorAll(selector).forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(selector).forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");callback(b)}))}
 
 document.getElementById("theme-button").addEventListener("click",()=>{document.documentElement.style.colorScheme=document.documentElement.style.colorScheme==="light"?"dark":"light"});
+renderJourney();
+renderResearchSpace();
+bindGraphNodes();
+document.querySelectorAll(".view-button").forEach(button=>button.addEventListener("click",()=>setResearchView(button.dataset.view)));
 setupTabs(".model-tab",b=>renderModel(b.dataset.model));
 setupTabs(".scale-tab",b=>renderScale(b.dataset.scenario));
 setupTabs(".curve-tab",b=>renderCurve(b.dataset.curve));
@@ -708,6 +1116,13 @@ renderTradeoff();
 renderScale("static");
 renderDrift();
 renderCurve("mnist");
+const initialParams=new URLSearchParams(location.hash.startsWith("#node=")?location.hash.slice(1):"");
+const initialNode=RESEARCH_GRAPH.nodes[initialParams.get("node")]?initialParams.get("node"):"root";
+const initialView=["journey","space"].includes(initialParams.get("view"))?initialParams.get("view"):"journey";
+setResearchView(initialView,false);
+selectResearchNode(initialNode,false);
 </script>
+<script src="wiki/wiki-data.js?v=20260722"></script>
+<script src="wiki/term-linker.js?v=20260722"></script>
 </body>
 </html>

@@ -1,0 +1,1759 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="A mathematical explainer for the proposed PC/BP × Adam/CLASSP × persistent/task-reset continual-learning model."
+  >
+  <title>State-policy factorial model · PC/BP × Adam/CLASSP</title>
+  <style>
+    :root {
+      --paper: #f5f1e8;
+      --paper-deep: #e9e1d2;
+      --ink: #1f2b2c;
+      --muted: #657171;
+      --rule: #c8c1b4;
+      --teal: #0b716a;
+      --teal-soft: #d8ebe6;
+      --coral: #d56143;
+      --coral-soft: #f4ded5;
+      --gold: #b98a2f;
+      --gold-soft: #f0e4c3;
+      --blue: #436c88;
+      --blue-soft: #dbe8ef;
+      --white: #fffdf8;
+      --shadow: 0 18px 50px rgba(31, 43, 44, 0.10);
+      --radius: 18px;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 3%, rgba(11, 113, 106, 0.10), transparent 28rem),
+        linear-gradient(90deg, rgba(31, 43, 44, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(31, 43, 44, 0.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 24px 24px, 24px 24px, auto;
+      font-family: var(--sans);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--teal);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      border-bottom: 1px solid rgba(31, 43, 44, 0.13);
+      background: rgba(245, 241, 232, 0.91);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      letter-spacing: 0;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      color: var(--teal);
+    }
+
+    .hero {
+      padding: 82px 0 56px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 20px;
+      color: var(--teal);
+      font-size: 0.77rem;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 30px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.08;
+    }
+
+    h1 {
+      max-width: 880px;
+      margin-bottom: 24px;
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6.7rem);
+      font-weight: 500;
+      letter-spacing: -0.055em;
+    }
+
+    h1 em {
+      color: var(--coral);
+      font-weight: 500;
+    }
+
+    .lede {
+      max-width: 760px;
+      margin: 0;
+      color: #425052;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    }
+
+    .hero-equation {
+      margin-top: 42px;
+      padding: 26px 28px;
+      border: 1px solid rgba(31, 43, 44, 0.18);
+      border-left: 5px solid var(--coral);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: rgba(255, 253, 248, 0.72);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-equation .equation {
+      margin: 5px 0;
+      font-size: clamp(1rem, 2.5vw, 1.48rem);
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .pill {
+      padding: 7px 11px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: #4d5959;
+      background: rgba(255, 253, 248, 0.64);
+      font-family: var(--mono);
+      font-size: 0.73rem;
+    }
+
+    main {
+      padding-bottom: 96px;
+    }
+
+    section {
+      scroll-margin-top: 84px;
+      padding: 64px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 38px;
+      margin-bottom: 34px;
+    }
+
+    .section-index {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      max-width: 780px;
+      margin-bottom: 14px;
+      font-family: var(--serif);
+      font-size: clamp(2.15rem, 4.5vw, 3.7rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .section-title p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .card {
+      border: 1px solid rgba(31, 43, 44, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.79);
+      box-shadow: 0 9px 30px rgba(31, 43, 44, 0.06);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .factor-card {
+      padding: 25px;
+    }
+
+    .factor-number {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .factor-card h3 {
+      margin: 8px 0 10px;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      font-weight: 600;
+    }
+
+    .factor-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .factor-levels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .factor-level {
+      padding: 6px 10px;
+      border-radius: 7px;
+      color: var(--ink);
+      background: var(--paper-deep);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .explorer {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(270px, 0.8fr) minmax(0, 1.2fr);
+    }
+
+    .controls {
+      padding: 28px;
+      border-right: 1px solid var(--rule);
+      background: rgba(233, 225, 210, 0.46);
+    }
+
+    .control-group + .control-group {
+      margin-top: 24px;
+    }
+
+    .control-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .choice {
+      padding: 10px 8px;
+      border: 1px solid var(--rule);
+      border-radius: 9px;
+      color: var(--muted);
+      background: var(--white);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .choice:hover,
+    .choice:focus-visible {
+      border-color: var(--teal);
+      outline: none;
+    }
+
+    .choice[aria-pressed="true"] {
+      border-color: var(--teal);
+      color: var(--white);
+      background: var(--teal);
+    }
+
+    .selection {
+      min-height: 390px;
+      padding: 31px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cell-code {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .selection h3 {
+      margin: 9px 0 15px;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .selection-description {
+      max-width: 670px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .selection-equations {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .mini-equation {
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--paper);
+    }
+
+    .mini-equation span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mini-math {
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 0.94rem;
+      overflow-x: auto;
+    }
+
+    .cell-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .cell-button {
+      min-height: 82px;
+      padding: 12px;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      color: var(--ink);
+      background: rgba(255, 253, 248, 0.72);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .cell-button:hover,
+    .cell-button:focus-visible {
+      border-color: var(--coral);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .cell-button.active {
+      border-color: var(--coral);
+      background: var(--coral-soft);
+      box-shadow: inset 0 0 0 1px var(--coral);
+    }
+
+    .cell-button strong,
+    .cell-button small {
+      display: block;
+    }
+
+    .cell-button strong {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+    }
+
+    .cell-button small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.69rem;
+    }
+
+    .architecture {
+      padding: 28px;
+    }
+
+    .architecture svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .architecture-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .key-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .key-swatch {
+      width: 16px;
+      height: 10px;
+      border-radius: 3px;
+      background: var(--blue);
+    }
+
+    .key-swatch.pc {
+      background: var(--coral);
+    }
+
+    .key-swatch.shared {
+      background: var(--teal);
+    }
+
+    .math-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .math-card {
+      padding: 26px;
+    }
+
+    .math-card h3 {
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 600;
+    }
+
+    .math-card > p {
+      margin-top: 0;
+      color: var(--muted);
+    }
+
+    .equation {
+      overflow-x: auto;
+      margin: 14px 0;
+      padding: 15px 17px;
+      border-left: 3px solid var(--teal);
+      color: #172324;
+      background: var(--paper);
+      font-family: var(--serif);
+      font-size: clamp(0.94rem, 1.8vw, 1.08rem);
+      line-height: 1.55;
+      white-space: normal;
+    }
+
+    .equation mjx-container,
+    .mini-math mjx-container,
+    .metrics-table mjx-container {
+      margin: 0 !important;
+    }
+
+    .equation mjx-container {
+      min-width: max-content;
+    }
+
+    .equation.coral {
+      border-left-color: var(--coral);
+    }
+
+    .equation.gold {
+      border-left-color: var(--gold);
+    }
+
+    .definition-list {
+      display: grid;
+      grid-template-columns: minmax(110px, 0.27fr) minmax(0, 1fr);
+      gap: 9px 20px;
+      margin-top: 20px;
+    }
+
+    .definition-list dt {
+      color: var(--teal);
+      font-family: var(--mono);
+      font-size: 0.79rem;
+      font-weight: 800;
+    }
+
+    .definition-list dd {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      color: #4b4333;
+      background: var(--gold-soft);
+      font-size: 0.9rem;
+    }
+
+    .note strong {
+      color: #332b1d;
+    }
+
+    .state-diagram {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .state-box {
+      padding: 23px;
+    }
+
+    .state-box h3 {
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 600;
+    }
+
+    .state-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .state-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--coral);
+      font-family: var(--serif);
+      font-size: 2.4rem;
+    }
+
+    .estimand-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .estimand {
+      padding: 22px;
+    }
+
+    .estimand .step {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 850;
+    }
+
+    .estimand h3 {
+      margin: 7px 0 9px;
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    .estimand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 0;
+      padding: 25px;
+      border-radius: var(--radius);
+      color: #e9f4ef;
+      background: #1e2b2b;
+      box-shadow: var(--shadow);
+      font-family: var(--mono);
+      font-size: 0.79rem;
+      line-height: 1.65;
+    }
+
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.76);
+    }
+
+    .metrics-table th,
+    .metrics-table td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--rule);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .metrics-table th {
+      color: var(--muted);
+      background: var(--paper-deep);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .metrics-table td:first-child {
+      font-weight: 800;
+    }
+
+    .metrics-table td:nth-child(2) {
+      font-family: var(--mono);
+      font-size: 0.79rem;
+    }
+
+    .metrics-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .boundary {
+      padding: 30px;
+      border-color: rgba(213, 97, 67, 0.35);
+      background:
+        linear-gradient(135deg, rgba(244, 222, 213, 0.8), rgba(255, 253, 248, 0.88));
+    }
+
+    .boundary h3 {
+      margin-bottom: 12px;
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .boundary p {
+      max-width: 870px;
+      margin-bottom: 0;
+      color: #5e5650;
+    }
+
+    footer {
+      padding: 36px 0 54px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .footer-inner p {
+      max-width: 700px;
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .grid-3,
+      .estimand-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .explorer {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .cell-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      .grid-2,
+      .selection-equations {
+        grid-template-columns: 1fr;
+      }
+
+      .state-diagram {
+        grid-template-columns: 1fr;
+      }
+
+      .state-arrow {
+        min-height: 42px;
+        transform: rotate(90deg);
+      }
+
+      .metrics-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      options: {
+        enableMenu: true,
+      },
+    };
+  </script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@4.1.2/tex-chtml.js"
+  ></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark">×</span>
+        State-policy model
+      </a>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#design">Design</a>
+        <a href="#architecture">Network</a>
+        <a href="#learning">Learning rules</a>
+        <a href="#state">State policy</a>
+        <a href="#estimands">Estimands</a>
+        <a href="#algorithm">Algorithm</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="shell">
+      <header class="hero">
+        <p class="eyebrow">Proposed follow-up · mathematical specification</p>
+        <h1>One stream. Eight cells. <em>Three causal axes.</em></h1>
+        <p class="lede">
+          A controlled continual-learning model that crosses the learning
+          method, parameter optimizer, and task-boundary state policy while
+          holding the architecture, data stream, objective, initialization,
+          and evaluation fixed.
+        </p>
+
+        <div class="hero-equation" aria-label="Factorial design equation">
+          <div class="caption">Experimental design</div>
+          <div class="equation">
+            \(\mathcal{D}
+            = \{\mathrm{BP},\mathrm{PC}\}
+            \times \{\mathrm{Adam},\mathrm{CLASSP}\}
+            \times \{\mathrm{persistent},\mathrm{task\text{-}reset}\}\)
+          </div>
+          <div class="caption">
+            This is <strong>factorial-design notation</strong>—a Cartesian
+            product of three two-level factors—not pseudocode. It defines
+            2 × 2 × 2 = 8 experimental cells per seed.
+          </div>
+        </div>
+
+        <div class="status-row" aria-label="Model status">
+          <span class="pill">status: proposed, not registered</span>
+          <span class="pill">architecture: 784→256→256→10</span>
+          <span class="pill">stream: 20-task permuted MNIST</span>
+          <span class="pill">one optimizer update / batch</span>
+        </div>
+      </header>
+
+      <section id="design">
+        <div class="section-head">
+          <div class="section-index">01 · Design</div>
+          <div class="section-title">
+            <h2>The factorial question</h2>
+            <p>
+              Does resetting optimizer memory at a task boundary specifically
+              rescue CLASSP’s plasticity, or does reset help any optimizer?
+              Does that rescue differ between predictive coding and
+              backpropagation?
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card factor-card">
+            <div class="factor-number">FACTOR A</div>
+            <h3>Method</h3>
+            <p>
+              Determines how the parameter gradient is produced from the
+              shared half-squared output objective.
+            </p>
+            <div class="factor-levels">
+              <span class="factor-level">BP</span>
+              <span class="factor-level">PC</span>
+            </div>
+          </article>
+
+          <article class="card factor-card">
+            <div class="factor-number">FACTOR B</div>
+            <h3>Optimizer</h3>
+            <p>
+              Converts the method-produced gradient into a parameter update
+              while maintaining optimizer-specific state.
+            </p>
+            <div class="factor-levels">
+              <span class="factor-level">Adam</span>
+              <span class="factor-level">CLASSP</span>
+            </div>
+          </article>
+
+          <article class="card factor-card">
+            <div class="factor-number">FACTOR C</div>
+            <h3>State policy</h3>
+            <p>
+              Determines whether optimizer memory crosses a task boundary.
+              Learned network parameters always persist.
+            </p>
+            <div class="factor-levels">
+              <span class="factor-level">persistent</span>
+              <span class="factor-level">task-reset</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="card explorer" style="margin-top: 22px">
+          <div class="controls" aria-label="Factor selector">
+            <div class="control-group">
+              <span class="control-label">Method</span>
+              <div class="segmented">
+                <button class="choice" type="button" data-factor="method" data-value="bp" aria-pressed="true">BP</button>
+                <button class="choice" type="button" data-factor="method" data-value="pc" aria-pressed="false">PC</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <span class="control-label">Optimizer</span>
+              <div class="segmented">
+                <button class="choice" type="button" data-factor="optimizer" data-value="adam" aria-pressed="true">Adam</button>
+                <button class="choice" type="button" data-factor="optimizer" data-value="classp" aria-pressed="false">CLASSP</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <span class="control-label">Parameter-state policy</span>
+              <div class="segmented">
+                <button class="choice" type="button" data-factor="state" data-value="persistent" aria-pressed="true">Persistent</button>
+                <button class="choice" type="button" data-factor="state" data-value="reset" aria-pressed="false">Task-reset</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="selection" aria-live="polite">
+            <div>
+              <div class="cell-code" id="cell-code">Cell 1 of 8 · BP–Adam–persistent</div>
+              <h3 id="cell-title">Backpropagation × Adam × persistent state</h3>
+              <p class="selection-description" id="cell-description">
+                Backpropagation produces the batch gradient; Adam transforms
+                it using moments that continue across all twenty tasks.
+              </p>
+              <div class="selection-equations">
+                <div class="mini-equation">
+                  <span>Gradient source</span>
+                  <div class="mini-math" id="gradient-equation">
+                    \(g_t = \nabla_\theta \frac{1}{2}
+                    \lVert f_\theta(x_t)-y_t\rVert_2^2\)
+                  </div>
+                </div>
+                <div class="mini-equation">
+                  <span>Boundary transition</span>
+                  <div class="mini-math" id="state-equation">
+                    \(s_{k+1,0} \leftarrow s_{k,B_k}\)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cell-grid" aria-label="All eight factorial cells">
+          <button class="cell-button active" type="button" data-cell="bp-adam-persistent">
+            <strong>BP · Adam · P</strong><small>moments cross tasks</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="bp-adam-reset">
+            <strong>BP · Adam · R</strong><small>moments reset by task</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="bp-classp-persistent">
+            <strong>BP · CLASSP · P</strong><small>accumulator crosses tasks</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="bp-classp-reset">
+            <strong>BP · CLASSP · R</strong><small>accumulator resets by task</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="pc-adam-persistent">
+            <strong>PC · Adam · P</strong><small>moments cross tasks</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="pc-adam-reset">
+            <strong>PC · Adam · R</strong><small>moments reset by task</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="pc-classp-persistent">
+            <strong>PC · CLASSP · P</strong><small>accumulator crosses tasks</small>
+          </button>
+          <button class="cell-button" type="button" data-cell="pc-classp-reset">
+            <strong>PC · CLASSP · R</strong><small>accumulator resets by task</small>
+          </button>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <div class="section-head">
+          <div class="section-index">02 · Network</div>
+          <div class="section-title">
+            <h2>Shared architecture and stream</h2>
+            <p>
+              Every cell sees the same realized samples in the same order and
+              starts from the same linear tensors. PC inserts latent
+              predictive-coding layers; evaluation uses the same feedforward
+              mapping as BP.
+            </p>
+          </div>
+        </div>
+
+        <div class="card architecture">
+          <svg viewBox="0 0 1060 270" role="img" aria-labelledby="network-title network-desc">
+            <title id="network-title">Shared multilayer perceptron architecture</title>
+            <desc id="network-desc">
+              Input dimension 784 passes through linear, optional PC latent,
+              ReLU, linear, optional PC latent, ReLU, and output dimension 10.
+            </desc>
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#657171"></path>
+              </marker>
+            </defs>
+
+            <g fill="none" stroke="#657171" stroke-width="2" marker-end="url(#arrowhead)">
+              <path d="M142 113 H228"></path>
+              <path d="M352 113 H406"></path>
+              <path d="M480 113 H542"></path>
+              <path d="M662 113 H716"></path>
+              <path d="M790 113 H852"></path>
+              <path d="M934 113 H982"></path>
+            </g>
+
+            <g font-family="Inter, system-ui, sans-serif" text-anchor="middle">
+              <rect x="28" y="70" width="114" height="86" rx="16" fill="#0b716a"></rect>
+              <text x="85" y="106" fill="#fffdf8" font-size="17" font-weight="800">input</text>
+              <text x="85" y="132" fill="#d8ebe6" font-size="14">x ∈ ℝ⁷⁸⁴</text>
+
+              <rect x="228" y="70" width="124" height="86" rx="16" fill="#436c88"></rect>
+              <text x="290" y="104" fill="#fffdf8" font-size="16" font-weight="800">Linear 1</text>
+              <text x="290" y="130" fill="#dbe8ef" font-size="13">W₁, b₁ · 256</text>
+
+              <rect class="pc-node" x="406" y="84" width="74" height="58" rx="13" fill="#d56143"></rect>
+              <text class="pc-label" x="443" y="107" fill="#fffdf8" font-size="12" font-weight="800">PC</text>
+              <text class="pc-label" x="443" y="126" fill="#f4ded5" font-size="11">z₁</text>
+
+              <rect x="542" y="70" width="120" height="86" rx="16" fill="#436c88"></rect>
+              <text x="602" y="104" fill="#fffdf8" font-size="16" font-weight="800">Linear 2</text>
+              <text x="602" y="130" fill="#dbe8ef" font-size="13">W₂, b₂ · 256</text>
+
+              <rect class="pc-node" x="716" y="84" width="74" height="58" rx="13" fill="#d56143"></rect>
+              <text class="pc-label" x="753" y="107" fill="#fffdf8" font-size="12" font-weight="800">PC</text>
+              <text class="pc-label" x="753" y="126" fill="#f4ded5" font-size="11">z₂</text>
+
+              <rect x="852" y="70" width="82" height="86" rx="16" fill="#b98a2f"></rect>
+              <text x="893" y="104" fill="#fffdf8" font-size="14" font-weight="800">Linear 3</text>
+              <text x="893" y="130" fill="#f0e4c3" font-size="13">10 logits</text>
+
+              <rect x="982" y="70" width="64" height="86" rx="16" fill="#0b716a"></rect>
+              <text x="1014" y="105" fill="#fffdf8" font-size="15" font-weight="800">ŷ</text>
+              <text x="1014" y="130" fill="#d8ebe6" font-size="12">ℝ¹⁰</text>
+
+              <text x="523" y="209" fill="#657171" font-size="13">
+                ReLU follows z₁ / Linear 1 and z₂ / Linear 2
+              </text>
+              <text x="523" y="235" fill="#657171" font-size="12">
+                PC nodes are active only during PC training; evaluation is feedforward.
+              </text>
+            </g>
+          </svg>
+          <div class="architecture-key">
+            <span class="key-item"><i class="key-swatch shared"></i> shared input/output</span>
+            <span class="key-item"><i class="key-swatch"></i> learned linear transform</span>
+            <span class="key-item"><i class="key-swatch pc"></i> PC latent state</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 18px">
+          <article class="card math-card">
+            <h3>Task stream</h3>
+            <p>
+              Task <em>k</em> applies a fixed pixel permutation π<sub>k</sub>
+              to MNIST while preserving the label.
+            </p>
+            <div class="equation">
+              \(x^{(k)} = P(\pi_k)x,\qquad
+              k \in \{0,\ldots,K-1\},\qquad K=20\)
+            </div>
+            <div class="equation">
+              \(\mathcal{S}_r =
+              [(x_1^{(0)},y_1),\ldots,(x_n^{(K-1)},y_n)]\)
+            </div>
+            <p class="caption">
+              For seed r, all eight cells use the same permutation checksums,
+              sample-order checksums, and train/test split.
+            </p>
+          </article>
+
+          <article class="card math-card">
+            <h3>Feedforward map</h3>
+            <p>
+              Biases are enabled. The output objective is identical for BP and
+              PC.
+            </p>
+            <div class="equation">
+              \(h_1 = \rho(W_1x+b_1),\qquad
+              h_2 = \rho(W_2h_1+b_2)\)
+            </div>
+            <div class="equation">
+              \(f_\theta(x) = W_3h_2+b_3,\qquad
+              \rho(a)=\max(0,a)\)
+            </div>
+            <div class="equation">
+              \(\mathcal{L}_{\mathrm{out}}(\theta;x,y)
+              = \frac{1}{2}
+              \lVert f_\theta(x)-\operatorname{onehot}(y)\rVert_2^2\)
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="learning">
+        <div class="section-head">
+          <div class="section-index">03 · Learning rules</div>
+          <div class="section-title">
+            <h2>How each batch produces a gradient</h2>
+            <p>
+              The method factor changes gradient production. The optimizer
+              factor acts afterward on whichever gradient the method produces.
+            </p>
+          </div>
+        </div>
+
+        <div class="math-stack">
+          <article class="card math-card">
+            <h3>A · Backpropagation</h3>
+            <p>
+              A single forward pass computes the shared output loss, and
+              reverse-mode differentiation produces the parameter gradient.
+            </p>
+            <div class="equation">
+              \(g_t^{\mathrm{BP}}
+              = \nabla_\theta
+              \mathcal{L}_{\mathrm{out}}(\theta_t;X_t,Y_t)\)
+            </div>
+            <div class="equation">
+              \(\theta_{t+1}
+              = \operatorname{Optimizer}
+              (\theta_t,g_t^{\mathrm{BP}},s_t)\)
+            </div>
+            <dl class="definition-list">
+              <dt>θ</dt>
+              <dd>All weights and biases in the three linear layers.</dd>
+              <dt>sₜ</dt>
+              <dd>Adam moments or the CLASSP accumulator at optimizer step t.</dd>
+              <dt>one update</dt>
+              <dd>Exactly one parameter-optimizer update for each training batch.</dd>
+            </dl>
+          </article>
+
+          <article class="card math-card">
+            <h3>B · Predictive coding</h3>
+            <p>
+              PC introduces latent activities z₁ and z₂. They begin at the
+              feedforward predictions and then minimize the sum of local
+              prediction energy and the output loss.
+            </p>
+            <div class="equation coral">
+              \(\mu_1 = W_1X+b_1,\qquad
+              z_1^{(0)}=\operatorname{stopgrad}(\mu_1)\)
+            </div>
+            <div class="equation coral">
+              \(\mu_2 = W_2\rho(z_1)+b_2,\qquad
+              z_2^{(0)}=\operatorname{stopgrad}(\mu_2)\)
+            </div>
+            <div class="equation coral">
+              \(E(\theta,z;X,Y)
+              = \frac{1}{2}\lVert z_1-\mu_1\rVert_2^2
+              + \frac{1}{2}\lVert z_2-\mu_2\rVert_2^2
+              + \frac{1}{2}
+              \lVert W_3\rho(z_2)+b_3-Y\rVert_2^2\)
+            </div>
+            <div class="equation coral">
+              \(z^{(q+1)} = z^{(q)}
+              - \eta_z\nabla_z E(\theta,z^{(q)};X,Y),
+              \qquad q=0,\ldots,T-1\)
+            </div>
+            <div class="equation coral">
+              \(g_t^{\mathrm{PC}}
+              = \nabla_\theta E(\theta_t,z^{(T)};X_t,Y_t),
+              \qquad
+              \theta_{t+1}
+              = \operatorname{Optimizer}
+              (\theta_t,g_t^{\mathrm{PC}},s_t)\)
+            </div>
+            <dl class="definition-list">
+              <dt>T = 20</dt>
+              <dd>Latent inference steps for each batch.</dd>
+              <dt>ηz = 0.01</dt>
+              <dd>SGD learning rate for z₁ and z₂ during inference.</dd>
+              <dt>update p</dt>
+              <dd>Network parameters are updated only at the final inference step.</dd>
+              <dt>latent reset</dt>
+              <dd>Latent activities and their SGD optimizer reset every batch in every PC cell.</dd>
+            </dl>
+            <div class="note">
+              <strong>Do not confuse the two resets.</strong> The experimental
+              state-policy factor controls the <em>parameter optimizer</em>
+              across task boundaries. PC latent state still resets every batch
+              in both state-policy conditions.
+            </div>
+          </article>
+
+          <div class="grid-2">
+            <article class="card math-card">
+              <h3>C · Adam</h3>
+              <p>
+                Adam stores exponential first and second moments of the
+                method-produced gradient.
+              </p>
+              <div class="equation">
+                \(m_t = \beta_1m_{t-1}+(1-\beta_1)g_t\)
+              </div>
+              <div class="equation">
+                \(v_t = \beta_2v_{t-1}+(1-\beta_2)g_t^2\)
+              </div>
+              <div class="equation">
+                \(\widehat{m}_t = \frac{m_t}{1-\beta_1^t},
+                \qquad
+                \widehat{v}_t = \frac{v_t}{1-\beta_2^t}\)
+              </div>
+              <div class="equation">
+                \(\theta_{t+1} = \theta_t
+                - \alpha
+                \frac{\widehat{m}_t}
+                {\sqrt{\widehat{v}_t}+\varepsilon_{\mathrm{Adam}}}\)
+              </div>
+              <p class="caption">
+                Optimizer state is sₜ = (t,mₜ,vₜ) for each parameter tensor.
+              </p>
+            </article>
+
+            <article class="card math-card">
+              <h3>D · Paper-equation CLASSP</h3>
+              <p>
+                CLASSP thresholds each coordinate and scales accepted
+                gradients by their accumulated p-power history.
+              </p>
+              <div class="equation gold">
+                \(M_{t,i} = \mathbb{1}[g_{t,i}^2 &gt; \tau]\)
+              </div>
+              <div class="equation gold">
+                \(A_{t,i} = A_{t-1,i}
+                + M_{t,i}\lvert g_{t,i}\rvert^p\)
+              </div>
+              <div class="equation gold">
+                \(\theta_{t+1,i} = \theta_{t,i}
+                - \alpha
+                \frac{M_{t,i}g_{t,i}}
+                {(A_{t,i}+\varepsilon_{\mathrm{C}})^{1/p}}\)
+              </div>
+              <dl class="definition-list">
+                <dt>p = 2</dt>
+                <dd>Squared-gradient accumulation.</dd>
+                <dt>τ = 10⁻⁵</dt>
+                <dd>Strict squared-gradient threshold.</dd>
+                <dt>εC = 10⁻⁵</dt>
+                <dd>Positive value inside the p-root.</dd>
+                <dt>rejected i</dt>
+                <dd>No parameter update and no erasure of prior Aₜ,ᵢ.</dd>
+              </dl>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="state">
+        <div class="section-head">
+          <div class="section-index">04 · State policy</div>
+          <div class="section-title">
+            <h2>The intervention occurs at task boundaries</h2>
+            <p>
+              The learned network θ always carries forward. Only optimizer
+              memory s is either retained or reinitialized when task k ends.
+            </p>
+          </div>
+        </div>
+
+        <div class="state-diagram">
+          <article class="card state-box">
+            <h3>Persistent</h3>
+            <div class="equation">
+              \(\theta_{k+1,0} \leftarrow \theta_{k,B_k}\)
+            </div>
+            <div class="equation">
+              \(s_{k+1,0} \leftarrow s_{k,B_k}\)
+            </div>
+            <p>
+              Adam moments or the CLASSP accumulator summarize the entire
+              stream observed so far.
+            </p>
+          </article>
+
+          <div class="state-arrow" aria-hidden="true">↔</div>
+
+          <article class="card state-box">
+            <h3>Task-reset</h3>
+            <div class="equation coral">
+              \(\theta_{k+1,0} \leftarrow \theta_{k,B_k}\)
+            </div>
+            <div class="equation coral">
+              \(s_{k+1,0} \leftarrow s^{(0)}\)
+            </div>
+            <p>
+              Learned weights remain intact, but Adam starts with zero moments
+              and CLASSP starts with a zero accumulator and step count.
+            </p>
+          </article>
+        </div>
+
+        <div class="card boundary">
+          <h3>What is causally manipulated?</h3>
+          <p>
+            Nothing about the new task’s data, model tensors, objective, or
+            evaluation changes. The intervention is only
+            <strong>sₖ₊₁,₀</strong>. Therefore, a reset effect estimates the
+            consequence of discarding optimizer history—not the consequence
+            of reinitializing the model or replaying data.
+          </p>
+        </div>
+      </section>
+
+      <section id="estimands">
+        <div class="section-head">
+          <div class="section-index">05 · Estimands</div>
+          <div class="section-title">
+            <h2>Contrasts that identify a CLASSP-specific reset rescue</h2>
+            <p>
+              Let Y(m,o,s;r) be a metric for method m, optimizer o, state
+              policy s, and experimental seed r. Every contrast is paired
+              within seed.
+            </p>
+          </div>
+        </div>
+
+        <div class="estimand-grid">
+          <article class="card estimand">
+            <div class="step">STEP 1</div>
+            <h3>Reset effect</h3>
+            <div class="equation">
+              \(\delta_{m,o}(r)
+              = Y(m,o,\mathrm{R};r)-Y(m,o,\mathrm{P};r)\)
+            </div>
+            <p>
+              How much task reset changes an optimizer under one learning
+              method.
+            </p>
+          </article>
+
+          <article class="card estimand">
+            <div class="step">STEP 2</div>
+            <h3>CLASSP-specific rescue</h3>
+            <div class="equation coral">
+              \(\mathcal{R}_m(r)
+              = \delta_{m,\mathrm{CLASSP}}(r)
+              - \delta_{m,\mathrm{Adam}}(r)\)
+            </div>
+            <p>
+              Removes the generic benefit or harm of resetting any optimizer.
+            </p>
+          </article>
+
+          <article class="card estimand">
+            <div class="step">STEP 3</div>
+            <h3>PC-specific rescue</h3>
+            <div class="equation gold">
+              \(\Omega(r)
+              = \mathcal{R}_{\mathrm{PC}}(r)
+              - \mathcal{R}_{\mathrm{BP}}(r)\)
+            </div>
+            <p>
+              The three-way interaction: whether CLASSP’s reset rescue is
+              larger under PC than BP.
+            </p>
+          </article>
+        </div>
+
+        <div class="card math-card" style="margin-top: 18px">
+          <h3>Expanded three-way interaction</h3>
+          <div class="equation">
+            \(\begin{aligned}
+            \Omega ={}&
+            \bigl[
+              \bigl(Y(\mathrm{PC},\mathrm{C},\mathrm{R})
+                    -Y(\mathrm{PC},\mathrm{C},\mathrm{P})\bigr)
+              -\bigl(Y(\mathrm{PC},\mathrm{A},\mathrm{R})
+                    -Y(\mathrm{PC},\mathrm{A},\mathrm{P})\bigr)
+            \bigr] \\
+            &-
+            \bigl[
+              \bigl(Y(\mathrm{BP},\mathrm{C},\mathrm{R})
+                    -Y(\mathrm{BP},\mathrm{C},\mathrm{P})\bigr)
+              -\bigl(Y(\mathrm{BP},\mathrm{A},\mathrm{R})
+                    -Y(\mathrm{BP},\mathrm{A},\mathrm{P})\bigr)
+            \bigr].
+            \end{aligned}\)
+          </div>
+          <p class="caption">
+            C = CLASSP, A = Adam, R = task-reset, P = persistent. A positive Ω
+            for a higher-is-better metric is the precise signature of a
+            PC-specific CLASSP reset rescue.
+          </p>
+        </div>
+      </section>
+
+      <section id="metrics">
+        <div class="section-head">
+          <div class="section-index">06 · Outcomes</div>
+          <div class="section-title">
+            <h2>Plasticity and stability are measured separately</h2>
+            <p>
+              The accuracy matrix R has shape (K+1)×K. Row zero is
+              pre-training; row k+1 follows acquisition of task k.
+            </p>
+          </div>
+        </div>
+
+        <table class="metrics-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Definition</th>
+              <th>Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Online accuracy</td>
+              <td>
+                \(\displaystyle
+                \frac{\sum_t
+                  \mathbb{1}[
+                    \operatorname*{arg\,max} f_{\theta_t}(X_t)=Y_t]}
+                {\sum_t \lvert X_t\rvert}\)
+              </td>
+              <td>Prediction before learning from the current batch; immediate online competence.</td>
+            </tr>
+            <tr>
+              <td>Adaptation</td>
+              <td>\(A_j = R_{j+1,j}-R_{j,j}\)</td>
+              <td>How much task j is acquired during its training period; a direct plasticity measure.</td>
+            </tr>
+            <tr>
+              <td>BWT</td>
+              <td>
+                \(\operatorname{BWT}_j = R_{K,j}-R_{j+1,j}\)
+              </td>
+              <td>How later tasks change performance on task j; higher is better.</td>
+            </tr>
+            <tr>
+              <td>Forgetting</td>
+              <td>
+                \(F_j = \max_{i\in\{j+1,\ldots,K\}}R_{i,j}-R_{K,j}\)
+              </td>
+              <td>Loss from the best post-acquisition value to the final value; lower is better.</td>
+            </tr>
+            <tr>
+              <td>Final accuracy</td>
+              <td>
+                \(\operatorname{Acc}_{\mathrm{final}}
+                = \frac{1}{K}\sum_j R_{K,j}\)
+              </td>
+              <td>End-of-stream performance, combining acquisition and retention.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <strong>Online plasticity/adaptation</strong> is not one extra metric.
+          “Online” refers to performance before each incoming update;
+          “adaptation” is the pre-to-post acquisition gain for a task. Together
+          they show whether the learner remains able to absorb new information
+          as the stream progresses.
+        </div>
+      </section>
+
+      <section id="algorithm">
+        <div class="section-head">
+          <div class="section-index">07 · Algorithm</div>
+          <div class="section-title">
+            <h2>Executable logic, expressed as pseudocode</h2>
+            <p>
+              Unlike the Cartesian-product expression at the top, this block
+              is pseudocode: it specifies order, state transitions, and
+              repeated operations.
+            </p>
+          </div>
+        </div>
+
+        <pre aria-label="Factorial experiment pseudocode"><code>for seed r in preregistered_seeds:
+    stream ← realize_permuted_MNIST(seed=r)
+    θ₀     ← draw_shared_initial_parameters(seed=r)
+
+    for method m in {BP, PC}:
+        for optimizer o in {Adam, CLASSP}:
+            for state_policy s in {persistent, task_reset}:
+                θ   ← exact_copy(θ₀)
+                opt ← create_optimizer(o, parameters=θ)
+
+                evaluate_all_tasks_before_training()
+
+                for task k in {0, …, 19}:
+                    if k &gt; 0 and s == task_reset:
+                        opt ← create_optimizer(o, parameters=θ)
+                        # θ is retained; only optimizer state is reset.
+
+                    for batch (Xₜ, Yₜ) in shared_order(stream[k]):
+                        record_prediction_before_update(θ, Xₜ, Yₜ)
+
+                        if m == BP:
+                            gₜ ← gradient_of_output_loss_by_backprop(θ, Xₜ, Yₜ)
+                        else:
+                            z ← feedforward_latent_initialization(θ, Xₜ)
+                            repeat T = 20 times:
+                                z ← z − 0.01 · ∇z E(θ, z, Xₜ, Yₜ)
+                            gₜ ← ∇θ E(θ, z, Xₜ, Yₜ)
+
+                        θ, opt.state ← optimizer_step(o, θ, gₜ, opt.state)
+
+                    evaluate_all_tasks_after_task(k)
+
+                seal_result_with_checksums_receipt_and_provenance()</code></pre>
+      </section>
+
+      <section id="boundary">
+        <div class="section-head">
+          <div class="section-index">08 · Boundary</div>
+          <div class="section-title">
+            <h2>What this model can answer</h2>
+            <p>
+              The design turns an implementation difference into a controlled
+              intervention. It does not turn one benchmark into a universal
+              theory of learning.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card math-card">
+            <h3>Supported by the design</h3>
+            <ul>
+              <li>The paired effect of parameter-optimizer reset.</li>
+              <li>Whether reset effects differ between Adam and CLASSP.</li>
+              <li>Whether that optimizer difference itself differs between PC and BP.</li>
+              <li>How those effects trade plasticity against retention.</li>
+            </ul>
+          </article>
+          <article class="card math-card">
+            <h3>Not supported by the design alone</h3>
+            <ul>
+              <li>That task reset is biologically plausible.</li>
+              <li>That CLASSP is generally better or worse than Adam.</li>
+              <li>That PC and CLASSP are mechanistically synergistic.</li>
+              <li>That effects generalize beyond this stream, MLP, and tuning budget.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <p>
+        Proposed follow-up model for the continual-MNIST PC × CLASSP project.
+        Mathematical details mirror the corrected runner’s architecture,
+        objective, PC energy, and paper-equation CLASSP update; the task-reset
+        axis and three-way estimand remain proposals pending protocol review.
+      </p>
+      <span class="pill">static HTML · MathJax typesetting</span>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const selection = {
+        method: "bp",
+        optimizer: "adam",
+        state: "persistent",
+      };
+
+      const labels = {
+        method: { bp: "Backpropagation", pc: "Predictive coding" },
+        optimizer: { adam: "Adam", classp: "CLASSP" },
+        state: { persistent: "persistent state", reset: "task-reset state" },
+      };
+
+      const descriptions = {
+        "bp-adam-persistent":
+          "Backpropagation produces the batch gradient; Adam transforms it using moments that continue across all twenty tasks.",
+        "bp-adam-reset":
+          "Backpropagation produces the batch gradient; Adam’s moments and step count restart at each task while network parameters persist.",
+        "bp-classp-persistent":
+          "Backpropagation produces the batch gradient; CLASSP’s coordinate-wise accumulator summarizes accepted gradients across the complete stream.",
+        "bp-classp-reset":
+          "Backpropagation produces the batch gradient; CLASSP’s accumulator and step count restart at each task while network parameters persist.",
+        "pc-adam-persistent":
+          "Predictive-coding inference produces the final-step parameter gradient; Adam’s moments continue across all twenty tasks.",
+        "pc-adam-reset":
+          "Predictive-coding inference produces the final-step parameter gradient; Adam’s moments restart at each task while network parameters persist.",
+        "pc-classp-persistent":
+          "Predictive-coding inference produces the final-step parameter gradient; CLASSP’s accepted-gradient accumulator persists across the stream.",
+        "pc-classp-reset":
+          "Predictive-coding inference produces the final-step parameter gradient; CLASSP’s accumulator restarts at each task while network parameters persist.",
+      };
+
+      const cellOrder = [
+        "bp-adam-persistent",
+        "bp-adam-reset",
+        "bp-classp-persistent",
+        "bp-classp-reset",
+        "pc-adam-persistent",
+        "pc-adam-reset",
+        "pc-classp-persistent",
+        "pc-classp-reset",
+      ];
+
+      const title = document.querySelector("#cell-title");
+      const code = document.querySelector("#cell-code");
+      const description = document.querySelector("#cell-description");
+      const gradientEquation = document.querySelector("#gradient-equation");
+      const stateEquation = document.querySelector("#state-equation");
+      const pcNodes = document.querySelectorAll(".pc-node, .pc-label");
+
+      function key() {
+        return `${selection.method}-${selection.optimizer}-${selection.state}`;
+      }
+
+      function update() {
+        const current = key();
+        const index = cellOrder.indexOf(current) + 1;
+        const mathTargets = [gradientEquation, stateEquation];
+        const mathJaxReady =
+          typeof window.MathJax?.typesetPromise === "function";
+
+        if (mathJaxReady) {
+          window.MathJax.typesetClear(mathTargets);
+        }
+
+        code.textContent =
+          `Cell ${index} of 8 · ${selection.method.toUpperCase()}–` +
+          `${labels.optimizer[selection.optimizer]}–` +
+          `${selection.state === "persistent" ? "persistent" : "reset"}`;
+        title.textContent =
+          `${labels.method[selection.method]} × ` +
+          `${labels.optimizer[selection.optimizer]} × ` +
+          `${labels.state[selection.state]}`;
+        description.textContent = descriptions[current];
+        gradientEquation.textContent =
+          selection.method === "bp"
+            ? "\\(g_t = \\nabla_\\theta \\frac{1}{2}" +
+              "\\lVert f_\\theta(x_t)-y_t\\rVert_2^2\\)"
+            : "\\(g_t = \\nabla_\\theta " +
+              "E(\\theta,z^{(T)};x_t,y_t)\\)";
+        stateEquation.textContent =
+          selection.state === "persistent"
+            ? "\\(s_{k+1,0} \\leftarrow s_{k,B_k}\\)"
+            : "\\(s_{k+1,0} \\leftarrow s^{(0)};" +
+              "\\;\\theta\\text{ persists}\\)";
+
+        if (mathJaxReady) {
+          window.MathJax.typesetPromise(mathTargets).catch((error) => {
+            console.error("Math typesetting failed:", error);
+          });
+        }
+
+        document.querySelectorAll(".choice").forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(selection[button.dataset.factor] === button.dataset.value),
+          );
+        });
+
+        document.querySelectorAll(".cell-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.cell === current);
+        });
+
+        pcNodes.forEach((node) => {
+          node.style.opacity = selection.method === "pc" ? "1" : "0.22";
+        });
+      }
+
+      document.querySelectorAll(".choice").forEach((button) => {
+        button.addEventListener("click", () => {
+          selection[button.dataset.factor] = button.dataset.value;
+          update();
+        });
+      });
+
+      document.querySelectorAll(".cell-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const [method, optimizer, state] = button.dataset.cell.split("-");
+          selection.method = method;
+          selection.optimizer = optimizer;
+          selection.state = state;
+          update();
+          document.querySelector(".explorer").scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        });
+      });
+
+      update();
+    })();
+  </script>
+</body>
+</html>

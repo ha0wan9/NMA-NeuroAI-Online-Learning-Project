@@ -12,6 +12,9 @@ __pycache__/
 .coverage
 htmlcov/
 
+# Generated experiment dashboards and self-contained interactive artifacts
+playground/step2-cifar10/runs/tensorboard/
+
 # Notebooks
 .ipynb_checkpoints/
 

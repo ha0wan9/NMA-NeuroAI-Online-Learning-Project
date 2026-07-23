@@ -1,0 +1,31 @@
+flowchart TD
+  S["predictive-coding-cifar-baseline"]
+  H1["H1: static CIFAR-10 reproduction"]
+  H2["H2: SplitCIFAR-10 extension"]
+  H1E1["H1.E1: static smoke (completed)"]
+  H1E2["H1.E2: paper reproduction (completed)"]
+  H2E1["H2.E1: Split smoke (completed)"]
+  H2E2["H2.E2: Split baseline (completed)"]
+  H2E3["H2.E3: representation visualizations (completed)"]
+  RH1["R-H1-reproduced: all six cells within ±1 pp"]
+  RH2["R-H2-tradeoff: less forgetting, weaker acquisition"]
+  RH3["R-H2-representation-tradeoff: lower drift, weaker geometry acquisition"]
+  D1["D-baseline-established: keep H1.E2 and H2.E2 baselines"]
+  D2["D-rq2-joint-metrics: interpret drift with plasticity and behavior"]
+  S -->|tests| H1
+  S -->|tests| H2
+  H1 -->|tests| H1E1
+  H1 -->|tests| H1E2
+  H1E1 -->|supports| H1E2
+  H1E2 -->|supports| RH1
+  H2 -->|tests| H2E1
+  H2 -->|tests| H2E2
+  H2 -->|tests| H2E3
+  H2E1 -->|supports| H2E2
+  H2E2 -->|supports| RH2
+  H2E3 -->|depends-on| H2E2
+  H2E3 -->|supports| RH3
+  RH1 -->|supports| D1
+  RH2 -->|supports| D1
+  RH2 -->|supports| D2
+  RH3 -->|supports| D2

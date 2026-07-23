@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Source-backed definitions and mathematical notation for Learning Without Letting Go.">
+  <title>Research Wiki · Learning Without Letting Go</title>
+  <link rel="stylesheet" href="wiki.css?v=20260722c">
+  <script>
+    window.MathJax = {
+      tex: {displayMath: [["\\[", "\\]"]], inlineMath: [["\\(", "\\)"]]},
+      options: {enableMenu: true},
+      chtml: {scale: 1}
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="wiki-data.js?v=20260722"></script>
+  <script defer src="wiki-page.js?v=20260722c"></script>
+</head>
+<body>
+  <header class="wiki-header">
+    <div class="wiki-header-inner">
+      <a class="wiki-home" href="#top">Learning Without Letting Go · Research Wiki</a>
+      <div class="header-actions">
+        <a class="return-link" data-return-link href="../learning-without-letting-go.html">← Back to source page</a>
+        <button class="theme-button" id="theme-button" type="button">Theme</button>
+      </div>
+    </div>
+  </header>
+  <main class="wiki-shell" id="top">
+    <section class="wiki-hero" aria-labelledby="wiki-title">
+      <div>
+        <p class="eyebrow">Definitions · notation · provenance</p>
+        <h1 id="wiki-title">Research Wiki</h1>
+        <p>Every linked term has one anchored definition, explicit mathematical notation, a project-specific reading, and traceable sources.</p>
+      </div>
+      <aside class="hero-note">
+        <strong>How navigation works</strong>
+        <p>Term links preserve the originating page and Atlas node. Use “Back to source page” or the browser Back command to return.</p>
+      </aside>
+    </section>
+
+    <section class="wiki-tools" aria-label="Wiki filters">
+      <label>
+        <span class="eyebrow">Find a term</span>
+        <input class="wiki-search" id="wiki-search" type="search" placeholder="Search definitions, aliases or categories…" autocomplete="off">
+      </label>
+      <nav class="category-nav" id="category-nav" aria-label="Definition categories"></nav>
+    </section>
+
+    <section class="wiki-index" aria-labelledby="index-title">
+      <h2 id="index-title">Term index</h2>
+      <div class="term-index" id="term-index"></div>
+    </section>
+    <section class="terms-list" id="terms-list" aria-live="polite"></section>
+    <footer class="wiki-footer">
+      <span id="wiki-count"></span>
+      <a class="return-link" data-return-link href="../learning-without-letting-go.html">← Back to source page</a>
+    </footer>
+  </main>
+</body>
+</html>

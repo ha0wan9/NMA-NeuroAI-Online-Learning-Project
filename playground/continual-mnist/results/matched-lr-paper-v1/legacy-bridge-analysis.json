@@ -1,0 +1,70 @@
+{
+  "cohort": "legacy-bridge",
+  "excluded_from_primary_summary": true,
+  "metrics": {
+    "final_average_accuracy": {
+      "condition_values": {
+        "bp-adam": 0.7570999999999999,
+        "bp-classp": 0.6132449999999999,
+        "pc-adam": 0.789415,
+        "pc-classp": 0.6332850000000001
+      },
+      "delta_bp": -0.14385499999999996,
+      "delta_delta": -0.012274999999999925,
+      "delta_pc": -0.15612999999999988,
+      "direction_note": "higher is better"
+    },
+    "mean_adaptation": {
+      "condition_values": {
+        "bp-adam": 0.84094,
+        "bp-classp": 0.59219,
+        "pc-adam": 0.84146,
+        "pc-classp": 0.606285
+      },
+      "delta_bp": -0.24875000000000003,
+      "delta_delta": 0.013575000000000004,
+      "delta_pc": -0.23517500000000002,
+      "direction_note": "higher is better"
+    },
+    "mean_bwt": {
+      "condition_values": {
+        "bp-adam": -0.19407894736842105,
+        "bp-classp": -0.10189473684210527,
+        "pc-adam": -0.1584210526315789,
+        "pc-classp": -0.09585789473684206
+      },
+      "delta_bp": 0.09218421052631577,
+      "delta_delta": -0.029621052631578923,
+      "delta_pc": 0.06256315789473685,
+      "direction_note": "higher is better"
+    },
+    "mean_forgetting": {
+      "condition_values": {
+        "bp-adam": 0.19407894736842105,
+        "bp-classp": 0.10189999999999999,
+        "pc-adam": 0.1584210526315789,
+        "pc-classp": 0.09644736842105259
+      },
+      "delta_bp": -0.09217894736842105,
+      "delta_delta": 0.030205263157894735,
+      "delta_pc": -0.06197368421052632,
+      "direction_note": "lower is better; differences are reported on the raw metric scale"
+    },
+    "online_predict_before_update_accuracy": {
+      "condition_values": {
+        "bp-adam": 0.8367175,
+        "bp-classp": 0.5412616666666666,
+        "pc-adam": 0.8391341666666666,
+        "pc-classp": 0.5602433333333333
+      },
+      "delta_bp": -0.29545583333333336,
+      "delta_delta": 0.016565000000000052,
+      "delta_pc": -0.2788908333333333,
+      "direction_note": "higher is better"
+    }
+  },
+  "protocol_id": "matched-lr-paper-v1",
+  "schema_version": 1,
+  "seed": 42,
+  "source_identity": "761b8d8adcbf0a558995b38b692f3c3fd03901dccf1c58c4bc66014fe283c33e"
+}

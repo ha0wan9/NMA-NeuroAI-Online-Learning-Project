@@ -1,0 +1,8 @@
+{
+  "artifact": "matched-lr-paper-v1__full__bp-classp__seed-31415.json",
+  "artifact_bytes": 129497,
+  "artifact_sha256": "0b6ef97d95ccec6be35d0283471fe51e4b802615db4094a0774e21be2b1524f7",
+  "created_at_utc": "2026-07-23T03:12:42.465861+00:00",
+  "protocol_id": "matched-lr-paper-v1",
+  "schema_version": 1
+}

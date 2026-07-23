@@ -1,7 +1,24 @@
-# Continual MNIST Results — `legacy-v0` Experiment Artifacts
+# Continual MNIST Results
 
-**Status:** `legacy-v0`; preserved but invalid for cross-task CLASSP or
-PC×CLASSP interaction claims.
+## Validated registered study
+
+The completed
+[`matched-lr-paper-v1`](matched-lr-paper-v1/synthesis.md) study contains 24
+validated full cells across five held-out seeds plus the excluded seed-42
+legacy bridge. The registered final-accuracy interaction gate did not pass:
+`ΔΔ` was positive in one of five held-out seeds, below the required four of
+five. The tracked snapshot includes raw results and receipts, exact run order,
+GPU isolation telemetry, complete validation output, bridge-only analysis,
+the synthesis, and a SHA-256 artifact manifest.
+
+This is a configuration-specific negative result. It does not establish a
+general claim about CLASSP, mechanistic synergy, statistical significance, or
+biological superiority.
+
+## `legacy-v0` experiment artifacts
+
+**Status:** preserved but invalid for cross-task CLASSP or PC×CLASSP
+interaction claims.
 
 **Purpose:** This directory preserves all outputs from the predictive-coding + CLASSP continual learning sweep on permuted MNIST (July 21, 2026). Every result — including negative, failed, weak, tuning, and superseded outcomes — is retained as auditable evidence. The JSON files are not deleted or rewritten.
 

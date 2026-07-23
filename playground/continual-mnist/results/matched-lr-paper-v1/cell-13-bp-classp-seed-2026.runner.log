@@ -1,0 +1,1 @@
+{"condition": "bp-classp", "device": "cuda", "final_average_accuracy": 0.6014700000000001, "mode": "full", "result": "playground/continual-mnist/run-staging/full-482ce0b/matched-lr-paper-v1__full__bp-classp__seed-2026.json", "seed": 2026, "sha256": "6e71550c6a666bde88eecf81d76c0d408a44229f81a337052146d29252d5ae95", "status": "validated-cell"}

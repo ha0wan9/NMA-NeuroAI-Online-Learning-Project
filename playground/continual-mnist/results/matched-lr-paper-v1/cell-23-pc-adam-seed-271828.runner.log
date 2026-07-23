@@ -1,0 +1,1 @@
+{"condition": "pc-adam", "device": "cuda", "final_average_accuracy": 0.790245, "mode": "full", "result": "playground/continual-mnist/run-staging/full-482ce0b/matched-lr-paper-v1__full__pc-adam__seed-271828.json", "seed": 271828, "sha256": "0bc227afb1b7ecfd228f91084c658300645c27fa9f524a9fa6ae4bdd16ef520a", "status": "validated-cell"}

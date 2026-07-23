@@ -1,0 +1,8 @@
+{
+  "artifact": "matched-lr-paper-v1__full__pc-adam__seed-271828.json",
+  "artifact_bytes": 128710,
+  "artifact_sha256": "0bc227afb1b7ecfd228f91084c658300645c27fa9f524a9fa6ae4bdd16ef520a",
+  "created_at_utc": "2026-07-23T03:57:22.471521+00:00",
+  "protocol_id": "matched-lr-paper-v1",
+  "schema_version": 1
+}

@@ -1,0 +1,8 @@
+{
+  "artifact": "matched-lr-paper-v1__full__bp-adam__seed-42.json",
+  "artifact_bytes": 128150,
+  "artifact_sha256": "a9477ceb493103bb2d573a9c359ea031efbb189acd790710197910996e8e210b",
+  "created_at_utc": "2026-07-22T22:37:03.392325+00:00",
+  "protocol_id": "matched-lr-paper-v1",
+  "schema_version": 1
+}

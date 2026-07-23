@@ -1,0 +1,168 @@
+event	timestamp_utc	cell	seed	condition	details
+initial-baseline	2026-07-22T22:23:41Z	0	-	-	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.06, 210, 405;processes=none
+idle-sample	2026-07-22T22:23:41Z	1	42	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.06, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T22:23:52Z	1	42	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.03, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T22:23:52Z	1	42	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-22T22:23:52Z	1	42	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.11, 210, 405;processes=none
+cell-exit	2026-07-22T22:37:04Z	1	42	bp-adam	exit=0;duration_seconds=792;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 57.39, 2520, 10501;processes=none
+cell-validated	2026-07-22T22:37:08Z	1	42	bp-adam	duration_seconds=792;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-01.json
+idle-sample	2026-07-22T22:37:08Z	2	42	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 15.93, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T22:37:18Z	2	42	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.84, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T22:37:18Z	2	42	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-22T22:37:18Z	2	42	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.84, 210, 405;processes=none
+cell-exit	2026-07-22T22:52:20Z	2	42	pc-adam	exit=0;duration_seconds=902;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 57.19, 2520, 10501;processes=none
+cell-validated	2026-07-22T22:52:24Z	2	42	pc-adam	duration_seconds=902;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-02.json
+idle-sample	2026-07-22T22:52:24Z	3	42	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 9.15, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T22:52:35Z	3	42	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.32, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T22:52:35Z	3	42	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-22T22:52:35Z	3	42	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.32, 210, 405;processes=none
+cell-exit	2026-07-22T23:05:42Z	3	42	bp-classp	exit=0;duration_seconds=787;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 35, 57.62, 2520, 10501;processes=none
+cell-validated	2026-07-22T23:05:46Z	3	42	bp-classp	duration_seconds=787;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-03.json
+idle-sample	2026-07-22T23:05:46Z	4	42	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 12.80, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T23:05:56Z	4	42	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 6.16, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T23:05:56Z	4	42	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-22T23:05:57Z	4	42	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 6.16, 210, 405;processes=none
+cell-exit	2026-07-22T23:21:06Z	4	42	pc-classp	exit=0;duration_seconds=910;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 57.74, 2520, 10501;processes=none
+cell-validated	2026-07-22T23:21:10Z	4	42	pc-classp	duration_seconds=910;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-04.json
+eta	2026-07-22T23:21:10Z	4	42	pc-classp	elapsed_seconds=3445;remaining_estimate_seconds=17225
+idle-sample	2026-07-22T23:21:10Z	5	7	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 11.30, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T23:21:21Z	5	7	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.45, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T23:21:21Z	5	7	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-22T23:21:21Z	5	7	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.45, 210, 405;processes=none
+cell-exit	2026-07-22T23:34:39Z	5	7	bp-adam	exit=0;duration_seconds=797;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 57.69, 2520, 10501;processes=none
+cell-validated	2026-07-22T23:34:43Z	5	7	bp-adam	duration_seconds=797;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-05.json
+eta	2026-07-22T23:34:43Z	5	7	bp-adam	elapsed_seconds=4257;remaining_estimate_seconds=16176
+idle-sample	2026-07-22T23:34:43Z	6	7	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 20.77, 225, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T23:34:53Z	6	7	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.78, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T23:34:53Z	6	7	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-22T23:34:53Z	6	7	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.78, 210, 405;processes=none
+cell-exit	2026-07-22T23:50:04Z	6	7	pc-adam	exit=0;duration_seconds=910;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 56.01, 2520, 10501;processes=none
+cell-validated	2026-07-22T23:50:08Z	6	7	pc-adam	duration_seconds=910;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-06.json
+eta	2026-07-22T23:50:08Z	6	7	pc-adam	elapsed_seconds=5182;remaining_estimate_seconds=15546
+idle-sample	2026-07-22T23:50:08Z	7	7	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 20.56, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-22T23:50:18Z	7	7	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.55, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-22T23:50:18Z	7	7	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-22T23:50:18Z	7	7	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.55, 210, 405;processes=none
+cell-exit	2026-07-23T00:03:18Z	7	7	bp-classp	exit=0;duration_seconds=780;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 35, 56.43, 2520, 10501;processes=none
+cell-validated	2026-07-23T00:03:22Z	7	7	bp-classp	duration_seconds=780;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-07.json
+eta	2026-07-23T00:03:22Z	7	7	bp-classp	elapsed_seconds=5977;remaining_estimate_seconds=14515
+idle-sample	2026-07-23T00:03:22Z	8	7	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 13.22, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T00:03:33Z	8	7	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 6.03, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T00:03:33Z	8	7	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T00:03:33Z	8	7	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 6.03, 210, 405;processes=none
+cell-exit	2026-07-23T00:18:45Z	8	7	pc-classp	exit=0;duration_seconds=911;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 54.16, 2520, 10501;processes=none
+cell-validated	2026-07-23T00:18:49Z	8	7	pc-classp	duration_seconds=911;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-08.json
+eta	2026-07-23T00:18:49Z	8	7	pc-classp	elapsed_seconds=6903;remaining_estimate_seconds=13806
+idle-sample	2026-07-23T00:18:49Z	9	123	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 20.72, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T00:18:59Z	9	123	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.25, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T00:18:59Z	9	123	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T00:18:59Z	9	123	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.25, 210, 405;processes=none
+cell-exit	2026-07-23T00:34:14Z	9	123	pc-adam	exit=0;duration_seconds=915;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 32, 56.10, 2520, 10501;processes=none
+cell-validated	2026-07-23T00:34:19Z	9	123	pc-adam	duration_seconds=915;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-09.json
+eta	2026-07-23T00:34:19Z	9	123	pc-adam	elapsed_seconds=7833;remaining_estimate_seconds=13055
+idle-sample	2026-07-23T00:34:19Z	10	123	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 9.42, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T00:34:29Z	10	123	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.30, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T00:34:29Z	10	123	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T00:34:29Z	10	123	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.30, 210, 405;processes=none
+cell-exit	2026-07-23T00:47:54Z	10	123	bp-classp	exit=0;duration_seconds=805;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 57.00, 2520, 10501;processes=none
+cell-validated	2026-07-23T00:47:58Z	10	123	bp-classp	duration_seconds=805;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-10.json
+eta	2026-07-23T00:47:58Z	10	123	bp-classp	elapsed_seconds=8653;remaining_estimate_seconds=12114
+idle-sample	2026-07-23T00:47:59Z	11	123	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 9.01, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T00:48:09Z	11	123	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.93, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T00:48:09Z	11	123	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T00:48:09Z	11	123	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 5.93, 210, 405;processes=none
+cell-exit	2026-07-23T01:03:34Z	11	123	pc-classp	exit=0;duration_seconds=925;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 54.89, 2520, 10501;processes=none
+cell-validated	2026-07-23T01:03:38Z	11	123	pc-classp	duration_seconds=925;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-11.json
+eta	2026-07-23T01:03:38Z	11	123	pc-classp	elapsed_seconds=9593;remaining_estimate_seconds=11337
+idle-sample	2026-07-23T01:03:38Z	12	123	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 12.80, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T01:03:49Z	12	123	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.26, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T01:03:49Z	12	123	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T01:03:49Z	12	123	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.18, 210, 405;processes=none
+cell-exit	2026-07-23T01:17:06Z	12	123	bp-adam	exit=0;duration_seconds=797;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 35, 56.26, 2520, 10501;processes=none
+cell-validated	2026-07-23T01:17:10Z	12	123	bp-adam	duration_seconds=797;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-12.json
+eta	2026-07-23T01:17:10Z	12	123	bp-adam	elapsed_seconds=10405;remaining_estimate_seconds=10405
+idle-sample	2026-07-23T01:17:10Z	13	2026	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 11.23, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T01:17:21Z	13	2026	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.68, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T01:17:21Z	13	2026	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T01:17:21Z	13	2026	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.68, 210, 405;processes=none
+cell-exit	2026-07-23T01:30:36Z	13	2026	bp-classp	exit=0;duration_seconds=795;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 56.70, 2520, 10501;processes=none
+cell-validated	2026-07-23T01:30:40Z	13	2026	bp-classp	duration_seconds=795;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-13.json
+eta	2026-07-23T01:30:40Z	13	2026	bp-classp	elapsed_seconds=11215;remaining_estimate_seconds=9489
+idle-sample	2026-07-23T01:30:40Z	14	2026	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 9.86, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T01:30:51Z	14	2026	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 5.37, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T01:30:51Z	14	2026	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T01:30:51Z	14	2026	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 5.37, 210, 405;processes=none
+cell-exit	2026-07-23T01:46:04Z	14	2026	pc-classp	exit=0;duration_seconds=913;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 31, 55.64, 2520, 10501;processes=none
+cell-validated	2026-07-23T01:46:08Z	14	2026	pc-classp	duration_seconds=913;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-14.json
+eta	2026-07-23T01:46:08Z	14	2026	pc-classp	elapsed_seconds=12143;remaining_estimate_seconds=8673
+idle-sample	2026-07-23T01:46:08Z	15	2026	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 16.01, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T01:46:19Z	15	2026	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.28, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T01:46:19Z	15	2026	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T01:46:19Z	15	2026	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.28, 210, 405;processes=none
+cell-exit	2026-07-23T01:59:27Z	15	2026	bp-adam	exit=0;duration_seconds=788;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 35, 55.78, 2520, 10501;processes=none
+cell-validated	2026-07-23T01:59:31Z	15	2026	bp-adam	duration_seconds=788;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-15.json
+eta	2026-07-23T01:59:31Z	15	2026	bp-adam	elapsed_seconds=12946;remaining_estimate_seconds=7767
+idle-sample	2026-07-23T01:59:31Z	16	2026	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 33, 16.30, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T01:59:41Z	16	2026	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.85, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T01:59:41Z	16	2026	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T01:59:42Z	16	2026	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.85, 210, 405;processes=none
+cell-exit	2026-07-23T02:14:54Z	16	2026	pc-adam	exit=0;duration_seconds=912;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 55.51, 2520, 10501;processes=none
+cell-validated	2026-07-23T02:14:58Z	16	2026	pc-adam	duration_seconds=912;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-16.json
+eta	2026-07-23T02:14:58Z	16	2026	pc-adam	elapsed_seconds=13873;remaining_estimate_seconds=6936
+idle-sample	2026-07-23T02:14:58Z	17	31415	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 22.69, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T02:15:08Z	17	31415	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.41, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T02:15:08Z	17	31415	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T02:15:08Z	17	31415	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.41, 210, 405;processes=none
+cell-exit	2026-07-23T02:30:18Z	17	31415	pc-classp	exit=0;duration_seconds=910;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 32, 55.18, 2520, 10501;processes=none
+cell-validated	2026-07-23T02:30:22Z	17	31415	pc-classp	duration_seconds=910;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-17.json
+eta	2026-07-23T02:30:22Z	17	31415	pc-classp	elapsed_seconds=14797;remaining_estimate_seconds=6092
+idle-sample	2026-07-23T02:30:22Z	18	31415	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 15.92, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T02:30:32Z	18	31415	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.55, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T02:30:32Z	18	31415	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T02:30:33Z	18	31415	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 5.55, 210, 405;processes=none
+cell-exit	2026-07-23T02:43:57Z	18	31415	bp-adam	exit=0;duration_seconds=804;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 57.96, 2520, 10501;processes=none
+cell-validated	2026-07-23T02:44:01Z	18	31415	bp-adam	duration_seconds=804;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-18.json
+eta	2026-07-23T02:44:01Z	18	31415	bp-adam	elapsed_seconds=15616;remaining_estimate_seconds=5205
+idle-sample	2026-07-23T02:44:01Z	19	31415	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 17.91, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T02:44:12Z	19	31415	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 5.87, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T02:44:12Z	19	31415	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T02:44:12Z	19	31415	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 30, 5.87, 210, 405;processes=none
+cell-exit	2026-07-23T02:59:28Z	19	31415	pc-adam	exit=0;duration_seconds=916;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 31, 56.10, 2520, 10501;processes=none
+cell-validated	2026-07-23T02:59:32Z	19	31415	pc-adam	duration_seconds=916;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-19.json
+eta	2026-07-23T02:59:32Z	19	31415	pc-adam	elapsed_seconds=16547;remaining_estimate_seconds=4354
+idle-sample	2026-07-23T02:59:32Z	20	31415	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 17.84, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T02:59:43Z	20	31415	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.31, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T02:59:43Z	20	31415	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T02:59:43Z	20	31415	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.31, 210, 405;processes=none
+cell-exit	2026-07-23T03:12:43Z	20	31415	bp-classp	exit=0;duration_seconds=780;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 5, 35, 57.11, 2520, 10501;processes=none
+cell-validated	2026-07-23T03:12:47Z	20	31415	bp-classp	duration_seconds=780;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-20.json
+eta	2026-07-23T03:12:47Z	20	31415	bp-classp	elapsed_seconds=17342;remaining_estimate_seconds=3468
+idle-sample	2026-07-23T03:12:47Z	21	271828	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 20.99, 225, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T03:12:57Z	21	271828	pc-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.71, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T03:12:57Z	21	271828	pc-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T03:12:57Z	21	271828	pc-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.71, 210, 405;processes=none
+cell-exit	2026-07-23T03:28:10Z	21	271828	pc-classp	exit=0;duration_seconds=913;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 6, 31, 55.51, 2520, 10501;processes=none
+cell-validated	2026-07-23T03:28:15Z	21	271828	pc-classp	duration_seconds=913;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-21.json
+eta	2026-07-23T03:28:15Z	21	271828	pc-classp	elapsed_seconds=18269;remaining_estimate_seconds=2609
+idle-sample	2026-07-23T03:28:15Z	22	271828	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 10.09, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T03:28:25Z	22	271828	bp-classp	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.03, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T03:28:25Z	22	271828	bp-classp	two_samples_10s_apart=true
+cell-start	2026-07-23T03:28:25Z	22	271828	bp-classp	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.03, 210, 405;processes=none
+cell-exit	2026-07-23T03:41:49Z	22	271828	bp-classp	exit=0;duration_seconds=804;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 35, 57.94, 2520, 10501;processes=none
+cell-validated	2026-07-23T03:41:53Z	22	271828	bp-classp	duration_seconds=804;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-22.json
+eta	2026-07-23T03:41:53Z	22	271828	bp-classp	elapsed_seconds=19088;remaining_estimate_seconds=1735
+idle-sample	2026-07-23T03:41:53Z	23	271828	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 34, 19.95, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T03:42:04Z	23	271828	pc-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.76, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T03:42:04Z	23	271828	pc-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T03:42:04Z	23	271828	pc-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 32, 5.78, 210, 405;processes=none
+cell-exit	2026-07-23T03:57:23Z	23	271828	pc-adam	exit=0;duration_seconds=919;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 31, 56.13, 2520, 10501;processes=none
+cell-validated	2026-07-23T03:57:27Z	23	271828	pc-adam	duration_seconds=919;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-23.json
+eta	2026-07-23T03:57:27Z	23	271828	pc-adam	elapsed_seconds=20022;remaining_estimate_seconds=870
+idle-sample	2026-07-23T03:57:27Z	24	271828	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 29, 24.03, 210, 405;memory_delta_mib=0;processes=none
+idle-sample	2026-07-23T03:57:37Z	24	271828	bp-adam	pass=1;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.27, 210, 405;memory_delta_mib=0;processes=none
+idle-gate-passed	2026-07-23T03:57:37Z	24	271828	bp-adam	two_samples_10s_apart=true
+cell-start	2026-07-23T03:57:37Z	24	271828	bp-adam	gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 28, 5.27, 210, 405;processes=none
+cell-exit	2026-07-23T04:10:46Z	24	271828	bp-adam	exit=0;duration_seconds=789;gpu=GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2, 560.35.03, 24564, 4, 0, 37, 57.71, 2520, 10501;processes=none
+cell-validated	2026-07-23T04:10:50Z	24	271828	bp-adam	duration_seconds=789;partial_validation=playground/continual-mnist/run-staging/full-482ce0b/partial-validation-24.json
+eta	2026-07-23T04:10:50Z	24	271828	bp-adam	elapsed_seconds=20825;remaining_estimate_seconds=0
+study-cells-complete	2026-07-23T04:10:50Z	24	-	-	all_cells_validated=true

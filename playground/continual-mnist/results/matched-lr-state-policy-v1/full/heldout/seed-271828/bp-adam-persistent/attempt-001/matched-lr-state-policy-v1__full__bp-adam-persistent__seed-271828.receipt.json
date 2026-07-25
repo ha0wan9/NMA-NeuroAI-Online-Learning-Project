@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__full__bp-adam-persistent__seed-271828.json",
+  "artifact_bytes": 199835,
+  "artifact_sha256": "d485e74d9f0042fd7aeaadd6677fd5decdab98bbacc45815b1d46cbc37398173",
+  "canonical_payload_sha256": "cfa7f471b2c16c05dfa895252fff2199a5892ed8caed62155e36a763865d3d4b",
+  "created_at_utc": "2026-07-24T11:21:10.086651+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}

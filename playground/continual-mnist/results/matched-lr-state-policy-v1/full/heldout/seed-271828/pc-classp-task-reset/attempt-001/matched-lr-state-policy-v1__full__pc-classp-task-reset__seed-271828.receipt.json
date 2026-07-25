@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-271828.json",
+  "artifact_bytes": 199984,
+  "artifact_sha256": "183feb1e701aafc83af016d62a0457969244c36bce9a43cd5544e1bd5d3c474c",
+  "canonical_payload_sha256": "8cd66a31d7ee9eb764256607227c930e63eaafbd043c78f287da451e07b85a54",
+  "created_at_utc": "2026-07-24T10:53:59.150287+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}

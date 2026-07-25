@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__full__pc-classp-persistent__seed-271828.json",
+  "artifact_bytes": 201345,
+  "artifact_sha256": "51b26a89436f8dbacd2609a79bbbde9271f1beb2ca84c01c836fe179192bd87c",
+  "canonical_payload_sha256": "37bdc7e3491034919e9a4ffb9902a997f13dc83b1c0a1ce7cbbc02a4608efd57",
+  "created_at_utc": "2026-07-24T10:22:59.655412+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}

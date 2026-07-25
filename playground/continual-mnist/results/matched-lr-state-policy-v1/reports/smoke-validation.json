@@ -1,0 +1,294 @@
+{
+  "complete_passes": 2,
+  "exact_scientific_repetition": true,
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "pass_1": {
+    "cells": [
+      {
+        "artifact_sha256": "229c7e1516e61f3e2be19e305c2f6bdb760df577eeb151b8d146d7cae6e73e97",
+        "condition_id": "bp-adam-persistent",
+        "elapsed_seconds": 2.0417851000092924,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "182b1fbaf61643449b59b80e66def180980fa227f279fc62722edc0762f55683",
+        "condition_id": "bp-adam-task-reset",
+        "elapsed_seconds": 2.1716293629724532,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "a9f3b89a638b91df2f45e01b22255dd89a270c995ad66d44029c3f2f0400cdc3",
+        "condition_id": "bp-classp-persistent",
+        "elapsed_seconds": 1.995188282977324,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "b41a6a58f94da143f0bc2818863436022221345b70e8213c5d63978af2a31a90",
+        "condition_id": "bp-classp-task-reset",
+        "elapsed_seconds": 1.9252269560238346,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "c4970f4a8566d52eed55f577616c42e7356945ce4f9fc4d856e066b4b7e5bf03",
+        "condition_id": "pc-adam-persistent",
+        "elapsed_seconds": 2.688967013033107,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "398c5d1d134b08a74b2039984913b775987c3a1f4db88463dd0ed4b9c174f4b7",
+        "condition_id": "pc-adam-task-reset",
+        "elapsed_seconds": 2.3044998859986663,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "31ce15846c04386b190beb4e79df1ea9314219dcfc043927e386a287d2e7a2f3",
+        "condition_id": "pc-classp-persistent",
+        "elapsed_seconds": 2.1616921529639512,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "2cf36f160b89976feb8559ad9f6fc64b7ad66ad7486f5e5a1213d1a60f52186e",
+        "condition_id": "pc-classp-task-reset",
+        "elapsed_seconds": 2.0690440330072306,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-1/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-task-reset__seed-42.json",
+        "seed": 42
+      }
+    ],
+    "complete": true,
+    "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+    "mode": "smoke",
+    "preserved_failure_artifacts": [],
+    "preserved_unpaired_attempt_artifacts": [],
+    "seeds": [
+      42
+    ],
+    "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d",
+    "status": "passed",
+    "validated_cells": 8
+  },
+  "pass_2": {
+    "cells": [
+      {
+        "artifact_sha256": "2b93da55f8820f7bcc998c78740d9cf651586b0b35ad96a3f8cf5316897be5bb",
+        "condition_id": "bp-adam-persistent",
+        "elapsed_seconds": 2.3502511589904316,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "f4d639bde21e5ae3b0ef84008d15093e007e8d9dde2f1ca6a42860f39662f80f",
+        "condition_id": "bp-adam-task-reset",
+        "elapsed_seconds": 2.8817570980172604,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-adam-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "e33ffa90652d6ae42189998c716aa39c9409b28508b7da48367ddf0b8d50c596",
+        "condition_id": "bp-classp-persistent",
+        "elapsed_seconds": 1.9907711640116759,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "eeeb0f18232033ddba223da8707bca5015bb9185d05add74705390fb135b1c64",
+        "condition_id": "bp-classp-task-reset",
+        "elapsed_seconds": 2.011162028007675,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__bp-classp-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "5afd9e443e8bdd9c3908d8ee6d2207e0d40efabacba51a718c37489df3458272",
+        "condition_id": "pc-adam-persistent",
+        "elapsed_seconds": 2.724498497962486,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "812ae43b5e1ee041dca75c5345d8eaabeadbb2a10029d69efe484314d8674abc",
+        "condition_id": "pc-adam-task-reset",
+        "elapsed_seconds": 2.7153032030328177,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-adam-task-reset__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "746940c00392a7f6b8999d359fceb1b622ae0b5321415fcbdcf8dcfade7e859a",
+        "condition_id": "pc-classp-persistent",
+        "elapsed_seconds": 2.1926451249746606,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-persistent__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-persistent__seed-42.json",
+        "seed": 42
+      },
+      {
+        "artifact_sha256": "0c6ef9664f7bfa0358103858347364be870dad071e39c93b19ab4c6ad4f2d21c",
+        "condition_id": "pc-classp-task-reset",
+        "elapsed_seconds": 2.0851177450385876,
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-task-reset__seed-42.receipt.json",
+        "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/smoke/pass-2/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__smoke__pc-classp-task-reset__seed-42.json",
+        "seed": 42
+      }
+    ],
+    "complete": true,
+    "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+    "mode": "smoke",
+    "preserved_failure_artifacts": [],
+    "preserved_unpaired_attempt_artifacts": [],
+    "seeds": [
+      42
+    ],
+    "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d",
+    "status": "passed",
+    "validated_cells": 8
+  },
+  "protocol_id": "matched-lr-state-policy-v1",
+  "status": "passed",
+  "validated_smoke_cells": 16
+}

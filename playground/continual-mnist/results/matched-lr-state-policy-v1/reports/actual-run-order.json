@@ -1,0 +1,389 @@
+{
+  "cells": [
+    {
+      "artifact_sha256": "c0d51d796e4724d0213eb0efc5a498cbfbae94f1437382d5cdf5a2c3f6aa6f85",
+      "completed_at_utc": "2026-07-23T20:02:08.352612+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T19:49:08.284388+00:00"
+    },
+    {
+      "artifact_sha256": "8e97aa453c5bcfbc85c4db0c7d518817febf9c31e1e11e1cca717b22f1f7aa19",
+      "completed_at_utc": "2026-07-23T20:15:32.384854+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T20:02:25.487138+00:00"
+    },
+    {
+      "artifact_sha256": "9b9d9bdae1c73292effc1692f1fd73ec2dc2d02af39d76feddeda99148082331",
+      "completed_at_utc": "2026-07-23T20:31:00.685954+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T20:15:49.058943+00:00"
+    },
+    {
+      "artifact_sha256": "bec979d4b11b72874ecbdf3002e356fe6b371da9e29b87901979abe699a5120d",
+      "completed_at_utc": "2026-07-23T20:44:25.402686+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T20:31:17.461496+00:00"
+    },
+    {
+      "artifact_sha256": "ba730e01fdf2944180b5130aac3e4ee6088e9bc3aef1686c7fb79332285a1144",
+      "completed_at_utc": "2026-07-23T21:00:02.672615+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T20:44:41.778981+00:00"
+    },
+    {
+      "artifact_sha256": "3f1997ea05f11c34ab3958b272bd1b312f83d3b8075670c1dd49a0b3fb0f3ae4",
+      "completed_at_utc": "2026-07-23T21:13:18.424612+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T21:00:19.487148+00:00"
+    },
+    {
+      "artifact_sha256": "60ebfc7aa4f15377dd336f52d78430c8567bc6b7b621ef5bb09bb6595c43414e",
+      "completed_at_utc": "2026-07-23T21:28:31.868696+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T21:13:35.194975+00:00"
+    },
+    {
+      "artifact_sha256": "67147c3b3cb5c39caab2911ad4c943f02fca885cd96efe95e0dc8332332074c2",
+      "completed_at_utc": "2026-07-23T21:44:02.520636+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-42.json",
+      "seed": 42,
+      "started_at_utc": "2026-07-23T21:28:48.716077+00:00"
+    },
+    {
+      "artifact_sha256": "88827442d6676e419003c1c37a125dd297076eacad5376360438681fefddccbf",
+      "completed_at_utc": "2026-07-24T02:22:26.537632+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T02:09:18.719183+00:00"
+    },
+    {
+      "artifact_sha256": "81617ebc67f9ef1a6ac3b770daa3e05388b635f4827b39ed2416c44d6547e46b",
+      "completed_at_utc": "2026-07-24T02:35:58.076614+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T02:22:43.444551+00:00"
+    },
+    {
+      "artifact_sha256": "13e6021684b811664ddbe5d8dfbfd0368b41ed8f13fe62e2bade4f5b0387a368",
+      "completed_at_utc": "2026-07-24T02:49:29.841575+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T02:36:25.112028+00:00"
+    },
+    {
+      "artifact_sha256": "3c163e79b2dd9be8fe31bd9b32cf83d6384e11c1b5d20fc2b998b3a23bc60e30",
+      "completed_at_utc": "2026-07-24T03:03:00.590746+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T02:49:47.078285+00:00"
+    },
+    {
+      "artifact_sha256": "a76493962ef73f33f2034e84b5b05abb9199150e4437420f9e8500117c442d10",
+      "completed_at_utc": "2026-07-24T03:18:30.968713+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T03:03:17.485670+00:00"
+    },
+    {
+      "artifact_sha256": "bef7ce15ad38cf54ef48c176186b954139e3e99682d16cf25569f5ce8a77345c",
+      "completed_at_utc": "2026-07-24T03:34:05.954736+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T03:18:47.927239+00:00"
+    },
+    {
+      "artifact_sha256": "3d5f743d4ce656c697fccb5f09062cd70e9acfd014e7808dc5fe33b4aaa75043",
+      "completed_at_utc": "2026-07-24T03:49:24.738728+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T03:34:22.832160+00:00"
+    },
+    {
+      "artifact_sha256": "c2c4dfbf202f8627e8a86df0d07a768d59676f5da9ed2a068fa037cce29bea59",
+      "completed_at_utc": "2026-07-24T04:04:56.206737+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-7.json",
+      "seed": 7,
+      "started_at_utc": "2026-07-24T03:49:41.760128+00:00"
+    },
+    {
+      "artifact_sha256": "f94e824e8e6ae833ee378fb697cb6e2e1b4300903d87a0c180654329633cac33",
+      "completed_at_utc": "2026-07-24T04:18:31.734709+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T04:05:13.035565+00:00"
+    },
+    {
+      "artifact_sha256": "8aa9227f477e21fecba3410231e244895059a16d1cef594eb7022b7bff96f052",
+      "completed_at_utc": "2026-07-24T04:31:53.845623+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T04:18:48.321178+00:00"
+    },
+    {
+      "artifact_sha256": "a12aab629fd4aed72f43dbe80e6f0b3ed296677015e793727da8367ecb2be373",
+      "completed_at_utc": "2026-07-24T04:45:16.540600+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T04:32:10.847093+00:00"
+    },
+    {
+      "artifact_sha256": "8e7efbc440d35c4dcef6017e51dc70847a72f34409584a25e0d06b1880598c10",
+      "completed_at_utc": "2026-07-24T05:00:42.245643+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T04:45:33.063108+00:00"
+    },
+    {
+      "artifact_sha256": "84967bde1c64b6eebef5b99c95be35de7eb19d5f0cc1f6a84ba3d645e5723055",
+      "completed_at_utc": "2026-07-24T05:14:28.968611+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T05:00:59.278966+00:00"
+    },
+    {
+      "artifact_sha256": "19d21a473a7476cf2edbff4e93dde889901582d42ed887a193bbf79e1dcd1f35",
+      "completed_at_utc": "2026-07-24T05:29:50.100621+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T05:14:45.875132+00:00"
+    },
+    {
+      "artifact_sha256": "692f6ee7b9dfd2406e328e999cf02ba201f0b08c86d62a0c2ef63e8b43abc6df",
+      "completed_at_utc": "2026-07-24T05:45:22.753640+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T05:30:07.343171+00:00"
+    },
+    {
+      "artifact_sha256": "49e5e727ef188d8f19aead80b76ab8612839e78ff3f24a1575c920302f14fc05",
+      "completed_at_utc": "2026-07-24T06:00:52.000631+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-123.json",
+      "seed": 123,
+      "started_at_utc": "2026-07-24T05:45:39.820044+00:00"
+    },
+    {
+      "artifact_sha256": "c238a4f9567eff1f130198a490979e913d184e8f981f0e375fe324fddc75f7fc",
+      "completed_at_utc": "2026-07-24T06:14:24.092617+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T06:01:19.131308+00:00"
+    },
+    {
+      "artifact_sha256": "e1c7d555f77af5bbf7e33b6ccf358be342bb8419fff71aee393ee836a4076a1c",
+      "completed_at_utc": "2026-07-24T06:29:52.372294+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T06:14:40.595181+00:00"
+    },
+    {
+      "artifact_sha256": "e551388fb9c52ed9f56a0969d3f22d931805043fd6ec4cff4fbbd367896bbd1a",
+      "completed_at_utc": "2026-07-24T06:43:20.566742+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T06:30:08.946104+00:00"
+    },
+    {
+      "artifact_sha256": "284917f4d0b0613c94ce7f25b8e36f428abc43622eb24c4056394c35953e3e55",
+      "completed_at_utc": "2026-07-24T06:58:46.097998+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T06:43:37.874268+00:00"
+    },
+    {
+      "artifact_sha256": "9711d01d9081d27ba00b9803e1218cf42eab9dd32f8bc720dc2f6988f5db7021",
+      "completed_at_utc": "2026-07-24T07:12:13.817658+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T06:59:02.445111+00:00"
+    },
+    {
+      "artifact_sha256": "35741656c4f24f6331cfca3a57ccb8c3f31224e56de8aa5f4a82667f61e5f8f0",
+      "completed_at_utc": "2026-07-24T07:27:40.396633+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T07:12:30.671124+00:00"
+    },
+    {
+      "artifact_sha256": "da479bb87605554d7979f4ef700efa6a6986796bd88e0f5012509dc2e5335814",
+      "completed_at_utc": "2026-07-24T07:41:18.848614+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T07:27:57.419183+00:00"
+    },
+    {
+      "artifact_sha256": "aec9b33a220cf11d073671d62a558183ca3b313bf96c54d205be178225c9cd6b",
+      "completed_at_utc": "2026-07-24T07:56:50.453733+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-2026.json",
+      "seed": 2026,
+      "started_at_utc": "2026-07-24T07:41:35.719143+00:00"
+    },
+    {
+      "artifact_sha256": "2f284500ed2b9d7cc2d7c5da61be02cea14bb80c0a8b3acf7f84c7d615ebb0bb",
+      "completed_at_utc": "2026-07-24T08:12:17.277645+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T07:57:06.879146+00:00"
+    },
+    {
+      "artifact_sha256": "5470df48f2e4c17e5c966403adcdf05f070fef3feb15ec0299d62fcf972dbc3c",
+      "completed_at_utc": "2026-07-24T08:27:33.232613+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T08:12:34.080134+00:00"
+    },
+    {
+      "artifact_sha256": "dfc2b3c0bbdbd4072ca39c768ec57e92877312111623f996685d0efbfed73c18",
+      "completed_at_utc": "2026-07-24T08:40:54.029772+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T08:27:50.302319+00:00"
+    },
+    {
+      "artifact_sha256": "7ff6199282004d92bbdb681966ba10e944504a478f45c92dc0e5eb92754f7631",
+      "completed_at_utc": "2026-07-24T08:56:15.921739+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T08:41:10.739198+00:00"
+    },
+    {
+      "artifact_sha256": "5ff47b481cb317183402b39374db00fcb08e387d17197476314703b6108b29ef",
+      "completed_at_utc": "2026-07-24T09:09:48.922668+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T08:56:32.463540+00:00"
+    },
+    {
+      "artifact_sha256": "47804d4c9e52278962a6560cc93e6adc8c8ce06f04fe4b4d52c823db27a71b57",
+      "completed_at_utc": "2026-07-24T09:25:18.397653+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T09:10:05.786989+00:00"
+    },
+    {
+      "artifact_sha256": "e0280825a328e83e1bae022102b328314bea0119dffe5c7979d90defef42c0a6",
+      "completed_at_utc": "2026-07-24T09:38:43.211835+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T09:25:35.343147+00:00"
+    },
+    {
+      "artifact_sha256": "5fe13c0f6d26d613274603fb424dd73cecc776f05826c60efe6feeb510c9b9c3",
+      "completed_at_utc": "2026-07-24T09:52:09.684792+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-31415.json",
+      "seed": 31415,
+      "started_at_utc": "2026-07-24T09:38:59.900246+00:00"
+    },
+    {
+      "artifact_sha256": "9105ff100d66b7adf684a83bc2e35a3726824dc6962951aef6ab1306d9fe76f1",
+      "completed_at_utc": "2026-07-24T10:07:39.645636+00:00",
+      "condition_id": "pc-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T09:52:26.863161+00:00"
+    },
+    {
+      "artifact_sha256": "51b26a89436f8dbacd2609a79bbbde9271f1beb2ca84c01c836fe179192bd87c",
+      "completed_at_utc": "2026-07-24T10:22:59.596620+00:00",
+      "condition_id": "pc-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T10:07:56.575257+00:00"
+    },
+    {
+      "artifact_sha256": "17e2552469e32eb2c5fcc0e495124ad134284f658abc9a20783c6e7cb44533c5",
+      "completed_at_utc": "2026-07-24T10:38:25.730392+00:00",
+      "condition_id": "pc-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T10:23:16.346989+00:00"
+    },
+    {
+      "artifact_sha256": "183feb1e701aafc83af016d62a0457969244c36bce9a43cd5544e1bd5d3c474c",
+      "completed_at_utc": "2026-07-24T10:53:59.100615+00:00",
+      "condition_id": "pc-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T10:38:42.227137+00:00"
+    },
+    {
+      "artifact_sha256": "710a194a57c490f222be4c234cca60908913511fc510d799e327cb6396d10081",
+      "completed_at_utc": "2026-07-24T11:07:34.024642+00:00",
+      "condition_id": "bp-classp-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T10:54:26.239318+00:00"
+    },
+    {
+      "artifact_sha256": "d485e74d9f0042fd7aeaadd6677fd5decdab98bbacc45815b1d46cbc37398173",
+      "completed_at_utc": "2026-07-24T11:21:10.036936+00:00",
+      "condition_id": "bp-adam-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T11:08:00.897198+00:00"
+    },
+    {
+      "artifact_sha256": "8d485bf92437ccc398420393adc600e373d321c8742bd775d936dc81f87de8d0",
+      "completed_at_utc": "2026-07-24T11:34:29.936617+00:00",
+      "condition_id": "bp-classp-persistent",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T11:21:26.861204+00:00"
+    },
+    {
+      "artifact_sha256": "1e975dac65748f52d73f9e9c630e8cf7e43927d9b85968c2bace898e46281071",
+      "completed_at_utc": "2026-07-24T11:47:59.211883+00:00",
+      "condition_id": "bp-adam-task-reset",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-271828.json",
+      "seed": 271828,
+      "started_at_utc": "2026-07-24T11:34:47.251474+00:00"
+    }
+  ],
+  "protocol_id": "matched-lr-state-policy-v1"
+}

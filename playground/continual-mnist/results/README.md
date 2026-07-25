@@ -15,6 +15,27 @@ This is a configuration-specific negative result. It does not establish a
 general claim about CLASSP, mechanistic synergy, statistical significance, or
 biological superiority.
 
+## Validated optimizer-state-policy study
+
+The completed
+[`matched-lr-state-policy-v1`](matched-lr-state-policy-v1/reports/complete-synthesis.md)
+study contains 48 validated full cells across five held-out seeds plus the
+excluded seed-42 bridge. It tests the effect of retaining versus clearing
+parameter-optimizer state at task boundaries in the registered
+BP/PC × Adam/CLASSP factorial. Both hierarchical final-accuracy gates passed
+5/5 held-out seeds. The human-approved conclusion and claim boundary are
+recorded in the tracked
+[`results.md`](../../../.research/studies/pc-classp-matched-lr-state-policy-v1/results.md).
+
+The tracked directory is an exact, immutable copy of the reviewed 12 MiB local
+run tree: 333 files containing raw cell results, receipts, attempt and idle
+records, logs, the frozen manifest, run order, bridge and smoke reports,
+complete validation, synthesis, and the SHA-256 artifact manifest. It contains
+no dataset files, trained-model checkpoints, credentials, or environment
+files. Machine-specific paths, hostname, GPU UUID, driver, and dependency
+information remain unchanged because they are part of the sealed scientific
+provenance.
+
 ## `legacy-v0` experiment artifacts
 
 **Status:** preserved but invalid for cross-task CLASSP or PC×CLASSP
@@ -167,4 +188,12 @@ determinism settings, and sample ordering.
 
 ## File Manifest
 
-30 curated JSON result files + this README + .gitignore. All other outputs (checkpoints, TensorBoard logs, caches, future experiment runs) are excluded by the local `.gitignore`.
+- `legacy-v0`: 30 curated JSON result files.
+- `matched-lr-paper-v1`: the reviewed raw/receipt snapshot and aggregate
+  reports for the corrected matched-learning-rate study.
+- `matched-lr-state-policy-v1`: the exact 333-file reviewed state-policy run
+  snapshot. Its `reports/artifact-manifest.sha256` covers the other 332 files.
+- This README and `.gitignore`.
+
+All other outputs, including checkpoints, TensorBoard logs, caches, and future
+unreviewed experiment runs, remain excluded by the local `.gitignore`.

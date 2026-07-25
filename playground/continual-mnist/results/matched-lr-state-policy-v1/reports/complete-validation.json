@@ -1,0 +1,2198 @@
+{
+  "cells": [
+    {
+      "artifact_sha256": "13e6021684b811664ddbe5d8dfbfd0368b41ed8f13fe62e2bade4f5b0387a368",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 784.6793144149706,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "c0d51d796e4724d0213eb0efc5a498cbfbae94f1437382d5cdf5a2c3f6aa6f85",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 780.0049161989591,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "84967bde1c64b6eebef5b99c95be35de7eb19d5f0cc1f6a84ba3d645e5723055",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 809.6478056310443,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "da479bb87605554d7979f4ef700efa6a6986796bd88e0f5012509dc2e5335814",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 801.3553818550427,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "5fe13c0f6d26d613274603fb424dd73cecc776f05826c60efe6feeb510c9b9c3",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 789.6818307869835,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "d485e74d9f0042fd7aeaadd6677fd5decdab98bbacc45815b1d46cbc37398173",
+      "condition_id": "bp-adam-persistent",
+      "elapsed_seconds": 789.0783609460341,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-adam-persistent__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "88827442d6676e419003c1c37a125dd297076eacad5376360438681fefddccbf",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 787.7539387230063,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "8e97aa453c5bcfbc85c4db0c7d518817febf9c31e1e11e1cca717b22f1f7aa19",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 786.8103545510094,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "a12aab629fd4aed72f43dbe80e6f0b3ed296677015e793727da8367ecb2be373",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 785.6208104179241,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "9711d01d9081d27ba00b9803e1218cf42eab9dd32f8bc720dc2f6988f5db7021",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 791.3132814309793,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "e0280825a328e83e1bae022102b328314bea0119dffe5c7979d90defef42c0a6",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 787.8053921170067,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "1e975dac65748f52d73f9e9c630e8cf7e43927d9b85968c2bace898e46281071",
+      "condition_id": "bp-adam-task-reset",
+      "elapsed_seconds": 791.9067535609938,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "81617ebc67f9ef1a6ac3b770daa3e05388b635f4827b39ed2416c44d6547e46b",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 794.5445761199808,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "bec979d4b11b72874ecbdf3002e356fe6b371da9e29b87901979abe699a5120d",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 787.8847970469506,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "f94e824e8e6ae833ee378fb697cb6e2e1b4300903d87a0c180654329633cac33",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 798.6276856679469,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "e551388fb9c52ed9f56a0969d3f22d931805043fd6ec4cff4fbbd367896bbd1a",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 791.5820543270092,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "5ff47b481cb317183402b39374db00fcb08e387d17197476314703b6108b29ef",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 796.3746183610056,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "8d485bf92437ccc398420393adc600e373d321c8742bd775d936dc81f87de8d0",
+      "condition_id": "bp-classp-persistent",
+      "elapsed_seconds": 782.9805131590692,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__bp-classp-persistent__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "3c163e79b2dd9be8fe31bd9b32cf83d6384e11c1b5d20fc2b998b3a23bc60e30",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 793.4234183030203,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "3f1997ea05f11c34ab3958b272bd1b312f83d3b8075670c1dd49a0b3fb0f3ae4",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 778.8727443880052,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "8aa9227f477e21fecba3410231e244895059a16d1cef594eb7022b7bff96f052",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 785.4400623559486,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "c238a4f9567eff1f130198a490979e913d184e8f981f0e375fe324fddc75f7fc",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 784.8571396089392,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "dfc2b3c0bbdbd4072ca39c768ec57e92877312111623f996685d0efbfed73c18",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 783.647691396065,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "710a194a57c490f222be4c234cca60908913511fc510d799e327cb6396d10081",
+      "condition_id": "bp-classp-task-reset",
+      "elapsed_seconds": 787.7472979340237,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/bp-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__bp-classp-task-reset__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "bef7ce15ad38cf54ef48c176186b954139e3e99682d16cf25569f5ce8a77345c",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 917.960616691038,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "67147c3b3cb5c39caab2911ad4c943f02fca885cd96efe95e0dc8332332074c2",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 913.7205308469711,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "8e7efbc440d35c4dcef6017e51dc70847a72f34409584a25e0d06b1880598c10",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 909.111075275112,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "e1c7d555f77af5bbf7e33b6ccf358be342bb8419fff71aee393ee836a4076a1c",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 911.7105120610213,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "2f284500ed2b9d7cc2d7c5da61be02cea14bb80c0a8b3acf7f84c7d615ebb0bb",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 910.3193658569362,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "17e2552469e32eb2c5fcc0e495124ad134284f658abc9a20783c6e7cb44533c5",
+      "condition_id": "pc-adam-persistent",
+      "elapsed_seconds": 909.3330680059735,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-adam-persistent__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "c2c4dfbf202f8627e8a86df0d07a768d59676f5da9ed2a068fa037cce29bea59",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 914.3791273109382,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "60ebfc7aa4f15377dd336f52d78430c8567bc6b7b621ef5bb09bb6595c43414e",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 896.599540330004,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "19d21a473a7476cf2edbff4e93dde889901582d42ed887a193bbf79e1dcd1f35",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 904.1563055579318,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "284917f4d0b0613c94ce7f25b8e36f428abc43622eb24c4056394c35953e3e55",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 908.1394040690502,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "5470df48f2e4c17e5c966403adcdf05f070fef3feb15ec0299d62fcf972dbc3c",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 899.0630404769909,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "9105ff100d66b7adf684a83bc2e35a3726824dc6962951aef6ab1306d9fe76f1",
+      "condition_id": "pc-adam-task-reset",
+      "elapsed_seconds": 912.7164551370079,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-adam-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "3d5f743d4ce656c697fccb5f09062cd70e9acfd014e7808dc5fe33b4aaa75043",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 901.8388418440009,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "ba730e01fdf2944180b5130aac3e4ee6088e9bc3aef1686c7fb79332285a1144",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 920.8470865080017,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "49e5e727ef188d8f19aead80b76ab8612839e78ff3f24a1575c920302f14fc05",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 912.123342175968,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "35741656c4f24f6331cfca3a57ccb8c3f31224e56de8aa5f4a82667f61e5f8f0",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 909.6816969909705,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "7ff6199282004d92bbdb681966ba10e944504a478f45c92dc0e5eb92754f7631",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 905.0715694950195,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "51b26a89436f8dbacd2609a79bbbde9271f1beb2ca84c01c836fe179192bd87c",
+      "condition_id": "pc-classp-persistent",
+      "elapsed_seconds": 902.9536509229802,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-persistent/attempt-001/matched-lr-state-policy-v1__full__pc-classp-persistent__seed-271828.json",
+      "seed": 271828
+    },
+    {
+      "artifact_sha256": "a76493962ef73f33f2034e84b5b05abb9199150e4437420f9e8500117c442d10",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 913.3759849310154,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-7.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-7/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-7.json",
+      "seed": 7
+    },
+    {
+      "artifact_sha256": "9b9d9bdae1c73292effc1692f1fd73ec2dc2d02af39d76feddeda99148082331",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 911.5513715600246,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-42.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/seed-42/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-42.json",
+      "seed": 42
+    },
+    {
+      "artifact_sha256": "692f6ee7b9dfd2406e328e999cf02ba201f0b08c86d62a0c2ef63e8b43abc6df",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 915.3457287540659,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-123.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-123/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-123.json",
+      "seed": 123
+    },
+    {
+      "artifact_sha256": "aec9b33a220cf11d073671d62a558183ca3b313bf96c54d205be178225c9cd6b",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 914.6624274830101,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-2026.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-2026/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-2026.json",
+      "seed": 2026
+    },
+    {
+      "artifact_sha256": "47804d4c9e52278962a6560cc93e6adc8c8ce06f04fe4b4d52c823db27a71b57",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 912.566831856966,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-31415.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-31415/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-31415.json",
+      "seed": 31415
+    },
+    {
+      "artifact_sha256": "183feb1e701aafc83af016d62a0457969244c36bce9a43cd5544e1bd5d3c474c",
+      "condition_id": "pc-classp-task-reset",
+      "elapsed_seconds": 916.801335300901,
+      "gpu_identity": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA GeForce RTX 4090",
+        "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+      },
+      "receipt_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-271828.receipt.json",
+      "result_path": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/full/heldout/seed-271828/pc-classp-task-reset/attempt-001/matched-lr-state-policy-v1__full__pc-classp-task-reset__seed-271828.json",
+      "seed": 271828
+    }
+  ],
+  "complete": true,
+  "confirmatory_analysis": {
+    "bridge_seed_excluded": 42,
+    "hierarchical_final_accuracy_gates": {
+      "claim_ceiling": "No statistical-significance, mechanistic-synergy, biological-superiority, or general-validity claim follows from these gates.",
+      "gate_1_classp_specific_reset_rescue_under_pc": {
+        "criterion": "positive R_PC in at least 4/5 held-out seeds",
+        "passed": true,
+        "positive_seeds": 5
+      },
+      "gate_2_pc_specific_rescue": {
+        "criterion": "only if gate 1 passes: positive Omega in at least 4/5 held-out seeds",
+        "evaluated": true,
+        "passed": true,
+        "positive_seeds": 5
+      }
+    },
+    "metrics": {
+      "final_average_accuracy": {
+        "bridge_seed_reported_separately": {
+          "delta_bp_adam": -0.2532549999999999,
+          "delta_bp_classp": -0.10051499999999991,
+          "delta_pc_adam": -0.27898,
+          "delta_pc_classp": -0.021870000000000278,
+          "omega": 0.10436999999999974,
+          "rescue_bp": 0.15274,
+          "rescue_pc": 0.2571099999999997,
+          "seed": 42
+        },
+        "delta_bp_adam": {
+          "mean": -0.17261500000000002,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.20338500000000004,
+            -0.15493000000000012
+          ],
+          "sample_standard_deviation": 0.019973451441851524,
+          "values": [
+            -0.20338500000000004,
+            -0.15793499999999994,
+            -0.18114000000000008,
+            -0.16568499999999986,
+            -0.15493000000000012
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_bp_classp": {
+          "mean": -0.072963,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.08726,
+            -0.052810000000000024
+          ],
+          "sample_standard_deviation": 0.013405843688481495,
+          "values": [
+            -0.052810000000000024,
+            -0.08003499999999997,
+            -0.08726,
+            -0.0777199999999999,
+            -0.0669900000000001
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_adam": {
+          "mean": -0.25320599999999993,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.27200499999999994,
+            -0.223375
+          ],
+          "sample_standard_deviation": 0.018027014589221346,
+          "values": [
+            -0.25705500000000003,
+            -0.2539699999999999,
+            -0.27200499999999994,
+            -0.2596249999999999,
+            -0.223375
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_classp": {
+          "mean": 0.007705999999999968,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.0006349999999999412,
+            0.018889999999999962
+          ],
+          "sample_standard_deviation": 0.0071456065172943815,
+          "values": [
+            0.0030599999999999516,
+            0.0006349999999999412,
+            0.006045000000000078,
+            0.018889999999999962,
+            0.009899999999999909
+          ],
+          "zero_sign_count": 0
+        },
+        "direction_note": "higher is better",
+        "omega": {
+          "mean": 0.1612599999999999,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.10953999999999997,
+            0.1905499999999999
+          ],
+          "sample_standard_deviation": 0.03372641490730965,
+          "values": [
+            0.10953999999999997,
+            0.1767049999999999,
+            0.18416999999999994,
+            0.1905499999999999,
+            0.14533499999999988
+          ],
+          "zero_sign_count": 0
+        },
+        "per_seed": [
+          {
+            "delta_bp_adam": -0.20338500000000004,
+            "delta_bp_classp": -0.052810000000000024,
+            "delta_pc_adam": -0.25705500000000003,
+            "delta_pc_classp": 0.0030599999999999516,
+            "omega": 0.10953999999999997,
+            "rescue_bp": 0.15057500000000001,
+            "rescue_pc": 0.260115,
+            "seed": 7
+          },
+          {
+            "delta_bp_adam": -0.15793499999999994,
+            "delta_bp_classp": -0.08003499999999997,
+            "delta_pc_adam": -0.2539699999999999,
+            "delta_pc_classp": 0.0006349999999999412,
+            "omega": 0.1767049999999999,
+            "rescue_bp": 0.07789999999999997,
+            "rescue_pc": 0.25460499999999986,
+            "seed": 123
+          },
+          {
+            "delta_bp_adam": -0.18114000000000008,
+            "delta_bp_classp": -0.08726,
+            "delta_pc_adam": -0.27200499999999994,
+            "delta_pc_classp": 0.006045000000000078,
+            "omega": 0.18416999999999994,
+            "rescue_bp": 0.09388000000000007,
+            "rescue_pc": 0.27805,
+            "seed": 2026
+          },
+          {
+            "delta_bp_adam": -0.16568499999999986,
+            "delta_bp_classp": -0.0777199999999999,
+            "delta_pc_adam": -0.2596249999999999,
+            "delta_pc_classp": 0.018889999999999962,
+            "omega": 0.1905499999999999,
+            "rescue_bp": 0.08796499999999996,
+            "rescue_pc": 0.27851499999999985,
+            "seed": 31415
+          },
+          {
+            "delta_bp_adam": -0.15493000000000012,
+            "delta_bp_classp": -0.0669900000000001,
+            "delta_pc_adam": -0.223375,
+            "delta_pc_classp": 0.009899999999999909,
+            "omega": 0.14533499999999988,
+            "rescue_bp": 0.08794000000000002,
+            "rescue_pc": 0.2332749999999999,
+            "seed": 271828
+          }
+        ],
+        "rescue_bp": {
+          "mean": 0.099652,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.07789999999999997,
+            0.15057500000000001
+          ],
+          "sample_standard_deviation": 0.02904037848410383,
+          "values": [
+            0.15057500000000001,
+            0.07789999999999997,
+            0.09388000000000007,
+            0.08796499999999996,
+            0.08794000000000002
+          ],
+          "zero_sign_count": 0
+        },
+        "rescue_pc": {
+          "mean": 0.2609119999999999,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.2332749999999999,
+            0.27851499999999985
+          ],
+          "sample_standard_deviation": 0.018760289709916545,
+          "values": [
+            0.260115,
+            0.25460499999999986,
+            0.27805,
+            0.27851499999999985,
+            0.2332749999999999
+          ],
+          "zero_sign_count": 0
+        }
+      },
+      "mean_adaptation": {
+        "bridge_seed_reported_separately": {
+          "delta_bp_adam": -0.0004999999999999449,
+          "delta_bp_classp": 0.13249,
+          "delta_pc_adam": -0.00468500000000005,
+          "delta_pc_classp": 0.11084000000000005,
+          "omega": -0.017464999999999842,
+          "rescue_bp": 0.13298999999999994,
+          "rescue_pc": 0.1155250000000001,
+          "seed": 42
+        },
+        "delta_bp_adam": {
+          "mean": 0.0006879999999999775,
+          "negative_sign_count": 3,
+          "positive_sign_count": 2,
+          "range": [
+            -0.002315000000000178,
+            0.006539999999999879
+          ],
+          "sample_standard_deviation": 0.003860234125023982,
+          "values": [
+            0.0027449999999999974,
+            -0.0019599999999998508,
+            -0.0015699999999999603,
+            -0.002315000000000178,
+            0.006539999999999879
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_bp_classp": {
+          "mean": 0.139613,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.1342749999999998,
+            0.14209499999999997
+          ],
+          "sample_standard_deviation": 0.003147039481798823,
+          "values": [
+            0.1342749999999998,
+            0.13984000000000008,
+            0.14178000000000013,
+            0.14209499999999997,
+            0.14007499999999995
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_adam": {
+          "mean": 0.0036959999999999437,
+          "negative_sign_count": 1,
+          "positive_sign_count": 4,
+          "range": [
+            -0.003030000000000088,
+            0.006679999999999908
+          ],
+          "sample_standard_deviation": 0.004002388974100345,
+          "values": [
+            0.006679999999999908,
+            -0.003030000000000088,
+            0.0066349999999999465,
+            0.0034000000000000696,
+            0.004794999999999883
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_classp": {
+          "mean": 0.11764599999999999,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.1121049999999999,
+            0.123915
+          ],
+          "sample_standard_deviation": 0.005373418837202257,
+          "values": [
+            0.1121049999999999,
+            0.11640000000000006,
+            0.123915,
+            0.12258499999999994,
+            0.11322500000000002
+          ],
+          "zero_sign_count": 0
+        },
+        "direction_note": "higher is better",
+        "omega": {
+          "mean": -0.02497499999999997,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.026104999999999823,
+            -0.02236999999999978
+          ],
+          "sample_standard_deviation": 0.0015281811083769615,
+          "values": [
+            -0.026104999999999823,
+            -0.02236999999999978,
+            -0.026070000000000038,
+            -0.025225000000000275,
+            -0.025104999999999933
+          ],
+          "zero_sign_count": 0
+        },
+        "per_seed": [
+          {
+            "delta_bp_adam": 0.0027449999999999974,
+            "delta_bp_classp": 0.1342749999999998,
+            "delta_pc_adam": 0.006679999999999908,
+            "delta_pc_classp": 0.1121049999999999,
+            "omega": -0.026104999999999823,
+            "rescue_bp": 0.1315299999999998,
+            "rescue_pc": 0.10542499999999999,
+            "seed": 7
+          },
+          {
+            "delta_bp_adam": -0.0019599999999998508,
+            "delta_bp_classp": 0.13984000000000008,
+            "delta_pc_adam": -0.003030000000000088,
+            "delta_pc_classp": 0.11640000000000006,
+            "omega": -0.02236999999999978,
+            "rescue_bp": 0.14179999999999993,
+            "rescue_pc": 0.11943000000000015,
+            "seed": 123
+          },
+          {
+            "delta_bp_adam": -0.0015699999999999603,
+            "delta_bp_classp": 0.14178000000000013,
+            "delta_pc_adam": 0.0066349999999999465,
+            "delta_pc_classp": 0.123915,
+            "omega": -0.026070000000000038,
+            "rescue_bp": 0.1433500000000001,
+            "rescue_pc": 0.11728000000000005,
+            "seed": 2026
+          },
+          {
+            "delta_bp_adam": -0.002315000000000178,
+            "delta_bp_classp": 0.14209499999999997,
+            "delta_pc_adam": 0.0034000000000000696,
+            "delta_pc_classp": 0.12258499999999994,
+            "omega": -0.025225000000000275,
+            "rescue_bp": 0.14441000000000015,
+            "rescue_pc": 0.11918499999999987,
+            "seed": 31415
+          },
+          {
+            "delta_bp_adam": 0.006539999999999879,
+            "delta_bp_classp": 0.14007499999999995,
+            "delta_pc_adam": 0.004794999999999883,
+            "delta_pc_classp": 0.11322500000000002,
+            "omega": -0.025104999999999933,
+            "rescue_bp": 0.13353500000000007,
+            "rescue_pc": 0.10843000000000014,
+            "seed": 271828
+          }
+        ],
+        "rescue_bp": {
+          "mean": 0.13892500000000002,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.1315299999999998,
+            0.14441000000000015
+          ],
+          "sample_standard_deviation": 0.005951251969123892,
+          "values": [
+            0.1315299999999998,
+            0.14179999999999993,
+            0.1433500000000001,
+            0.14441000000000015,
+            0.13353500000000007
+          ],
+          "zero_sign_count": 0
+        },
+        "rescue_pc": {
+          "mean": 0.11395000000000004,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.10542499999999999,
+            0.11943000000000015
+          ],
+          "sample_standard_deviation": 0.0065511554324408925,
+          "values": [
+            0.10542499999999999,
+            0.11943000000000015,
+            0.11728000000000005,
+            0.11918499999999987,
+            0.10843000000000014
+          ],
+          "zero_sign_count": 0
+        }
+      },
+      "mean_bwt": {
+        "bridge_seed_reported_separately": {
+          "delta_bp_adam": -0.264163157894737,
+          "delta_bp_classp": -0.23951578947368418,
+          "delta_pc_adam": -0.28954210526315793,
+          "delta_pc_classp": -0.1432789473684211,
+          "omega": 0.12161578947368404,
+          "rescue_bp": 0.024647368421052807,
+          "rescue_pc": 0.14626315789473684,
+          "seed": 42
+        },
+        "delta_bp_adam": {
+          "mean": -0.17855157894736845,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.2106947368421053,
+            -0.16112631578947367
+          ],
+          "sample_standard_deviation": 0.020785598372983948,
+          "values": [
+            -0.2106947368421053,
+            -0.1621842105263158,
+            -0.18718947368421066,
+            -0.1715631578947368,
+            -0.16112631578947367
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_bp_classp": {
+          "mean": -0.21133052631578947,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.2274368421052631,
+            -0.18902105263157895
+          ],
+          "sample_standard_deviation": 0.015121036327321872,
+          "values": [
+            -0.18902105263157895,
+            -0.22256315789473682,
+            -0.2274368421052631,
+            -0.21186842105263154,
+            -0.20576315789473687
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_adam": {
+          "mean": -0.26191368421052635,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.2811842105263158,
+            -0.23097368421052636
+          ],
+          "sample_standard_deviation": 0.018666338227555094,
+          "values": [
+            -0.2670894736842105,
+            -0.26222631578947364,
+            -0.2811842105263158,
+            -0.2680947368421054,
+            -0.23097368421052636
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_classp": {
+          "mean": -0.11402631578947371,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.12562631578947375,
+            -0.09934736842105271
+          ],
+          "sample_standard_deviation": 0.010464855443147944,
+          "values": [
+            -0.12040526315789471,
+            -0.12562631578947375,
+            -0.11695263157894736,
+            -0.09934736842105271,
+            -0.10779999999999998
+          ],
+          "zero_sign_count": 0
+        },
+        "direction_note": "higher is better",
+        "omega": {
+          "mean": 0.18066631578947365,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.12501052631578943,
+            0.2090526315789474
+          ],
+          "sample_standard_deviation": 0.03500630129268021,
+          "values": [
+            0.12501052631578943,
+            0.19697894736842092,
+            0.2044789473684209,
+            0.2090526315789474,
+            0.16781052631578958
+          ],
+          "zero_sign_count": 0
+        },
+        "per_seed": [
+          {
+            "delta_bp_adam": -0.2106947368421053,
+            "delta_bp_classp": -0.18902105263157895,
+            "delta_pc_adam": -0.2670894736842105,
+            "delta_pc_classp": -0.12040526315789471,
+            "omega": 0.12501052631578943,
+            "rescue_bp": 0.021673684210526345,
+            "rescue_pc": 0.14668421052631578,
+            "seed": 7
+          },
+          {
+            "delta_bp_adam": -0.1621842105263158,
+            "delta_bp_classp": -0.22256315789473682,
+            "delta_pc_adam": -0.26222631578947364,
+            "delta_pc_classp": -0.12562631578947375,
+            "omega": 0.19697894736842092,
+            "rescue_bp": -0.06037894736842103,
+            "rescue_pc": 0.1365999999999999,
+            "seed": 123
+          },
+          {
+            "delta_bp_adam": -0.18718947368421066,
+            "delta_bp_classp": -0.2274368421052631,
+            "delta_pc_adam": -0.2811842105263158,
+            "delta_pc_classp": -0.11695263157894736,
+            "omega": 0.2044789473684209,
+            "rescue_bp": -0.04024736842105245,
+            "rescue_pc": 0.16423157894736845,
+            "seed": 2026
+          },
+          {
+            "delta_bp_adam": -0.1715631578947368,
+            "delta_bp_classp": -0.21186842105263154,
+            "delta_pc_adam": -0.2680947368421054,
+            "delta_pc_classp": -0.09934736842105271,
+            "omega": 0.2090526315789474,
+            "rescue_bp": -0.04030526315789473,
+            "rescue_pc": 0.16874736842105267,
+            "seed": 31415
+          },
+          {
+            "delta_bp_adam": -0.16112631578947367,
+            "delta_bp_classp": -0.20576315789473687,
+            "delta_pc_adam": -0.23097368421052636,
+            "delta_pc_classp": -0.10779999999999998,
+            "omega": 0.16781052631578958,
+            "rescue_bp": -0.0446368421052632,
+            "rescue_pc": 0.12317368421052638,
+            "seed": 271828
+          }
+        ],
+        "rescue_bp": {
+          "mean": -0.03277894736842101,
+          "negative_sign_count": 4,
+          "positive_sign_count": 1,
+          "range": [
+            -0.06037894736842103,
+            0.021673684210526345
+          ],
+          "sample_standard_deviation": 0.03154315098339446,
+          "values": [
+            0.021673684210526345,
+            -0.06037894736842103,
+            -0.04024736842105245,
+            -0.04030526315789473,
+            -0.0446368421052632
+          ],
+          "zero_sign_count": 0
+        },
+        "rescue_pc": {
+          "mean": 0.14788736842105263,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.12317368421052638,
+            0.16874736842105267
+          ],
+          "sample_standard_deviation": 0.018986121772089182,
+          "values": [
+            0.14668421052631578,
+            0.1365999999999999,
+            0.16423157894736845,
+            0.16874736842105267,
+            0.12317368421052638
+          ],
+          "zero_sign_count": 0
+        }
+      },
+      "mean_forgetting": {
+        "bridge_seed_reported_separately": {
+          "delta_bp_adam": 0.264163157894737,
+          "delta_bp_classp": 0.23951052631578945,
+          "delta_pc_adam": 0.28954210526315793,
+          "delta_pc_classp": 0.14268947368421056,
+          "omega": -0.12219999999999984,
+          "rescue_bp": -0.024652631578947537,
+          "rescue_pc": -0.14685263157894737,
+          "seed": 42
+        },
+        "delta_bp_adam": {
+          "mean": 0.17855157894736845,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.16112631578947367,
+            0.2106947368421053
+          ],
+          "sample_standard_deviation": 0.020785598372983948,
+          "values": [
+            0.2106947368421053,
+            0.1621842105263158,
+            0.18718947368421066,
+            0.1715631578947368,
+            0.16112631578947367
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_bp_classp": {
+          "mean": 0.21104631578947367,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.18902105263157895,
+            0.22663684210526314
+          ],
+          "sample_standard_deviation": 0.014969551922637584,
+          "values": [
+            0.18902105263157895,
+            0.22256315789473682,
+            0.22663684210526314,
+            0.21186842105263154,
+            0.2051421052631579
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_adam": {
+          "mean": 0.26191368421052635,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.23097368421052636,
+            0.2811842105263158
+          ],
+          "sample_standard_deviation": 0.018666338227555094,
+          "values": [
+            0.2670894736842105,
+            0.26222631578947364,
+            0.2811842105263158,
+            0.2680947368421054,
+            0.23097368421052636
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_classp": {
+          "mean": 0.11366526315789476,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.09934736842105271,
+            0.12562631578947375
+          ],
+          "sample_standard_deviation": 0.010432456280489322,
+          "values": [
+            0.11984736842105262,
+            0.12562631578947375,
+            0.11632105263157895,
+            0.09934736842105271,
+            0.1071842105263158
+          ],
+          "zero_sign_count": 0
+        },
+        "direction_note": "lower is better; all differences remain on the raw forgetting scale",
+        "omega": {
+          "mean": -0.1807431578947368,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.2090526315789474,
+            -0.12556842105263152
+          ],
+          "sample_standard_deviation": 0.03475661347219261,
+          "values": [
+            -0.12556842105263152,
+            -0.19697894736842092,
+            -0.20431052631578936,
+            -0.2090526315789474,
+            -0.1678052631578948
+          ],
+          "zero_sign_count": 0
+        },
+        "per_seed": [
+          {
+            "delta_bp_adam": 0.2106947368421053,
+            "delta_bp_classp": 0.18902105263157895,
+            "delta_pc_adam": 0.2670894736842105,
+            "delta_pc_classp": 0.11984736842105262,
+            "omega": -0.12556842105263152,
+            "rescue_bp": -0.021673684210526345,
+            "rescue_pc": -0.14724210526315787,
+            "seed": 7
+          },
+          {
+            "delta_bp_adam": 0.1621842105263158,
+            "delta_bp_classp": 0.22256315789473682,
+            "delta_pc_adam": 0.26222631578947364,
+            "delta_pc_classp": 0.12562631578947375,
+            "omega": -0.19697894736842092,
+            "rescue_bp": 0.06037894736842103,
+            "rescue_pc": -0.1365999999999999,
+            "seed": 123
+          },
+          {
+            "delta_bp_adam": 0.18718947368421066,
+            "delta_bp_classp": 0.22663684210526314,
+            "delta_pc_adam": 0.2811842105263158,
+            "delta_pc_classp": 0.11632105263157895,
+            "omega": -0.20431052631578936,
+            "rescue_bp": 0.03944736842105248,
+            "rescue_pc": -0.16486315789473688,
+            "seed": 2026
+          },
+          {
+            "delta_bp_adam": 0.1715631578947368,
+            "delta_bp_classp": 0.21186842105263154,
+            "delta_pc_adam": 0.2680947368421054,
+            "delta_pc_classp": 0.09934736842105271,
+            "omega": -0.2090526315789474,
+            "rescue_bp": 0.04030526315789473,
+            "rescue_pc": -0.16874736842105267,
+            "seed": 31415
+          },
+          {
+            "delta_bp_adam": 0.16112631578947367,
+            "delta_bp_classp": 0.2051421052631579,
+            "delta_pc_adam": 0.23097368421052636,
+            "delta_pc_classp": 0.1071842105263158,
+            "omega": -0.1678052631578948,
+            "rescue_bp": 0.04401578947368423,
+            "rescue_pc": -0.12378947368421056,
+            "seed": 271828
+          }
+        ],
+        "rescue_bp": {
+          "mean": 0.03249473684210523,
+          "negative_sign_count": 1,
+          "positive_sign_count": 4,
+          "range": [
+            -0.021673684210526345,
+            0.06037894736842103
+          ],
+          "sample_standard_deviation": 0.03143972446186873,
+          "values": [
+            -0.021673684210526345,
+            0.06037894736842103,
+            0.03944736842105248,
+            0.04030526315789473,
+            0.04401578947368423
+          ],
+          "zero_sign_count": 0
+        },
+        "rescue_pc": {
+          "mean": -0.14824842105263158,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.16874736842105267,
+            -0.12378947368421056
+          ],
+          "sample_standard_deviation": 0.01891556775783135,
+          "values": [
+            -0.14724210526315787,
+            -0.1365999999999999,
+            -0.16486315789473688,
+            -0.16874736842105267,
+            -0.12378947368421056
+          ],
+          "zero_sign_count": 0
+        }
+      },
+      "online_predict_before_update_accuracy": {
+        "bridge_seed_reported_separately": {
+          "delta_bp_adam": -0.021545000000000036,
+          "delta_bp_classp": 0.17956250000000007,
+          "delta_pc_adam": -0.026395833333333285,
+          "delta_pc_classp": 0.17044916666666665,
+          "omega": -0.004262500000000169,
+          "rescue_bp": 0.2011075000000001,
+          "rescue_pc": 0.19684499999999994,
+          "seed": 42
+        },
+        "delta_bp_adam": {
+          "mean": -0.024899166666666694,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.026781666666666704,
+            -0.02236500000000008
+          ],
+          "sample_standard_deviation": 0.001697104151193999,
+          "values": [
+            -0.026059999999999972,
+            -0.024447500000000066,
+            -0.02484166666666665,
+            -0.02236500000000008,
+            -0.026781666666666704
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_bp_classp": {
+          "mean": 0.1785883333333333,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.17577416666666668,
+            0.18040999999999996
+          ],
+          "sample_standard_deviation": 0.001759488463382951,
+          "values": [
+            0.17843416666666656,
+            0.18040999999999996,
+            0.17867999999999995,
+            0.17577416666666668,
+            0.17964333333333327
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_adam": {
+          "mean": -0.03125133333333332,
+          "negative_sign_count": 5,
+          "positive_sign_count": 0,
+          "range": [
+            -0.036203333333333254,
+            -0.027000833333333363
+          ],
+          "sample_standard_deviation": 0.0034530314580089976,
+          "values": [
+            -0.027000833333333363,
+            -0.031365833333333315,
+            -0.02930083333333333,
+            -0.036203333333333254,
+            -0.032385833333333336
+          ],
+          "zero_sign_count": 0
+        },
+        "delta_pc_classp": {
+          "mean": 0.172175,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.17028,
+            0.1743866666666667
+          ],
+          "sample_standard_deviation": 0.0016669338327533758,
+          "values": [
+            0.17335166666666668,
+            0.1743866666666667,
+            0.17168583333333332,
+            0.17028,
+            0.17117083333333327
+          ],
+          "zero_sign_count": 0
+        },
+        "direction_note": "higher is better",
+        "omega": {
+          "mean": -6.11666666666677e-05,
+          "negative_sign_count": 3,
+          "positive_sign_count": 2,
+          "range": [
+            -0.004141666666666488,
+            0.008344166666666486
+          ],
+          "sample_standard_deviation": 0.0050550568603241215,
+          "values": [
+            -0.004141666666666488,
+            0.0008949999999999791,
+            -0.002534999999999954,
+            0.008344166666666486,
+            -0.0028683333333333616
+          ],
+          "zero_sign_count": 0
+        },
+        "per_seed": [
+          {
+            "delta_bp_adam": -0.026059999999999972,
+            "delta_bp_classp": 0.17843416666666656,
+            "delta_pc_adam": -0.027000833333333363,
+            "delta_pc_classp": 0.17335166666666668,
+            "omega": -0.004141666666666488,
+            "rescue_bp": 0.20449416666666653,
+            "rescue_pc": 0.20035250000000004,
+            "seed": 7
+          },
+          {
+            "delta_bp_adam": -0.024447500000000066,
+            "delta_bp_classp": 0.18040999999999996,
+            "delta_pc_adam": -0.031365833333333315,
+            "delta_pc_classp": 0.1743866666666667,
+            "omega": 0.0008949999999999791,
+            "rescue_bp": 0.20485750000000003,
+            "rescue_pc": 0.2057525,
+            "seed": 123
+          },
+          {
+            "delta_bp_adam": -0.02484166666666665,
+            "delta_bp_classp": 0.17867999999999995,
+            "delta_pc_adam": -0.02930083333333333,
+            "delta_pc_classp": 0.17168583333333332,
+            "omega": -0.002534999999999954,
+            "rescue_bp": 0.2035216666666666,
+            "rescue_pc": 0.20098666666666665,
+            "seed": 2026
+          },
+          {
+            "delta_bp_adam": -0.02236500000000008,
+            "delta_bp_classp": 0.17577416666666668,
+            "delta_pc_adam": -0.036203333333333254,
+            "delta_pc_classp": 0.17028,
+            "omega": 0.008344166666666486,
+            "rescue_bp": 0.19813916666666676,
+            "rescue_pc": 0.20648333333333324,
+            "seed": 31415
+          },
+          {
+            "delta_bp_adam": -0.026781666666666704,
+            "delta_bp_classp": 0.17964333333333327,
+            "delta_pc_adam": -0.032385833333333336,
+            "delta_pc_classp": 0.17117083333333327,
+            "omega": -0.0028683333333333616,
+            "rescue_bp": 0.20642499999999997,
+            "rescue_pc": 0.2035566666666666,
+            "seed": 271828
+          }
+        ],
+        "rescue_bp": {
+          "mean": 0.20348749999999996,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.19813916666666676,
+            0.20642499999999997
+          ],
+          "sample_standard_deviation": 0.003167215687055904,
+          "values": [
+            0.20449416666666653,
+            0.20485750000000003,
+            0.2035216666666666,
+            0.19813916666666676,
+            0.20642499999999997
+          ],
+          "zero_sign_count": 0
+        },
+        "rescue_pc": {
+          "mean": 0.20342633333333332,
+          "negative_sign_count": 0,
+          "positive_sign_count": 5,
+          "range": [
+            0.20035250000000004,
+            0.20648333333333324
+          ],
+          "sample_standard_deviation": 0.0027465301720736527,
+          "values": [
+            0.20035250000000004,
+            0.2057525,
+            0.20098666666666665,
+            0.20648333333333324,
+            0.2035566666666666
+          ],
+          "zero_sign_count": 0
+        }
+      }
+    },
+    "primary_held_out_seeds": [
+      7,
+      123,
+      2026,
+      31415,
+      271828
+    ],
+    "protocol_id": "matched-lr-state-policy-v1",
+    "resources": {
+      "cells": [
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 784.6793144149706,
+          "peak_cuda_bytes": 82660352,
+          "seed": 7
+        },
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 780.0049161989591,
+          "peak_cuda_bytes": 82660352,
+          "seed": 42
+        },
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 809.6478056310443,
+          "peak_cuda_bytes": 82660352,
+          "seed": 123
+        },
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 801.3553818550427,
+          "peak_cuda_bytes": 82660352,
+          "seed": 2026
+        },
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 789.6818307869835,
+          "peak_cuda_bytes": 82660352,
+          "seed": 31415
+        },
+        {
+          "condition_id": "bp-adam-persistent",
+          "elapsed_seconds": 789.0783609460341,
+          "peak_cuda_bytes": 82660352,
+          "seed": 271828
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 787.7539387230063,
+          "peak_cuda_bytes": 82660352,
+          "seed": 7
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 786.8103545510094,
+          "peak_cuda_bytes": 82660352,
+          "seed": 42
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 785.6208104179241,
+          "peak_cuda_bytes": 82660352,
+          "seed": 123
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 791.3132814309793,
+          "peak_cuda_bytes": 82660352,
+          "seed": 2026
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 787.8053921170067,
+          "peak_cuda_bytes": 82660352,
+          "seed": 31415
+        },
+        {
+          "condition_id": "bp-adam-task-reset",
+          "elapsed_seconds": 791.9067535609938,
+          "peak_cuda_bytes": 82660352,
+          "seed": 271828
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 794.5445761199808,
+          "peak_cuda_bytes": 81582592,
+          "seed": 7
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 787.8847970469506,
+          "peak_cuda_bytes": 81582592,
+          "seed": 42
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 798.6276856679469,
+          "peak_cuda_bytes": 81582592,
+          "seed": 123
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 791.5820543270092,
+          "peak_cuda_bytes": 81582592,
+          "seed": 2026
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 796.3746183610056,
+          "peak_cuda_bytes": 81582592,
+          "seed": 31415
+        },
+        {
+          "condition_id": "bp-classp-persistent",
+          "elapsed_seconds": 782.9805131590692,
+          "peak_cuda_bytes": 81582592,
+          "seed": 271828
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 793.4234183030203,
+          "peak_cuda_bytes": 81582592,
+          "seed": 7
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 778.8727443880052,
+          "peak_cuda_bytes": 81582592,
+          "seed": 42
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 785.4400623559486,
+          "peak_cuda_bytes": 81582592,
+          "seed": 123
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 784.8571396089392,
+          "peak_cuda_bytes": 81582592,
+          "seed": 2026
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 783.647691396065,
+          "peak_cuda_bytes": 81582592,
+          "seed": 31415
+        },
+        {
+          "condition_id": "bp-classp-task-reset",
+          "elapsed_seconds": 787.7472979340237,
+          "peak_cuda_bytes": 81582592,
+          "seed": 271828
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 917.960616691038,
+          "peak_cuda_bytes": 84708864,
+          "seed": 7
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 913.7205308469711,
+          "peak_cuda_bytes": 84708864,
+          "seed": 42
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 909.111075275112,
+          "peak_cuda_bytes": 84708864,
+          "seed": 123
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 911.7105120610213,
+          "peak_cuda_bytes": 84708864,
+          "seed": 2026
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 910.3193658569362,
+          "peak_cuda_bytes": 84708864,
+          "seed": 31415
+        },
+        {
+          "condition_id": "pc-adam-persistent",
+          "elapsed_seconds": 909.3330680059735,
+          "peak_cuda_bytes": 84708864,
+          "seed": 271828
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 914.3791273109382,
+          "peak_cuda_bytes": 84708864,
+          "seed": 7
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 896.599540330004,
+          "peak_cuda_bytes": 84708864,
+          "seed": 42
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 904.1563055579318,
+          "peak_cuda_bytes": 84708864,
+          "seed": 123
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 908.1394040690502,
+          "peak_cuda_bytes": 84708864,
+          "seed": 2026
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 899.0630404769909,
+          "peak_cuda_bytes": 84708864,
+          "seed": 31415
+        },
+        {
+          "condition_id": "pc-adam-task-reset",
+          "elapsed_seconds": 912.7164551370079,
+          "peak_cuda_bytes": 84708864,
+          "seed": 271828
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 901.8388418440009,
+          "peak_cuda_bytes": 83631104,
+          "seed": 7
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 920.8470865080017,
+          "peak_cuda_bytes": 83631104,
+          "seed": 42
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 912.123342175968,
+          "peak_cuda_bytes": 83631104,
+          "seed": 123
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 909.6816969909705,
+          "peak_cuda_bytes": 83631104,
+          "seed": 2026
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 905.0715694950195,
+          "peak_cuda_bytes": 83631104,
+          "seed": 31415
+        },
+        {
+          "condition_id": "pc-classp-persistent",
+          "elapsed_seconds": 902.9536509229802,
+          "peak_cuda_bytes": 83631104,
+          "seed": 271828
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 913.3759849310154,
+          "peak_cuda_bytes": 83631104,
+          "seed": 7
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 911.5513715600246,
+          "peak_cuda_bytes": 83631104,
+          "seed": 42
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 915.3457287540659,
+          "peak_cuda_bytes": 83631104,
+          "seed": 123
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 914.6624274830101,
+          "peak_cuda_bytes": 83631104,
+          "seed": 2026
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 912.566831856966,
+          "peak_cuda_bytes": 83631104,
+          "seed": 31415
+        },
+        {
+          "condition_id": "pc-classp-task-reset",
+          "elapsed_seconds": 916.801335300901,
+          "peak_cuda_bytes": 83631104,
+          "seed": 271828
+        }
+      ],
+      "host": {
+        "cuda_runtime": "12.6",
+        "gpu_driver": "560.35.03",
+        "gpu_identity": {
+          "compute_capability": [
+            8,
+            9
+          ],
+          "name": "NVIDIA GeForce RTX 4090",
+          "uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2"
+        },
+        "hostname": "debian"
+      },
+      "peak_cuda_bytes": {
+        "mean": 83145728.0,
+        "negative_sign_count": 0,
+        "positive_sign_count": 48,
+        "range": [
+          81582592.0,
+          84708864.0
+        ],
+        "sample_standard_deviation": 1169611.8321443594,
+        "values": [
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          82660352.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          81582592.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          84708864.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0,
+          83631104.0
+        ],
+        "zero_sign_count": 0
+      },
+      "pooling_policy": "one frozen RTX 4090 identity",
+      "runtime_seconds": {
+        "mean": 849.9097843488295,
+        "negative_sign_count": 0,
+        "positive_sign_count": 48,
+        "range": [
+          778.8727443880052,
+          920.8470865080017
+        ],
+        "sample_standard_deviation": 61.23197921678682,
+        "values": [
+          784.6793144149706,
+          780.0049161989591,
+          809.6478056310443,
+          801.3553818550427,
+          789.6818307869835,
+          789.0783609460341,
+          787.7539387230063,
+          786.8103545510094,
+          785.6208104179241,
+          791.3132814309793,
+          787.8053921170067,
+          791.9067535609938,
+          794.5445761199808,
+          787.8847970469506,
+          798.6276856679469,
+          791.5820543270092,
+          796.3746183610056,
+          782.9805131590692,
+          793.4234183030203,
+          778.8727443880052,
+          785.4400623559486,
+          784.8571396089392,
+          783.647691396065,
+          787.7472979340237,
+          917.960616691038,
+          913.7205308469711,
+          909.111075275112,
+          911.7105120610213,
+          910.3193658569362,
+          909.3330680059735,
+          914.3791273109382,
+          896.599540330004,
+          904.1563055579318,
+          908.1394040690502,
+          899.0630404769909,
+          912.7164551370079,
+          901.8388418440009,
+          920.8470865080017,
+          912.123342175968,
+          909.6816969909705,
+          905.0715694950195,
+          902.9536509229802,
+          913.3759849310154,
+          911.5513715600246,
+          915.3457287540659,
+          914.6624274830101,
+          912.566831856966,
+          916.801335300901
+        ],
+        "zero_sign_count": 0
+      }
+    }
+  },
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "mode": "full",
+  "preserved_failure_artifacts": [],
+  "preserved_unpaired_attempt_artifacts": [],
+  "seeds": [
+    7,
+    123,
+    2026,
+    31415,
+    271828,
+    42
+  ],
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d",
+  "status": "passed",
+  "validated_cells": 48
+}

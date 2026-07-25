@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__smoke__bp-classp-task-reset__seed-42.json",
+  "artifact_bytes": 15933,
+  "artifact_sha256": "eeeb0f18232033ddba223da8707bca5015bb9185d05add74705390fb135b1c64",
+  "canonical_payload_sha256": "b76f01d1ff2e263cde51448e50a654dc073397fa57c336c22a7870c54373de10",
+  "created_at_utc": "2026-07-23T19:43:23.717091+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}

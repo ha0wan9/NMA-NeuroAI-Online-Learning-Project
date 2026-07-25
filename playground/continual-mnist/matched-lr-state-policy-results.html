@@ -1,0 +1,1825 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="An interactive explanation of the validated matched-lr-state-policy-v1 continual-learning experiment."
+  >
+  <title>When optimizer memory resets · matched-lr-state-policy-v1</title>
+  <!--
+    Project-owned review artifact.
+    Aggregate sources:
+      complete-synthesis.md
+        sha256 3056bebd126b6f4825922e14b79d6cd98cc2aa532c555a799a15cfecf3831b30
+      complete-validation.json
+        sha256 51422b4bc02cbd8f3b2bc3c695f4701c567d45d31d85a59a37c5088b7998669b
+    Status: validated results; human conclusion approved 2026-07-24.
+  -->
+  <style>
+    :root {
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d2;
+      --ink: #1c2a2c;
+      --muted: #627072;
+      --rule: #c9c0b1;
+      --surface: #fffdf8;
+      --teal: #08766e;
+      --teal-dark: #075b56;
+      --teal-soft: #d9ece7;
+      --coral: #cf6045;
+      --coral-dark: #9d412f;
+      --coral-soft: #f4ddd5;
+      --gold: #a97920;
+      --gold-soft: #f2e5bd;
+      --blue: #3f708f;
+      --blue-soft: #dbe8ef;
+      --slate: #526267;
+      --shadow: 0 20px 60px rgba(28, 42, 44, 0.10);
+      --radius: 20px;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 1%, rgba(8, 118, 110, 0.12), transparent 28rem),
+        linear-gradient(90deg, rgba(28, 42, 44, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(28, 42, 44, 0.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 24px 24px, 24px 24px, auto;
+      font-family: var(--sans);
+      line-height: 1.62;
+    }
+
+    a {
+      color: var(--teal-dark);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(8, 118, 110, 0.35);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      border-bottom: 1px solid rgba(28, 42, 44, 0.14);
+      background: rgba(244, 240, 231, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--surface);
+      background: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      letter-spacing: 0;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav a {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .nav a:hover {
+      color: var(--teal);
+    }
+
+    .hero {
+      padding: 86px 0 66px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      color: var(--teal);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 30px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 920px;
+      margin-bottom: 24px;
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      font-weight: 500;
+      letter-spacing: -0.058em;
+      line-height: 0.98;
+    }
+
+    h1 em {
+      color: var(--coral);
+      font-weight: 500;
+    }
+
+    .lede {
+      max-width: 780px;
+      margin-bottom: 0;
+      color: #405052;
+      font-size: clamp(1.08rem, 2.2vw, 1.36rem);
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      padding: 7px 11px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: #465557;
+      background: rgba(255, 253, 248, 0.72);
+      font-family: var(--mono);
+      font-size: 0.71rem;
+    }
+
+    .pill.pass {
+      border-color: rgba(8, 118, 110, 0.45);
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+    }
+
+    .pill.pending {
+      border-color: rgba(169, 121, 32, 0.46);
+      color: #795815;
+      background: var(--gold-soft);
+    }
+
+    .hero-result {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-top: 48px;
+    }
+
+    .hero-card {
+      min-height: 210px;
+      padding: 28px;
+      border: 1px solid rgba(28, 42, 44, 0.16);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.80);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card.primary {
+      color: var(--surface);
+      background: var(--ink);
+    }
+
+    .kicker {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .primary .kicker {
+      color: #b7c4c4;
+    }
+
+    .hero-number {
+      margin-bottom: 10px;
+      color: #8cddd3;
+      font-family: var(--serif);
+      font-size: clamp(3.7rem, 8vw, 6.5rem);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+    }
+
+    .hero-card h2 {
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+
+    .hero-card p {
+      margin-bottom: 0;
+      color: inherit;
+    }
+
+    .primary p {
+      color: #d7dfde;
+    }
+
+    main {
+      padding-bottom: 100px;
+    }
+
+    section {
+      scroll-margin-top: 84px;
+      padding: 72px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 165px minmax(0, 1fr);
+      gap: 36px;
+      margin-bottom: 38px;
+    }
+
+    .section-index {
+      color: var(--coral);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      max-width: 820px;
+      margin-bottom: 14px;
+      font-family: var(--serif);
+      font-size: clamp(2.3rem, 4.8vw, 4rem);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.04;
+    }
+
+    .section-title p {
+      max-width: 790px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .two-col,
+    .three-col,
+    .four-col {
+      display: grid;
+      gap: 18px;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .four-col {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid rgba(28, 42, 44, 0.15);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+    }
+
+    .card p:last-child,
+    .card ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .mini-label {
+      display: block;
+      margin-bottom: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .memory-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: stretch;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .memory-box {
+      padding: 26px;
+      border: 1px solid rgba(28, 42, 44, 0.16);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .memory-box.weights {
+      border-top: 5px solid var(--teal);
+    }
+
+    .memory-box.state {
+      border-top: 5px solid var(--coral);
+    }
+
+    .memory-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      color: var(--surface);
+      background: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.6rem;
+    }
+
+    .memory-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 1.9rem;
+    }
+
+    .callout {
+      margin-top: 20px;
+      padding: 20px 22px;
+      border-left: 5px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: rgba(242, 229, 189, 0.66);
+    }
+
+    .callout strong {
+      color: #6d5017;
+    }
+
+    .factor-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1.1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .factor-controls {
+      display: grid;
+      gap: 18px;
+    }
+
+    .factor-group {
+      padding: 18px;
+      border: 1px solid rgba(28, 42, 44, 0.14);
+      border-radius: 16px;
+      background: rgba(255, 253, 248, 0.68);
+    }
+
+    .choice-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .choice {
+      min-height: 44px;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      color: var(--ink);
+      background: var(--surface);
+      cursor: pointer;
+      font-weight: 760;
+    }
+
+    .choice:hover {
+      border-color: var(--teal);
+    }
+
+    .choice[aria-pressed="true"] {
+      border-color: var(--ink);
+      color: var(--surface);
+      background: var(--ink);
+      box-shadow: 0 8px 22px rgba(28, 42, 44, 0.15);
+    }
+
+    .selection-card {
+      position: sticky;
+      top: 92px;
+      padding: 28px;
+      border-radius: var(--radius);
+      color: var(--surface);
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+
+    .selection-id {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      color: #c8d3d2;
+      font-family: var(--mono);
+      font-size: 0.69rem;
+    }
+
+    .selection-card h3 {
+      margin-bottom: 12px;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.03;
+    }
+
+    .selection-card p {
+      color: #ced8d7;
+    }
+
+    .selection-result {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .selection-result span {
+      color: #b9c7c6;
+      font-size: 0.82rem;
+    }
+
+    .selection-result strong {
+      color: #8cddd3;
+      font-family: var(--serif);
+      font-size: 2.35rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .timeline::before {
+      position: absolute;
+      z-index: -1;
+      top: 30px;
+      right: 8%;
+      left: 8%;
+      height: 2px;
+      content: "";
+      background: var(--rule);
+    }
+
+    .stage {
+      padding: 20px;
+      border: 1px solid rgba(28, 42, 44, 0.14);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+
+    .stage-number {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 21px;
+      border: 5px solid var(--surface);
+      border-radius: 50%;
+      color: var(--surface);
+      background: var(--teal);
+      box-shadow: 0 0 0 1px var(--teal);
+      font-family: var(--mono);
+      font-size: 0.62rem;
+    }
+
+    .stage h3 {
+      margin-bottom: 7px;
+      font-size: 1rem;
+    }
+
+    .stage p {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .stage strong {
+      color: var(--teal-dark);
+    }
+
+    .result-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .result-stat {
+      min-height: 170px;
+      padding: 24px;
+      border: 1px solid rgba(28, 42, 44, 0.15);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .result-stat strong {
+      display: block;
+      margin: 6px 0 10px;
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .result-stat.pass strong {
+      color: var(--teal);
+    }
+
+    .result-stat.caution strong {
+      color: var(--coral);
+    }
+
+    .chart-card {
+      padding: 24px;
+      border: 1px solid rgba(28, 42, 44, 0.15);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .metric-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .metric-tab {
+      padding: 8px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 760;
+    }
+
+    .metric-tab[aria-pressed="true"] {
+      border-color: var(--teal);
+      color: var(--surface);
+      background: var(--teal);
+    }
+
+    .chart-title-row {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+
+    .chart-title-row h3 {
+      margin-bottom: 0;
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 550;
+    }
+
+    .chart-note {
+      max-width: 430px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.79rem;
+      text-align: right;
+    }
+
+    .chart-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .chart-wrap svg {
+      width: 100%;
+      min-width: 720px;
+      height: auto;
+      display: block;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+      text-align: right;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    .gate-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .gate-card {
+      min-height: 240px;
+      padding: 26px;
+      border: 1px solid rgba(8, 118, 110, 0.28);
+      border-radius: var(--radius);
+      background: var(--teal-soft);
+    }
+
+    .gate-card h3 {
+      margin-bottom: 10px;
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 550;
+    }
+
+    .gate-card .gate-count {
+      display: block;
+      margin: 18px 0 10px;
+      color: var(--teal-dark);
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 0.9;
+    }
+
+    .gate-arrow {
+      color: var(--teal);
+      font-size: 2rem;
+    }
+
+    .formula {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border: 1px solid rgba(28, 42, 44, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.74);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      overflow-x: auto;
+    }
+
+    .tradeoff-grid {
+      display: grid;
+      grid-template-columns: 140px repeat(4, minmax(120px, 1fr));
+      gap: 8px;
+      margin-top: 26px;
+      overflow-x: auto;
+    }
+
+    .tradeoff-cell {
+      min-width: 120px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255, 253, 248, 0.78);
+    }
+
+    .tradeoff-cell.header {
+      display: grid;
+      place-items: end start;
+      color: var(--muted);
+      background: transparent;
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tradeoff-cell.row-head {
+      display: grid;
+      place-items: center start;
+      font-weight: 800;
+    }
+
+    .tradeoff-cell .value {
+      display: block;
+      margin-bottom: 3px;
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .tradeoff-cell .good {
+      color: var(--teal);
+    }
+
+    .tradeoff-cell .bad {
+      color: var(--coral-dark);
+    }
+
+    .tradeoff-cell small {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .reading {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .reading-card {
+      padding: 24px;
+      border-radius: var(--radius);
+    }
+
+    .reading-card.fact {
+      background: var(--teal-soft);
+    }
+
+    .reading-card.interpretation {
+      background: var(--blue-soft);
+    }
+
+    .reading-card.counterclaim {
+      background: var(--coral-soft);
+    }
+
+    .reading-card h3 {
+      margin-bottom: 11px;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 550;
+    }
+
+    .reading-card p {
+      margin-bottom: 0;
+      font-size: 0.91rem;
+    }
+
+    .claim-boundary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .claim-box {
+      padding: 25px;
+      border: 1px solid rgba(28, 42, 44, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.75);
+    }
+
+    .claim-box.supported {
+      border-top: 5px solid var(--teal);
+    }
+
+    .claim-box.not-supported {
+      border-top: 5px solid var(--coral);
+    }
+
+    .claim-box h3 {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 550;
+    }
+
+    .claim-box ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0;
+    }
+
+    details {
+      margin-top: 10px;
+      border: 1px solid rgba(28, 42, 44, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.72);
+    }
+
+    summary {
+      padding: 16px 18px;
+      cursor: pointer;
+      font-weight: 780;
+    }
+
+    details p {
+      padding: 0 18px 18px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .provenance {
+      padding: 26px;
+      border-radius: var(--radius);
+      color: #d9e1e0;
+      background: var(--ink);
+    }
+
+    .provenance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .provenance code {
+      color: #9fe2d8;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      overflow-wrap: anywhere;
+    }
+
+    .provenance p {
+      color: #c4cfce;
+      font-size: 0.86rem;
+    }
+
+    .provenance a {
+      color: #9fe2d8;
+    }
+
+    footer {
+      padding: 32px 0 52px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.79rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero-result,
+      .factor-panel,
+      .claim-boundary {
+        grid-template-columns: 1fr;
+      }
+
+      .selection-card {
+        position: static;
+      }
+
+      .four-col,
+      .timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .timeline::before {
+        display: none;
+      }
+
+      .result-strip,
+      .reading {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .nav {
+        width: 100%;
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .two-col,
+      .three-col,
+      .four-col,
+      .memory-diagram,
+      .timeline,
+      .gate-grid,
+      .provenance-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .memory-arrow,
+      .gate-arrow {
+        transform: rotate(90deg);
+      }
+
+      .chart-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .chart-note {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .metric-tabs,
+      .factor-controls {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .selection-card,
+      .provenance {
+        color: var(--ink);
+        background: white;
+        box-shadow: none;
+      }
+
+      .selection-card p,
+      .provenance p {
+        color: var(--ink);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">δ</span>
+        state-policy study
+      </a>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#question">Question</a>
+        <a href="#design">Design</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#results">Results</a>
+        <a href="#meaning">Meaning</a>
+        <a href="#boundary">Limits</a>
+        <a href="#provenance">Provenance</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="shell">
+      <header class="hero">
+        <p class="eyebrow">Validated continual-learning experiment · July 2026</p>
+        <h1>What happens when optimizer <em>memory</em> resets?</h1>
+        <p class="lede">
+          We kept the learned network intact, cleared only the optimizer's
+          internal state at each task boundary, and compared how Adam and
+          CLASSP responded under Backpropagation and Predictive Coding.
+        </p>
+        <div class="status-row" aria-label="Study status">
+          <span class="pill pass">48/48 full cells validated</span>
+          <span class="pill pass">both registered gates passed 5/5</span>
+          <span class="pill">one frozen RTX 4090</span>
+          <span class="pill">five held-out seeds</span>
+          <span class="pill pass">human conclusion approved</span>
+        </div>
+
+        <div class="hero-result">
+          <article class="hero-card primary">
+            <span class="kicker">Direct PC–CLASSP effect</span>
+            <div class="hero-number">+0.77<span style="font-size:0.34em"> pp</span></div>
+            <h2>A small final-accuracy gain, repeated across all five seeds.</h2>
+            <p>
+              The effect ranged from +0.06 to +1.89 percentage points. This is
+              the direct reset-versus-persistent comparison.
+            </p>
+          </article>
+          <article class="hero-card">
+            <span class="kicker">PC-specific relative contrast · Ω</span>
+            <div class="hero-number" style="color:var(--coral)">+16.13<span style="font-size:0.34em"> pp</span></div>
+            <h2>The interaction is much larger than the direct gain.</h2>
+            <p>
+              Why? Reset badly harmed Adam. A difference-of-differences is not
+              the same quantity as PC–CLASSP's absolute improvement.
+            </p>
+          </article>
+        </div>
+      </header>
+
+      <section id="question">
+        <div class="section-head">
+          <div class="section-index">01 · Question</div>
+          <div class="section-title">
+            <h2>Weights are knowledge. Optimizer state is the notebook.</h2>
+            <p>
+              The intervention asked whether carrying or clearing that notebook
+              changes continual learning—and whether the answer depends on the
+              learning method and optimizer.
+            </p>
+          </div>
+        </div>
+
+        <div class="memory-diagram">
+          <article class="memory-box weights">
+            <div class="memory-icon" aria-hidden="true">w</div>
+            <span class="mini-label">Network parameters</span>
+            <h3>Always preserved</h3>
+            <p>
+              The MLP's learned weights and biases remained across all 20
+              tasks. Reset never returned the network to its initialization.
+            </p>
+          </article>
+          <div class="memory-arrow" aria-hidden="true">+</div>
+          <article class="memory-box state">
+            <div class="memory-icon" aria-hidden="true">s</div>
+            <span class="mini-label">Parameter-optimizer state</span>
+            <h3>Persistent or cleared</h3>
+            <p>
+              Adam carries gradient moments. CLASSP carries its accumulator.
+              Task-reset emptied this state before tasks 1–19.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>Analogy, not mechanism:</strong> the notebook metaphor
+          explains what was manipulated. It does not prove how PC or CLASSP
+          works biologically.
+        </div>
+      </section>
+
+      <section id="design">
+        <div class="section-head">
+          <div class="section-index">02 · Design</div>
+          <div class="section-title">
+            <h2>A 2 × 2 × 2 factorial, with everything else held fixed.</h2>
+            <p>
+              Select one value from each factor to inspect a condition. Each
+              held-out seed realized all eight conditions with matched stream,
+              initialization, architecture, learning rate, and data access.
+            </p>
+          </div>
+        </div>
+
+        <div class="factor-panel">
+          <div class="factor-controls" aria-label="Condition selector">
+            <div class="factor-group">
+              <span class="mini-label">Learning method</span>
+              <div class="choice-row">
+                <button class="choice" type="button" data-factor="method" data-value="bp" aria-pressed="false">Backpropagation</button>
+                <button class="choice" type="button" data-factor="method" data-value="pc" aria-pressed="true">Predictive Coding</button>
+              </div>
+            </div>
+            <div class="factor-group">
+              <span class="mini-label">Parameter optimizer</span>
+              <div class="choice-row">
+                <button class="choice" type="button" data-factor="optimizer" data-value="adam" aria-pressed="false">Adam</button>
+                <button class="choice" type="button" data-factor="optimizer" data-value="classp" aria-pressed="true">CLASSP</button>
+              </div>
+            </div>
+            <div class="factor-group">
+              <span class="mini-label">State policy</span>
+              <div class="choice-row">
+                <button class="choice" type="button" data-factor="policy" data-value="persistent" aria-pressed="false">Persistent</button>
+                <button class="choice" type="button" data-factor="policy" data-value="reset" aria-pressed="true">Task-reset</button>
+              </div>
+            </div>
+          </div>
+
+          <article class="selection-card" aria-live="polite">
+            <span class="selection-id" id="selection-id">pc-classp-task-reset</span>
+            <h3 id="selection-title">PC · CLASSP · task-reset</h3>
+            <p id="selection-copy">
+              Predictive Coding settles latent activities before the parameter
+              update. CLASSP's accumulator is cleared at each task boundary;
+              the learned network remains intact.
+            </p>
+            <div class="selection-result">
+              <span>Mean final reset effect<br>across held-out seeds</span>
+              <strong id="selection-result">+0.77 pp</strong>
+            </div>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>Frozen common protocol:</strong> 20-task domain-incremental
+          Permuted MNIST, MLP 784→256→256→10, one pass per task, no replay,
+          batch size 500, parameter learning rate 3×10<sup>−4</sup>, and
+          deterministic CUDA execution.
+        </div>
+      </section>
+
+      <section id="workflow">
+        <div class="section-head">
+          <div class="section-index">03 · Workflow</div>
+          <div class="section-title">
+            <h2>Learn openly, then confirm without peeking.</h2>
+            <p>
+              Seed 42 was openly inspected for commissioning and intuition.
+              Five different seeds remained concealed until all 40 held-out
+              cells were complete and validated.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline" aria-label="Experiment stages">
+          <article class="stage">
+            <div class="stage-number">1</div>
+            <h3>Smoke</h3>
+            <p>Two exact eight-condition passes using seed 42.</p>
+            <strong>16/16 · exact repeat</strong>
+          </article>
+          <article class="stage">
+            <div class="stage-number">2</div>
+            <h3>Bridge</h3>
+            <p>Full 20-task runs for open seed 42; excluded from confirmation.</p>
+            <strong>8/8 · 1 h 53 m</strong>
+          </article>
+          <article class="stage">
+            <div class="stage-number">3</div>
+            <h3>Held-out</h3>
+            <p>Five seeds × eight conditions; partial effects stayed hidden.</p>
+            <strong>40/40 · 9 h 27 m</strong>
+          </article>
+          <article class="stage">
+            <div class="stage-number">4</div>
+            <h3>Complete validation</h3>
+            <p>Pairs, order, provenance, invariants, and artifact hashes.</p>
+            <strong>48/48 · passed</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="section-head">
+          <div class="section-index">04 · Results</div>
+          <div class="section-title">
+            <h2>Reset helped one final configuration—and hurt the other three.</h2>
+            <p>
+              Bars show the mean task-reset minus persistent-state effect.
+              Dots are the five held-out seeds. Switch metrics to see why final
+              accuracy alone does not tell the whole story.
+            </p>
+          </div>
+        </div>
+
+        <div class="result-strip">
+          <article class="result-stat pass">
+            <span class="mini-label">Gate 1 · R_PC &gt; 0</span>
+            <strong>5 / 5</strong>
+            <p>CLASSP's reset effect was more favorable than Adam's under PC.</p>
+          </article>
+          <article class="result-stat pass">
+            <span class="mini-label">Gate 2 · Ω &gt; 0</span>
+            <strong>5 / 5</strong>
+            <p>The relative CLASSP advantage was larger under PC than BP.</p>
+          </article>
+          <article class="result-stat caution">
+            <span class="mini-label">Forgetting under reset</span>
+            <strong>4 / 4</strong>
+            <p>Every method/optimizer combination forgot more after reset.</p>
+          </article>
+        </div>
+
+        <div class="chart-card">
+          <div class="metric-tabs" role="group" aria-label="Select metric">
+            <button class="metric-tab" type="button" data-metric="final" aria-pressed="true">Final accuracy</button>
+            <button class="metric-tab" type="button" data-metric="online" aria-pressed="false">Online accuracy</button>
+            <button class="metric-tab" type="button" data-metric="adaptation" aria-pressed="false">Adaptation</button>
+            <button class="metric-tab" type="button" data-metric="forgetting" aria-pressed="false">Forgetting</button>
+          </div>
+          <div class="chart-title-row">
+            <h3 id="effect-chart-title">Final-average-accuracy reset effects</h3>
+            <p class="chart-note" id="effect-chart-note">
+              Positive is better. Values are percentage-point differences.
+            </p>
+          </div>
+          <div class="chart-wrap">
+            <svg
+              id="effect-chart"
+              viewBox="0 0 900 380"
+              role="img"
+              aria-labelledby="effect-chart-title effect-chart-note"
+            ></svg>
+          </div>
+          <div class="sr-only" aria-live="polite" id="chart-table"></div>
+        </div>
+
+        <div class="gate-grid">
+          <article class="gate-card">
+            <span class="mini-label">First comparison</span>
+            <h3>CLASSP-specific reset effect under PC</h3>
+            <span class="gate-count">R<sub>PC</sub> = +26.09 pp</span>
+            <p>Positive in all five held-out seeds.</p>
+            <div class="formula">(+0.77) − (−25.32) = +26.09</div>
+          </article>
+          <div class="gate-arrow" aria-hidden="true">→</div>
+          <article class="gate-card">
+            <span class="mini-label">Second comparison</span>
+            <h3>How much larger under PC than BP?</h3>
+            <span class="gate-count">Ω = +16.13 pp</span>
+            <p>Positive in all five held-out seeds.</p>
+            <div class="formula">(+26.09) − (+9.97) = +16.13</div>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>Read the 26-point contrast correctly:</strong> PC–CLASSP
+          itself improved by 0.77 points. The much larger <em>relative</em>
+          contrast partly reflects PC–Adam losing 25.32 points after reset.
+        </div>
+      </section>
+
+      <section id="meaning">
+        <div class="section-head">
+          <div class="section-index">05 · Meaning</div>
+          <div class="section-title">
+            <h2>The central pattern is a plasticity–stability tradeoff.</h2>
+            <p>
+              CLASSP reset made the network adapt faster in both learning
+              methods. PC's distinctive result appeared in the smaller
+              retention penalty, not in a uniquely larger plasticity boost.
+            </p>
+          </div>
+        </div>
+
+        <div class="tradeoff-grid" role="table" aria-label="Mean CLASSP reset effects">
+          <div class="tradeoff-cell header" role="columnheader">Method</div>
+          <div class="tradeoff-cell header" role="columnheader">Online ↑</div>
+          <div class="tradeoff-cell header" role="columnheader">Adaptation ↑</div>
+          <div class="tradeoff-cell header" role="columnheader">Forgetting ↓</div>
+          <div class="tradeoff-cell header" role="columnheader">Final ↑</div>
+
+          <div class="tradeoff-cell row-head" role="rowheader">BP + CLASSP</div>
+          <div class="tradeoff-cell" role="cell"><span class="value good">+17.86</span><small>better</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value good">+13.96</span><small>better</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value bad">+21.10</span><small>more forgetting</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value bad">−7.30</span><small>worse</small></div>
+
+          <div class="tradeoff-cell row-head" role="rowheader">PC + CLASSP</div>
+          <div class="tradeoff-cell" role="cell"><span class="value good">+17.22</span><small>better</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value good">+11.76</span><small>better</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value bad">+11.37</span><small>more forgetting</small></div>
+          <div class="tradeoff-cell" role="cell"><span class="value good">+0.77</span><small>slightly better</small></div>
+        </div>
+
+        <div class="reading">
+          <article class="reading-card fact">
+            <span class="mini-label">Established observation</span>
+            <h3>Plasticity returned</h3>
+            <p>
+              Reset increased CLASSP online accuracy and adaptation under both
+              BP and PC, while increasing forgetting in both.
+            </p>
+          </article>
+          <article class="reading-card interpretation">
+            <span class="mini-label">Interpretation</span>
+            <h3>PC buffered the cost</h3>
+            <p>
+              PC may preserve prior-task performance better during the
+              reset-induced plasticity burst, allowing a small positive final
+              balance.
+            </p>
+          </article>
+          <article class="reading-card counterclaim">
+            <span class="mini-label">Counterclaim</span>
+            <h3>Transient scale may explain it</h3>
+            <p>
+              Reset enlarged first updates, and Adam was exceptionally
+              sensitive. The interaction need not imply a special
+              PC×CLASSP mechanism.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <strong>Bridge versus confirmation:</strong> open seed 42 showed a
+          −2.19-point PC–CLASSP effect, while all five held-out seeds were
+          slightly positive. The relative R<sub>PC</sub> and Ω directions were
+          positive in both. This is why the inspected seed was excluded.
+        </div>
+      </section>
+
+      <section id="boundary">
+        <div class="section-head">
+          <div class="section-index">06 · Limits</div>
+          <div class="section-title">
+            <h2>What the experiment supports—and where the claim stops.</h2>
+            <p>
+              Passing a preregistered directional gate is evidence for the
+              frozen configuration. It is not a license to generalize beyond
+              the data, intervention, architecture, or analysis.
+            </p>
+          </div>
+        </div>
+
+        <div class="claim-boundary">
+          <article class="claim-box supported">
+            <h3>Supported here</h3>
+            <ul>
+              <li>R<sub>PC</sub> and Ω were positive in all five held-out seeds.</li>
+              <li>PC–CLASSP reset had a small positive final effect in all five.</li>
+              <li>Reset exposed a repeatable plasticity–retention tradeoff.</li>
+              <li>All frozen state, stream, source, order, and pairing checks passed.</li>
+            </ul>
+          </article>
+          <article class="claim-box not-supported">
+            <h3>Not established</h3>
+            <ul>
+              <li>Statistical significance or a population-level effect.</li>
+              <li>A causal PC×CLASSP mechanism or biological synergy.</li>
+              <li>Reset as a generally superior continual-learning strategy.</li>
+              <li>Generality beyond this fixed-LR Permuted-MNIST MLP.</li>
+            </ul>
+          </article>
+        </div>
+
+        <details>
+          <summary>What follow-up would best test the mechanism?</summary>
+          <p>
+            A new preregistered protocol should match the first-update
+            magnitude after task boundaries across reset and persistent
+            conditions, perhaps through a learning-rate ramp or state-rescaling
+            intervention. If Ω remained positive after transient scale was
+            matched, the optimizer-transient counterclaim would weaken.
+          </p>
+        </details>
+        <details>
+          <summary>Why not call 5/5 “statistically significant”?</summary>
+          <p>
+            The protocol registered a directional sign gate, not an inferential
+            test with a population model and calibrated error rate. Five
+            deterministic seeds show consistency within this experiment, but
+            the claim ceiling explicitly excludes statistical significance.
+          </p>
+        </details>
+        <details>
+          <summary>Did reset prevent catastrophic forgetting?</summary>
+          <p>
+            No. Forgetting increased in every configuration. PC–CLASSP had the
+            smallest retention penalty among the PC reset comparisons and
+            enough adaptation benefit to end slightly ahead on final average
+            accuracy.
+          </p>
+        </details>
+      </section>
+
+      <section id="provenance">
+        <div class="section-head">
+          <div class="section-index">07 · Provenance</div>
+          <div class="section-title">
+            <h2>The scientific record behind this page.</h2>
+            <p>
+              The page is a view over sealed aggregate artifacts. The manifest,
+              source identity, intended/actual order, receipts, and artifact
+              hashes were independently revalidated before interpretation.
+            </p>
+          </div>
+        </div>
+
+        <div class="provenance">
+          <div class="provenance-grid">
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Protocol</span>
+              <p><code>matched-lr-state-policy-v1</code></p>
+              <p>
+                <a href="../../.research/studies/pc-classp-matched-lr-state-policy-v1/protocol.md">
+                  Open the frozen protocol
+                </a>
+              </p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Accepted conclusion</span>
+              <p>Human conclusion checkpoint approved 2026-07-24.</p>
+              <p>
+                <a href="../../.research/studies/pc-classp-matched-lr-state-policy-v1/results.md">
+                  Open the tracked scientific result
+                </a>
+              </p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Raw evidence</span>
+              <p>Exact 333-file reviewed snapshot · 12 MiB</p>
+              <p>
+                <a href="results/matched-lr-state-policy-v1/reports/complete-synthesis.md">
+                  Open the tracked synthesis
+                </a>
+              </p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Manifest SHA-256</span>
+              <p><code>9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791</code></p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Complete synthesis SHA-256</span>
+              <p><code>3056bebd126b6f4825922e14b79d6cd98cc2aa532c555a799a15cfecf3831b30</code></p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Complete validation SHA-256</span>
+              <p><code>51422b4bc02cbd8f3b2bc3c695f4701c567d45d31d85a59a37c5088b7998669b</code></p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Frozen source</span>
+              <p><code>commit fa7ba098ab5ce89636137554aa0ea55f9419b50b</code></p>
+              <p><code>source identity 12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d</code></p>
+            </div>
+            <div>
+              <span class="mini-label" style="color:#9fb0af">Hardware and execution</span>
+              <p>One NVIDIA GeForce RTX 4090 · deterministic CUDA · sequential cells</p>
+              <p>
+                <a href="matched-lr-state-policy-model.html">
+                  Open the conceptual model
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <p>
+        Conclusion approved 2026-07-24 after review of the validated aggregate
+        artifacts. Validation establishes provenance, integrity, frozen
+        invariants, and reproducibility metadata—not the truth of the
+        scientific interpretation.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const conditionMeta = {
+      "bp-adam": {
+        label: "BP · Adam",
+        copy: "Backpropagation computes parameter gradients directly. Adam uses moving first- and second-moment estimates.",
+        final: -17.2615
+      },
+      "bp-classp": {
+        label: "BP · CLASSP",
+        copy: "Backpropagation computes parameter gradients directly. CLASSP scales updates with its accumulated state.",
+        final: -7.2963
+      },
+      "pc-adam": {
+        label: "PC · Adam",
+        copy: "Predictive Coding settles latent activities before the parameter update. Adam carries moving gradient moments.",
+        final: -25.3206
+      },
+      "pc-classp": {
+        label: "PC · CLASSP",
+        copy: "Predictive Coding settles latent activities before the parameter update. CLASSP carries its accumulated state.",
+        final: 0.7706
+      }
+    };
+
+    const selection = {
+      method: "pc",
+      optimizer: "classp",
+      policy: "reset"
+    };
+
+    const formatSigned = (value, digits = 2) =>
+      `${value >= 0 ? "+" : "−"}${Math.abs(value).toFixed(digits)} pp`;
+
+    function updateSelection() {
+      const key = `${selection.method}-${selection.optimizer}`;
+      const meta = conditionMeta[key];
+      const policyLabel = selection.policy === "reset" ? "task-reset" : "persistent";
+      const conditionId = `${key}-${policyLabel}`;
+      const policyCopy = selection.policy === "reset"
+        ? "Its optimizer state is cleared before each later task; learned parameters remain intact."
+        : "Its optimizer state is retained across every task boundary.";
+
+      document.getElementById("selection-id").textContent = conditionId;
+      document.getElementById("selection-title").textContent =
+        `${meta.label} · ${policyLabel}`;
+      document.getElementById("selection-copy").textContent =
+        `${meta.copy} ${policyCopy}`;
+
+      const result = document.getElementById("selection-result");
+      if (selection.policy === "reset") {
+        result.textContent = formatSigned(meta.final);
+        result.parentElement.querySelector("span").innerHTML =
+          "Mean final reset effect<br>across held-out seeds";
+      } else {
+        result.textContent = "reference";
+        result.parentElement.querySelector("span").innerHTML =
+          "Role in each pair<br>within held-out seeds";
+      }
+    }
+
+    document.querySelectorAll(".choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        const factor = button.dataset.factor;
+        selection[factor] = button.dataset.value;
+        document.querySelectorAll(`.choice[data-factor="${factor}"]`).forEach((peer) => {
+          peer.setAttribute("aria-pressed", String(peer === button));
+        });
+        updateSelection();
+      });
+    });
+
+    const metricData = {
+      final: {
+        title: "Final-average-accuracy reset effects",
+        note: "Positive is better. Values are percentage-point differences.",
+        domain: 30,
+        rows: [
+          { label: "BP · Adam", color: "#526267", values: [-20.3385, -15.7935, -18.1140, -16.5685, -15.4930] },
+          { label: "BP · CLASSP", color: "#a97920", values: [-5.2810, -8.0035, -8.7260, -7.7720, -6.6990] },
+          { label: "PC · Adam", color: "#3f708f", values: [-25.7055, -25.3970, -27.2005, -25.9625, -22.3375] },
+          { label: "PC · CLASSP", color: "#08766e", values: [0.3060, 0.0635, 0.6045, 1.8890, 0.9900] }
+        ]
+      },
+      online: {
+        title: "Online predict-before-update reset effects",
+        note: "Positive is better. CLASSP gains are similar under BP and PC.",
+        domain: 22,
+        rows: [
+          { label: "BP · Adam", color: "#526267", values: [-2.6060, -2.4448, -2.4842, -2.2365, -2.6782] },
+          { label: "BP · CLASSP", color: "#a97920", values: [17.8434, 18.0410, 17.8680, 17.5774, 17.9643] },
+          { label: "PC · Adam", color: "#3f708f", values: [-2.7001, -3.1366, -2.9301, -3.6203, -3.2386] },
+          { label: "PC · CLASSP", color: "#08766e", values: [17.3352, 17.4387, 17.1686, 17.0280, 17.1171] }
+        ]
+      },
+      adaptation: {
+        title: "Mean-adaptation reset effects",
+        note: "Positive is better. Adam changes little; CLASSP adapts more.",
+        domain: 16,
+        rows: [
+          { label: "BP · Adam", color: "#526267", values: [0.2745, -0.1960, -0.1570, -0.2315, 0.6540] },
+          { label: "BP · CLASSP", color: "#a97920", values: [13.4275, 13.9840, 14.1780, 14.2095, 14.0075] },
+          { label: "PC · Adam", color: "#3f708f", values: [0.6680, -0.3030, 0.6635, 0.3400, 0.4795] },
+          { label: "PC · CLASSP", color: "#08766e", values: [11.2105, 11.6400, 12.3915, 12.2585, 11.3225] }
+        ]
+      },
+      forgetting: {
+        title: "Mean-forgetting reset effects",
+        note: "Lower is better. Positive bars mean reset caused more forgetting.",
+        domain: 30,
+        rows: [
+          { label: "BP · Adam", color: "#526267", values: [21.0695, 16.2184, 18.7189, 17.1563, 16.1126] },
+          { label: "BP · CLASSP", color: "#a97920", values: [18.9021, 22.2563, 22.6637, 21.1868, 20.5142] },
+          { label: "PC · Adam", color: "#3f708f", values: [26.7089, 26.2226, 28.1184, 26.8095, 23.0974] },
+          { label: "PC · CLASSP", color: "#08766e", values: [11.9847, 12.5626, 11.6321, 9.9347, 10.7184] }
+        ]
+      }
+    };
+
+    const seeds = ["7", "123", "2026", "31415", "271828"];
+    const svgNS = "http://www.w3.org/2000/svg";
+    const mean = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+
+    function svgElement(name, attributes = {}) {
+      const element = document.createElementNS(svgNS, name);
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+      return element;
+    }
+
+    function addText(svg, text, x, y, attributes = {}) {
+      const node = svgElement("text", { x, y, ...attributes });
+      node.textContent = text;
+      svg.appendChild(node);
+      return node;
+    }
+
+    function renderChart(metricKey) {
+      const data = metricData[metricKey];
+      const svg = document.getElementById("effect-chart");
+      svg.replaceChildren();
+      document.getElementById("effect-chart-title").textContent = data.title;
+      document.getElementById("effect-chart-note").textContent = data.note;
+
+      const width = 900;
+      const height = 380;
+      const left = 150;
+      const right = 85;
+      const top = 58;
+      const bottom = 42;
+      const plotWidth = width - left - right;
+      const plotHeight = height - top - bottom;
+      const rowGap = plotHeight / data.rows.length;
+      const zeroX = left + plotWidth / 2;
+      const scale = (value) => left + ((value + data.domain) / (2 * data.domain)) * plotWidth;
+
+      [-data.domain, -data.domain / 2, 0, data.domain / 2, data.domain].forEach((tick) => {
+        const x = scale(tick);
+        svg.appendChild(svgElement("line", {
+          x1: x,
+          x2: x,
+          y1: top - 24,
+          y2: height - bottom,
+          stroke: tick === 0 ? "#526267" : "#ddd5c8",
+          "stroke-width": tick === 0 ? 1.5 : 1
+        }));
+        addText(svg, `${tick > 0 ? "+" : ""}${tick.toFixed(0)}`, x, 22, {
+          "text-anchor": "middle",
+          fill: "#627072",
+          "font-family": "SFMono-Regular, Consolas, monospace",
+          "font-size": "11"
+        });
+      });
+
+      addText(svg, "reset − persistent (percentage points)", left + plotWidth / 2, height - 8, {
+        "text-anchor": "middle",
+        fill: "#627072",
+        "font-family": "system-ui, sans-serif",
+        "font-size": "11"
+      });
+
+      data.rows.forEach((row, rowIndex) => {
+        const y = top + rowGap * rowIndex + rowGap / 2;
+        const average = mean(row.values);
+        const averageX = scale(average);
+        const barX = Math.min(zeroX, averageX);
+        const barWidth = Math.max(2, Math.abs(averageX - zeroX));
+
+        addText(svg, row.label, left - 18, y + 5, {
+          "text-anchor": "end",
+          fill: "#1c2a2c",
+          "font-family": "system-ui, sans-serif",
+          "font-size": "13",
+          "font-weight": "700"
+        });
+
+        svg.appendChild(svgElement("rect", {
+          x: barX,
+          y: y - 13,
+          width: barWidth,
+          height: 26,
+          rx: 6,
+          fill: row.color,
+          opacity: 0.78
+        }));
+
+        row.values.forEach((value, seedIndex) => {
+          const dot = svgElement("circle", {
+            cx: scale(value),
+            cy: y + (seedIndex - 2) * 4.2,
+            r: 4.2,
+            fill: "#fffdf8",
+            stroke: row.color,
+            "stroke-width": 2
+          });
+          const title = svgElement("title");
+          title.textContent = `${row.label}, seed ${seeds[seedIndex]}: ${formatSigned(value)}`;
+          dot.appendChild(title);
+          svg.appendChild(dot);
+        });
+
+        const labelX = average >= 0 ? averageX + 10 : averageX - 10;
+        addText(svg, formatSigned(average), labelX, y + 5, {
+          "text-anchor": average >= 0 ? "start" : "end",
+          fill: row.color,
+          "font-family": "SFMono-Regular, Consolas, monospace",
+          "font-size": "12",
+          "font-weight": "800"
+        });
+      });
+
+      document.getElementById("chart-table").textContent =
+        `${data.title}. ` +
+        data.rows.map((row) =>
+          `${row.label}: mean ${formatSigned(mean(row.values))}; seeds ${row.values.map((value) => formatSigned(value)).join(", ")}.`
+        ).join(" ");
+    }
+
+    document.querySelectorAll(".metric-tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".metric-tab").forEach((peer) => {
+          peer.setAttribute("aria-pressed", String(peer === button));
+        });
+        renderChart(button.dataset.metric);
+      });
+    });
+
+    updateSelection();
+    renderChart("final");
+  </script>
+</body>
+</html>

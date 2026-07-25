@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__full__bp-adam-task-reset__seed-2026.json",
+  "artifact_bytes": 199329,
+  "artifact_sha256": "9711d01d9081d27ba00b9803e1218cf42eab9dd32f8bc720dc2f6988f5db7021",
+  "canonical_payload_sha256": "99088a244d1a389c75ba35e1cb32353510c2e7dcf5d83c21cb03c27446ed9aa9",
+  "created_at_utc": "2026-07-24T07:12:13.872070+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}

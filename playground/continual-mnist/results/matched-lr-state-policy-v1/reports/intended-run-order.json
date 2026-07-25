@@ -1,0 +1,281 @@
+{
+  "bridge": [
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 42
+    }
+  ],
+  "heldout": [
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 7
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 7
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 7
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 7
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 7
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 7
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 7
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 7
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 123
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 123
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 123
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 123
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 123
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 123
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 123
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 123
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 2026
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 2026
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 2026
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 2026
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 2026
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 2026
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 2026
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 2026
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 31415
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 31415
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 31415
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 31415
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 31415
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 31415
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 31415
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 31415
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "seed": 271828
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "seed": 271828
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "seed": 271828
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "seed": 271828
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "seed": 271828
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "seed": 271828
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "seed": 271828
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "seed": 271828
+    }
+  ],
+  "protocol_id": "matched-lr-state-policy-v1",
+  "smoke": [
+    {
+      "condition_id": "bp-adam-persistent",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "pass_index": 1,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-adam-persistent",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-adam-task-reset",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-task-reset",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-persistent",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-classp-persistent",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "bp-classp-task-reset",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-task-reset",
+      "pass_index": 2,
+      "seed": 42
+    },
+    {
+      "condition_id": "pc-adam-persistent",
+      "pass_index": 2,
+      "seed": 42
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "samples": [
+    {
+      "available_ram_bytes": 260041428992,
+      "disk_free_bytes": 1405519323136,
+      "foreign_processes": [],
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "gpu_uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2",
+      "memory_used_mib": 4,
+      "sampled_at_utc": "2026-07-24T07:12:14.704290+00:00",
+      "temperature_c": 34,
+      "utilization_percent": 0
+    },
+    {
+      "available_ram_bytes": 260031979520,
+      "disk_free_bytes": 1405519265792,
+      "foreign_processes": [],
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "gpu_uuid": "GPU-53dcafb1-294a-ca41-713f-376e6cb56ff2",
+      "memory_used_mib": 4,
+      "sampled_at_utc": "2026-07-24T07:12:24.846516+00:00",
+      "temperature_c": 31,
+      "utilization_percent": 0
+    }
+  ]
+}

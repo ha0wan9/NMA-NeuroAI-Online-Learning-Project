@@ -1,0 +1,7 @@
+{
+  "bridge_report": "/home/mmurua/scratch/NeuroAI/Project/NMA-NeuroAI-Online-Learning-Project/playground/continual-mnist/run-staging/matched-lr-state-policy-v1/reports/bridge-intuition-report.md",
+  "bridge_report_sha256": "39d743c44b67677c6c179baddb13dfd0994ffeb68a2fcda3358efc606ec18e26",
+  "protocol_confirmation": "matched-lr-state-policy-v1",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1
+}

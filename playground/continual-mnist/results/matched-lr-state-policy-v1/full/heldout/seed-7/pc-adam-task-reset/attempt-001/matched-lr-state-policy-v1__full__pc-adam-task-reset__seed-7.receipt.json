@@ -1,0 +1,11 @@
+{
+  "artifact": "matched-lr-state-policy-v1__full__pc-adam-task-reset__seed-7.json",
+  "artifact_bytes": 199569,
+  "artifact_sha256": "c2c4dfbf202f8627e8a86df0d07a768d59676f5da9ed2a068fa037cce29bea59",
+  "canonical_payload_sha256": "611ee2f0d271e76bc35aa068e0ad5048fb6931a59aad9702cd733d42cb8d74dd",
+  "created_at_utc": "2026-07-24T04:04:56.258469+00:00",
+  "manifest_hash": "9e88aac4a68a886a056a88a91826168faedd95593fa7db1df210ddd3d7459791",
+  "protocol_id": "matched-lr-state-policy-v1",
+  "schema_version": 1,
+  "source_identity": "12ac2a6a8fce44343ae842e885fe01ee5a1783194a5453878f660fa47684851d"
+}
